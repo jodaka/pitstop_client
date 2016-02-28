@@ -1,0 +1,9 @@
+{
+    "DEBUG": true,
+    "version": "0.0.1",
+    "api": {
+        "url": "http://localhost:8881/",
+        "race": "race/%s",
+        "races": "races/%s/%s",
+    }
+}

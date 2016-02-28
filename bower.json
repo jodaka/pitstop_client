@@ -1,0 +1,25 @@
+{
+  "name": "test",
+  "version": "0.0.1",
+  "authors": [
+    "Anton Kudris <anton@kudris.com>"
+  ],
+  "moduleType": [
+    "es6"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-animate": "~1.4.7",
+    "angular-route": "~1.4.7",
+    "angularjs": "~1.4.7",
+    "Chart.js": "~2.0.0",
+    "chartist": "~0.9.7"
+  }
+}

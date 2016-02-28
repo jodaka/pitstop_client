@@ -1,0 +1,70 @@
+.k-races-list,
+.k-clubs {
+    .display-table;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.k-paging-holder {
+    .display-table;
+    width: 50%;
+    margin: 0 auto;
+    margin-top: @margin_big;
+}
+
+.k-paging {
+    .display-row;
+}
+
+.k-page {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    background-color: #EEE;
+    margin: 1px;
+    color: blue;
+
+    &:hover {
+        cursor: pointer;
+        background-color: #333;
+        color: #EEE;
+    }
+}
+
+.k-page_selected {
+    background-color: #333;
+    color: #EEE;
+}
+
+.k-clubs {
+    margin-top: @margin_big;
+    margin-bottom: @margin_big;
+}
+
+.k-club-select {
+    background-color: #EEE;
+    display: table-cell;
+    text-align: center;
+    line-height: @margin_normal;
+    // line-height: @margin_big;
+}
+
+.k-races-list__race {
+    .display-row;
+}
+
+.k-races-list__race_header {
+    font-weight: bold;
+    background-color: #FFFFEE;
+}
+
+.k-races-list__race:nth-child(even) {
+    background-color: rgba(200, 200, 200, 0.3);
+}
+
+.k-race__cell {
+    white-space: nowrap;
+    line-height: 3em;
+    padding: 0 @margin_normal;
+}

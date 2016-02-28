@@ -1,0 +1,21 @@
+{
+    "predef": [
+        "console",
+        "Promise"
+    ],
+    "node"   : true,
+    "browser": true,
+
+    "boss" : false,
+    "curly": false,
+    "debug": false,
+    "devel": false,
+    "eqeqeq": true,
+
+    "laxbreak": true,
+    "onevar": false,
+
+    "strict": false,
+    "undef": true,
+    "unused": true
+}

@@ -1,0 +1,7 @@
+<div class="k-clubs">
+    <label class="k-club-select" ng-repeat="(key,value) in clubs track by $index">
+        <input type="checkbox" ng-model="selectedClubs" ng-checked="selectedClubs.indexOf(value) > -1" ng-click="selectClub(value)">{{:: key}}
+    </label>
+</div>
+
+<races data-selected-clubs="selectedClubs" data-clubs="clubs" data-page="page"></races>
