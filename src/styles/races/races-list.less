@@ -7,11 +7,11 @@
 }
 
 .k-race__cell_name {
-    width: 20%;
+    width: 24%;
 }
 
 .k-race__cell_club {
-    width: 15%;
+    width: 11%;
 }
 
 .k-race__cell_date {
@@ -108,5 +108,7 @@
 .k-race__cell {
     white-space: nowrap;
     line-height: 3em;
-    padding: 0 @margin_normal;
+    padding: 0 @margin_normal/2 0 @margin_normal;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }

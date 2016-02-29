@@ -13,6 +13,7 @@ function raceFactory( getRace ) {
 
                     data.basic.best = data.basic.best / 1000;
                     $scope.race = data;
+                    data.basic.date = data.basic.date.replace( /Z$/, '+0300' );
 
                     var labels = new Array( data.laps.length );
                     for ( var i = 1; i <= data.laps.length; i++ ) {
@@ -20,7 +21,7 @@ function raceFactory( getRace ) {
                     }
 
                     var series = [];
-                    var colors = [ "rgba(255, 0,0, 0.8)", "rgba(0, 255,0, 0.8)", "rgba(0, 0, 255, 0.8)", "rgba(255, 255,0, 1)", "rgba(0, 255, 255, 1)"];
+                    var colors = [ 'rgba(255, 0,0, 0.8)', 'rgba(0, 255,0, 0.8)', 'rgba(0, 0, 255, 0.8)', 'rgba(255, 255,0, 1)', 'rgba(0, 255, 255, 1)' ];
 
                     for ( var d in data.drivers ) {
 
@@ -29,31 +30,30 @@ function raceFactory( getRace ) {
                             var serie = [];
 
                             for ( i = 0; i < data.laps.length; i++ ) {
-                                var value = ( typeof data.laps[ i ][ d ] !== 'undefined') ? data.laps[ i ][ d ].time : null;
-                                console.log( data.laps[ i ], value );
+                                var value = ( typeof data.laps[ i ][ d ] !== 'undefined' ) ? data.laps[ i ][ d ].time : null;
                                 serie.push( value );
                             }
 
-                            console.log( colors[ series.length ] );
+                            // console.log( colors[ series.length ] );
                             series.push( {
                                 fill: true,
                                 tension: 0.25,
                                 borderColor: colors[ series.length ],
-                                label: data.drivers[d].name,
+                                label: data.drivers[ d ].name,
                                 data: serie
-                            });
+                            } );
                         }
                     }
 
-                    var ctx = document.getElementById("myChart").getContext("2d");
-                    var myChart = new Chart(ctx, {
-                            type: 'line',
-                            data: {
-                                labels: labels,
-                                datasets: series
-                            },
+                    var ctx = document.getElementById( "myChart" ).getContext( "2d" );
+                    var myChart = new Chart( ctx, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: series
+                        },
 
-                    });
+                    } );
 
                     // options:{
                     //     scales:{

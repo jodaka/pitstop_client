@@ -25,6 +25,11 @@ function racesFactory( getRaces, $location ) {
                     .then( function ( response ) {
                         $scope.races = response.data;
 
+                        // fixing timezone
+                        for ( var z = 0; z < $scope.races.length; z++ ) {
+                            $scope.races[ z ].date = $scope.races[ z ].date.replace( /Z$/, '+0300' );
+                        }
+
                         var paging = [];
                         var perPage = 10;
                         var total = response.total;
