@@ -1,40 +1,57 @@
 .k-races-list,
 .k-clubs {
     .display-table;
-    width: 50%;
+    width: 75%;
     margin: 0 auto;
+    table-layout: fixed;
 }
 
-.k-paging-holder {
-    .display-table;
-    width: 50%;
-    margin: 0 auto;
-    margin-top: @margin_big;
+.k-race__cell_name {
+    width: 20%;
+}
+
+.k-race__cell_club {
+    width: 15%;
+}
+
+.k-race__cell_date {
+    width: 25%;
+}
+
+.k-race__cell_winner {
+    width: 20%;
+}
+
+.k-race__cell_kart,
+.k-race__cell_laps {
+    width: 10%;
 }
 
 .k-paging {
-    .display-row;
+    width: 75%;
+    margin: 50px auto 25px;
 }
 
 .k-page {
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    line-height: 40px;
     text-align: center;
-    background-color: #EEE;
-    margin: 1px;
-    color: blue;
+    background-color: @color_3;
+    margin-right: 5px;
+    color: @color_1;
 
     &:hover {
         cursor: pointer;
-        background-color: #333;
-        color: #EEE;
+        background-color: @color_2;
+        color: @color_3;
     }
 }
 
 .k-page_selected {
-    background-color: #333;
-    color: #EEE;
+    background-color: @color_4;
+    color: @color_3;
 }
 
 .k-clubs {
@@ -43,11 +60,21 @@
 }
 
 .k-club-select {
-    background-color: #EEE;
+    color: @color_3;
+    border-bottom: 3px solid @color_5;
+    font-weight: 100;
+    font-size: 40px;
     display: table-cell;
     text-align: center;
     line-height: @margin_normal;
-    // line-height: @margin_big;
+}
+
+.k-club-checkbox {
+    // opacity: 0;
+}
+
+.k-club-select_active {
+    border-bottom: 3px solid @color_2;
 }
 
 .k-races-list__race {
@@ -56,11 +83,26 @@
 
 .k-races-list__race_header {
     font-weight: bold;
-    background-color: #FFFFEE;
+
+    .k-race__cell {
+        background-color: @color_2;
+        line-height: 50px;
+    }
+}
+
+.k-races-list__race {
+    background-color: @color_4;
+}
+
+.k-races-list__race:hover {
+    .k-race__cell {
+        background-color: @color_2;
+        color: @color_3;
+    }
 }
 
 .k-races-list__race:nth-child(even) {
-    background-color: rgba(200, 200, 200, 0.3);
+    background-color: @color_5;
 }
 
 .k-race__cell {

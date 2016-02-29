@@ -3,6 +3,10 @@
     .display-row;
 }
 
+.k-race-data__cell {
+    vertical-align: top;
+}
+
 .k-race-data__cell_grid {
     width: 80%;
 }
@@ -19,11 +23,12 @@
 
 .k-race-basic {
     padding: 20px;
+    margin-top: 30px;
     width: 100%;
     color: @color_1;
     background-color: @color_4;
     border: 1px solid @color_5;
-    border-radius: 6px;
+    border-radius: 2px;
 }
 
 .k-race-data {
@@ -44,12 +49,9 @@
 
     &:hover {
         .k-race-cell {
-            border-top: 1px solid @color_2;
-            border-bottom: 1px solid @color_2;
-            background-color: @color_3;
-            color: @color_2;
+            background-color: @color_2;
+            color: @color_3;
         }
-        // background-color: @color_3;
     }
 }
 

@@ -44,7 +44,7 @@
                         templateUrl: 'partials/race/race.html',
                         controller: 'RaceCtrl'
                     } )
-                    .when( '/races/:page?', {
+                    .when( '/races/:clubs/:page', {
                         templateUrl: 'partials/races/races.html',
                         controller: 'RacesCtrl'
                     } )
@@ -53,11 +53,9 @@
                     } );
         } ] );
 
-        // app.run( [
-        //     '$injector', '$rootScope', 'AppConfig',
-        //     function runApp( $injector, $rootScope, $AppConfig ) {
-        //         console.log( 'running' );
-        // } ] );
+        app.config( [ '$compileProvider', function ( $compileProvider ) {
+            $compileProvider.debugInfoEnabled( false );
+        } ] );
 
         angular.bootstrap( node, [ 'k' ], {
             strictDi: true

@@ -4,8 +4,6 @@ angular.module( 'k.directives' ).directive( 'races', [
 function racesFactory( getRaces, $location ) {
 
         var link = function ( $scope ) {
-            //
-            console.log( 'races directive laoded. page', $scope.page );
 
             $scope.clubsIds = {};
             for ( var cl in $scope.clubs ) {
@@ -16,7 +14,7 @@ function racesFactory( getRaces, $location ) {
 
             $scope.changePage = function ( p ) {
                 if ( p !== $scope.page ) {
-                    $location.path( '/races/' + p );
+                    $location.path( '/races/' + $scope.selectedClubs.join( ',' ) + '/' + p );
                 }
             };
 

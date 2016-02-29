@@ -1,6 +1,6 @@
 angular.module( 'k.controllers' ).controller( 'RacesCtrl', [
-'$scope', '$routeParams',
-function RaceCtrlFactory( $scope, $routeParams ) {
+'$scope', '$routeParams', '$location',
+function RaceCtrlFactory( $scope, $routeParams, $location ) {
         'use strict';
 
         $scope.clubs = {
@@ -11,6 +11,33 @@ function RaceCtrlFactory( $scope, $routeParams ) {
 
         $scope.selectedClubs = [ '586', '686', '786' ];
         $scope.page = $routeParams.page || 1;
+        $scope.selectedClubs = $routeParams.clubs;
+
+        var saveUrlParams = function () {
+            $location.path( '/races/' + $scope.selectedClubs.join( ',' ) + '/' + $scope.page );
+        };
+
+        var redirectToDefault = function() {
+            $scope.page = 1;
+            $scope.selectedClubs = [ '586', '686', '786' ];
+            saveUrlParams();
+        };
+
+        // checking page
+        if ( typeof $scope.page !== 'number') {
+            redirectToDefault();
+            return;
+        }
+
+        // checking clubs list
+        if ( !$scope.selectedClubs || !/^(\d+,?)+$/.test( $scope.selectedClubs ) ) {
+            redirectToDefault();
+            return;
+
+        } else {
+            $scope.selectedClubs = $scope.selectedClubs.split( ',' );
+        }
+
 
         $scope.selectClub = function ( id ) {
             var idx = $scope.selectedClubs.indexOf( id );
@@ -19,6 +46,7 @@ function RaceCtrlFactory( $scope, $routeParams ) {
             } else {
                 $scope.selectedClubs.push( id );
             }
+            saveUrlParams();
         };
 
 } ] );
