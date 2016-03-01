@@ -3,38 +3,76 @@ angular.module( 'k.directives' ).directive( 'race', [
 'getRace',
 function raceFactory( getRace ) {
 
-        var link = function ( $scope ) {
+        var link = function ( $scope, $element ) {
             //
             console.log( 'race directive laoded' );
+
+            var round = function ( val ) {
+                if ( typeof val === 'number' ) {
+                    return val.toFixed( 3 );
+                }
+                return 0;
+            };
 
             getRace( $scope.raceId )
                 .then( function ( data ) {
                     console.log( data );
 
                     data.basic.best = data.basic.best / 1000;
-                    $scope.race = data;
+
                     data.basic.date = data.basic.date.replace( /Z$/, '+0300' );
 
                     var labels = new Array( data.laps.length );
-                    for ( var i = 1; i <= data.laps.length; i++ ) {
-                        labels[ i ] = i;
+                    for ( var i = 0; i < data.laps.length; i++ ) {
+                        labels[ i ] = i + 1;
                     }
 
                     var series = [];
-                    var colors = [ 'rgba(255, 0,0, 0.8)', 'rgba(0, 255,0, 0.8)', 'rgba(0, 0, 255, 0.8)', 'rgba(255, 255,0, 1)', 'rgba(0, 255, 255, 1)' ];
+                    var colors = [
+
+                        'rgba(172, 207, 204, 0.8)',
+                        'rgba(184, 174, 156, 0.8)',
+                        'rgba(255, 255, 255, 0.8)',
+                        'rgba(138, 9, 23, 0.8)',
+                        'rgba(41, 217, 194, 0.8)',
+                        'rgba(255, 255, 166, 0.8)',
+                        'rgba(174, 238, 0, 0.8)',
+                        'rgba(89, 82, 65, 0.8)',
+                        'rgba(255, 53, 139, 0.8)'
+                    ];
 
                     for ( var d in data.drivers ) {
 
                         if ( data.drivers.hasOwnProperty( d ) ) {
 
                             var serie = [];
+                            var driverBest = null;
+                            var driverAverage = 0;
+                            var averageLaps = 0;
 
                             for ( i = 0; i < data.laps.length; i++ ) {
+
                                 var value = ( typeof data.laps[ i ][ d ] !== 'undefined' ) ? data.laps[ i ][ d ].time : null;
+
+                                if ( value !== null && ( driverBest === null || driverBest > value ) ) {
+                                    driverBest = value;
+                                }
+
+                                if ( value !== null ) {
+                                    data.laps[ i ][ d ].time = round( value );
+                                    driverAverage += value;
+                                    averageLaps++;
+                                }
+
                                 serie.push( value );
                             }
 
-                            // console.log( colors[ series.length ] );
+                            data.drivers[ d ].best = driverBest;
+
+                            data.drivers[ d ].average = ( averageLaps > 0 ) ? round( driverAverage / averageLaps ) : 0;
+
+                            console.log( 11, driverAverage, averageLaps, driverAverage / averageLaps, round( driverAverage / averageLaps ) );
+
                             series.push( {
                                 fill: true,
                                 tension: 0.25,
@@ -45,7 +83,10 @@ function raceFactory( getRace ) {
                         }
                     }
 
-                    var ctx = document.getElementById( "myChart" ).getContext( "2d" );
+                    $scope.race = data;
+
+                    /*global Chart */
+                    var ctx = $element[0].querySelector( '.k-race-chart' ).getContext( '2d' );
                     var myChart = new Chart( ctx, {
                         type: 'line',
                         data: {

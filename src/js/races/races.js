@@ -12,6 +12,10 @@ function racesFactory( getRaces, $location ) {
                 }
             }
 
+            $scope.showRace = function ( race ) {
+                $location.path( '/race/' + race.id );
+            };
+
             $scope.changePage = function ( p ) {
                 if ( p !== $scope.page ) {
                     $location.path( '/races/' + $scope.selectedClubs.join( ',' ) + '/' + p );

@@ -8,8 +8,8 @@
         <div class="k-race__cell k-race__cell_laps">Кругов</div>
     </div>
 
-    <div class="k-races-list__race" ng-repeat="race in races track by $index" ng-class="{ 'k-races-list_single-club': selectedClubs.length === 1}">
-        <div class="k-race__cell k-race__cell_name"><a href="/#/race/{{ race.id }}">{{ race.name }}</a></div>
+    <div ng-click="showRace(race)" class="k-races-list__race" ng-repeat="race in races track by $index" ng-class="{ 'k-races-list_single-club': selectedClubs.length === 1}">
+        <div class="k-race__cell k-race__cell_name">{{ race.name }}</div>
         <div class="k-race__cell k-race__cell_club" ng-if="selectedClubs.length > 1">{{ clubsIds[ race.clubid ] }}</div>
         <div class="k-race__cell k-race__cell_date">{{ race.date | date:'EEEE, d MMM HH:mm' }}</div>
         <div class="k-race__cell k-race__cell_winner">{{ race.winner }}</div>

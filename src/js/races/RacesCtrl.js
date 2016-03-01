@@ -24,18 +24,18 @@ function RaceCtrlFactory( $scope, $routeParams, $location ) {
         };
 
         var saveUrlParams = function () {
-            console.log('--->', '/races/' + $scope.selectedClubs.join( ',' ) + '/' + $scope.page);
+            console.log( '--->', '/races/' + $scope.selectedClubs.join( ',' ) + '/' + $scope.page );
             $location.path( '/races/' + $scope.selectedClubs.join( ',' ) + '/' + $scope.page );
         };
 
-        var redirectToDefault = function() {
+        var redirectToDefault = function () {
             $scope.page = 1;
             $scope.selectedClubs = [ '586', '686', '786' ];
             saveUrlParams();
         };
 
         // checking page
-        if ( isNaN( $scope.page ) || ! Number.isInteger( $scope.page )) {
+        if ( isNaN( $scope.page ) || !Number.isInteger( $scope.page ) ) {
             redirectToDefault();
             return;
         }

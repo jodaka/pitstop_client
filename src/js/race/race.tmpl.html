@@ -32,14 +32,20 @@
                 </div>
                 <div class="k-race-lap" ng-repeat="lap in race.laps track by $index">
                     <div class="k-race-cell k-race-cell__header">{{ $index+1 }}</div>
-                    <div class="k-race-cell k-race-cell_{{ $index+1 }}" ng-class="{'k-race-cell_best': true}" ng-repeat="(dkey, dvalue) in race.drivers track by $index">
+                    <div class="k-race-cell k-race-cell_{{ $index+1 }}" ng-class="{'k-race-cell_best':  lap[ dkey ].time == race.drivers[ dkey ].best }" ng-repeat="(dkey, dvalue) in race.drivers track by $index">
                         {{ lap[ dkey ].time }}
+                    </div>
+                </div>
+                <div class="k-race-lap">
+                    <div class="k-race-cell k-race-cell__header">A</div>
+                    <div class="k-race-cell k-race-cell_{{ $index+1 }} k-race-cell_average" ng-repeat="driver in race.drivers track by $index">
+                        {{ driver.average }}
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="k-race-data__row">
-        <canvas id="myChart" width="800" height="300"></canvas>
+        <canvas class="k-race-chart" width="800" height="300"></canvas>
     </div>
 </div>
