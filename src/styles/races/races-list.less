@@ -3,6 +3,10 @@
     .display-table;
     width: 75%;
     margin: 0 auto;
+}
+
+.k-clubs
+{
     table-layout: fixed;
 }
 
@@ -111,4 +115,25 @@
     padding: 0 @margin_normal/2 0 @margin_normal;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+
+
+.k-races-list_single-club
+{
+    .k-race__cell_name {
+        width: 35%;
+    }
+
+    .k-race__cell_date {
+        width: 25%;
+    }
+
+    .k-race__cell_winner {
+        width: 20%;
+    }
+
+    .k-race__cell_kart,
+    .k-race__cell_laps {
+        width: 10%;
+    }
 }

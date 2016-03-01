@@ -1,8 +1,27 @@
+<div class="k-header">
+    <svg class="k-kart-logo">
+        <use xlink:href="#kart"></use>
+    </svg>
+    <div class="k-race-basic__wrapper">
+        <div class="k-race-basic">
+            <div class="k-race-basic__label k-race-basic__label_race"> {{ race.basic.name }} </div>
+            <div class="k-race-basic__label k-race-basic__label_date">{{ race.basic.date | date:'EEEE, d MMM HH:mm' }} </div>
+
+             <div class="k-race-basic__label">Победитель:
+                <span class="k-race-basic__value">{{ race.basic.winner }}, карт
+                    {{ race.basic.winnerKart }}</span>
+            </div>
+            <div class="k-race-basic__label">Лучшее время:
+                <span class="k-race-basic__value">{{ race.basic.best }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="k-race-data">
     <div class="k-race-data__row">
 
         <div class="k-race-data__cell k-race-data__cell_grid">
-
             <div class="k-race-laps">
                 <div class="k-race-drivers">
                     <div class="k-race-driver">&nbsp;</div>
@@ -12,21 +31,11 @@
                     </div>
                 </div>
                 <div class="k-race-lap" ng-repeat="lap in race.laps track by $index">
-                    <div class="k-race-cell k-race-cell_header">{{ $index+1 }}</div>
+                    <div class="k-race-cell k-race-cell__header">{{ $index+1 }}</div>
                     <div class="k-race-cell k-race-cell_{{ $index+1 }}" ng-class="{'k-race-cell_best': true}" ng-repeat="(dkey, dvalue) in race.drivers track by $index">
                         {{ lap[ dkey ].time }}
                     </div>
-
                 </div>
-            </div>
-
-        </div>
-        <div class="k-race-data__cell k-race-data__cell_basic">
-            <div class="k-race-basic">
-                <div class="k-race_basic_label">Гонка: <span class="k-race_basic_value">{{ race.basic.name }}</span></div>
-                <div class="k-race_basic_label">Дата: <span class="k-race_basic_value">{{ race.basic.date | date:'EEEE, d MMM HH:mm' }}</span></div>
-                <div class="k-race_basic_label">Победитель: <span class="k-race_basic_value">{{ race.basic.winner }}, карт {{ race.basic.winnerKart }}</span></div>
-                <div class="k-race_basic_label">Лучшее время: <span class="k-race_basic_value">{{ race.basic.best }}</span></div>
             </div>
         </div>
     </div>

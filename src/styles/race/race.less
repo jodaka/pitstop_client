@@ -1,3 +1,15 @@
+.k-header
+{
+    display: table;
+}
+
+.k-race-basic__wrapper,
+.k-kart-logo
+{
+    display: table-cell;
+    vertical-align: top;
+}
+
 .k-race-drivers,
 .k-race-data__row {
     .display-row;
@@ -17,7 +29,6 @@
 
 .k-race-laps {
     .display-table;
-    width: 80%;
     margin: 0 auto;
 }
 
@@ -25,24 +36,57 @@
     padding: 20px;
     margin-top: 30px;
     width: 100%;
-    color: @color_1;
-    background-color: @color_4;
-    border: 1px solid @color_5;
+    color: @color_3;
+    background-color: @color_5;
+    border: 1px solid @color_4;
     border-radius: 2px;
+
+}
+
+.k-race-basic__label
+{
+    color: @color_1;
+}
+
+.k-race-basic__label_race
+{
+    font-size: 24px;
+    color: @color_3;
+}
+
+.k-race-basic__label_date
+{
+
+    margin: @margin_micro 0;
+}
+
+.k-race-basic__value
+{
+    color: @color_3;
+    // font-weight: bold;
 }
 
 .k-race-data {
     .display-table;
     table-layout: fixed;
-    width: 80%;
-    max-width: 900px;
+    width: 75%;
     margin: 0 auto;
 }
 
 .k-race-driver {
+    background-color: @color_2;
+    color: @color_3;
+    height: 50px;
+    line-height: 25px;
     font-weight: bold;
     text-align: center;
 }
+
+.k-race-driver__cart
+{
+    font-weight: normal;
+}
+
 
 .k-race-lap {
     .display-row;
@@ -55,8 +99,11 @@
     }
 }
 
-.k-race-cell_header {
+.k-race-cell__header {
     font-weight: bold;
+    background-color: @color_2;
+    color: @color_3;
+    width: 5%;
 }
 
 .k-race-cell {
