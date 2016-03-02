@@ -4,6 +4,13 @@
     "api": {
         "url": "http://pitstop.kudris.com/api/",
         "race": "race/%s",
+        "pilot": "pilot/%s/%s",
         "races": "races/%s/%s",
+    },
+    "clubs": {
+        "Пулково": "586",
+        "Драйв": "686",
+        "Нарвская": "786"
     }
+
 }

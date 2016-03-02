@@ -48,6 +48,10 @@
                         templateUrl: 'partials/races/races.html',
                         controller: 'RacesCtrl'
                     } )
+                    .when( '/pilot/:id?/:page?', {
+                        templateUrl: 'partials/pilot/pilot.html',
+                        controller: 'PilotCtrl'
+                    } )
                     .otherwise( {
                         redirectTo: '/races'
                     } );
