@@ -28,7 +28,23 @@ function racesFactory( getPilot, $location, AppConfig ) {
 
                 getPilot( $scope.pilotId, $scope.page - 1 )
                     .then( function ( response ) {
-                        $scope.races = response.data;
+                        $scope.races = response.races;
+                        $scope.clubStats = {};
+                        $scope.name = response.name;
+
+                        for ( var cl in $scope.clubsIds ) {
+                            if ( $scope.clubsIds.hasOwnProperty( cl ) ) {
+                                if ( response.clubs.hasOwnProperty( cl ) ) {
+                                    $scope.clubStats[ cl ] = response.clubs[ cl ];
+                                    $scope.clubStats[ cl ].best = ( Number( response.clubs[ cl ].best ) / 1000 ).toFixed( 3 );
+                                } else {
+                                    $scope.clubStats[ cl ] = {
+                                        count: 0,
+                                        best: 0
+                                    };
+                                }
+                            }
+                        }
 
                         console.log( 222333, response );
                         // // fixing timezone
