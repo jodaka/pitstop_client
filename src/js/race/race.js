@@ -46,32 +46,30 @@ function raceFactory( getRace ) {
                         if ( data.drivers.hasOwnProperty( d ) ) {
 
                             var serie = [];
-                            var driverBest = null;
-                            var driverAverage = 0;
-                            var averageLaps = 0;
+                            // var driverBest = null;
+                            // var driverAverage = 0;
+                            // var averageLaps = 0;
 
                             for ( i = 0; i < data.laps.length; i++ ) {
 
                                 var value = ( typeof data.laps[ i ][ d ] !== 'undefined' ) ? data.laps[ i ][ d ].time : null;
 
-                                if ( value !== null && ( driverBest === null || driverBest > value ) ) {
-                                    driverBest = value;
-                                }
+                                // if ( value !== null && ( driverBest === null || driverBest > value ) ) {
+                                    // driverBest = value;
+                                // }
 
                                 if ( value !== null ) {
                                     data.laps[ i ][ d ].time = round( value );
-                                    driverAverage += value;
-                                    averageLaps++;
+                                    // driverAverage += value;
+                                    // averageLaps++;
                                 }
 
                                 serie.push( value );
                             }
 
-                            data.drivers[ d ].best = driverBest;
-
-                            data.drivers[ d ].average = ( averageLaps > 0 ) ? round( driverAverage / averageLaps ) : 0;
-
-                            console.log( 11, driverAverage, averageLaps, driverAverage / averageLaps, round( driverAverage / averageLaps ) );
+                            // data.drivers[ d ].best = driverBest;
+                            // data.drivers[ d ].average = ( averageLaps > 0 ) ? round( driverAverage / averageLaps ) : 0;
+                            // console.log( 11, driverAverage, averageLaps, driverAverage / averageLaps, round( driverAverage / averageLaps ) );
 
                             series.push( {
                                 fill: true,
