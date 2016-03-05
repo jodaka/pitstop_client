@@ -33,8 +33,8 @@
 }
 
 .k-race-basic {
-    padding: 20px;
-    margin-top: 30px;
+    padding: @margin_micro*4;
+    margin-top: @margin_normal;
     width: 100%;
     color: @color_3;
     background-color: @color_5;
@@ -47,7 +47,7 @@
 }
 
 .k-race-basic__label_race {
-    font-size: 24px;
+    font-size: @fs_heading;
     color: @color_3;
 }
 
@@ -76,6 +76,43 @@
     text-align: center;
 
     width: 13.5%;
+}
+
+.k-race-laps__drivers2 .k-race-driver
+{
+    width: 45%;
+}
+.k-race-laps__drivers3 .k-race-driver
+{
+    width: 31.5%;
+}
+.k-race-laps__drivers4 .k-race-driver
+{
+    width: 23.5%;
+}
+.k-race-laps__drivers5 .k-race-driver
+{
+    width: 19%;
+}
+.k-race-laps__drivers6 .k-race-driver
+{
+    width: 15.8%;
+}
+.k-race-laps__drivers7 .k-race-driver
+{
+    width: 13.5%;
+}
+.k-race-laps__drivers8 .k-race-driver
+{
+    width: 11.8%;
+}
+.k-race-laps__drivers9 .k-race-driver
+{
+    width: 10.5%;
+}
+.k-race-laps__drivers10 .k-race-driver
+{
+    width: 9.5%;
 }
 
 .k-race-driver__cart {
@@ -119,7 +156,8 @@
 }
 
 .k-race-cell_average {
-    border-top: 2px solid @color_2;
+    border-top: 25px solid @color_1;
+    line-height: 40px;
 }
 
 .k-race-cell_1,
@@ -157,5 +195,5 @@
 .k-race-cell_10.k-race-cell_best,
 .k-race-cell_12.k-race-cell_best {
     background-color: @color_4;
-
+    color: @color_1;
 }

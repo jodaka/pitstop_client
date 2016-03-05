@@ -31,7 +31,7 @@ function racesFactory( getRaces, $location ) {
 
                         // fixing timezone
                         for ( var z = 0; z < $scope.races.length; z++ ) {
-                            $scope.races[ z ].date = $scope.races[ z ].date.replace( /Z$/, '+0300' );
+                            $scope.races[ z ].date = $scope.races[ z ].date.replace( /Z$/, '+0600' );
                             $scope.races[ z ].best = ( $scope.races[ z ].best / 1000 ).toFixed( 3 );
                         }
 
