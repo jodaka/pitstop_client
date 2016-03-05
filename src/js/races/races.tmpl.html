@@ -5,16 +5,20 @@
         <div class="k-race__cell k-race__cell_date">Дата</div>
         <div class="k-race__cell k-race__cell_winner">Победитель</div>
         <div class="k-race__cell k-race__cell_kart">Карт</div>
-        <div class="k-race__cell k-race__cell_laps">Кругов</div>
+        <div class="k-race__cell k-race__cell_laps">Лучшее время</div>
     </div>
 
-    <div ng-click="showRace(race)" class="k-races-list__race" ng-repeat="race in races track by $index" ng-class="{ 'k-races-list_single-club': selectedClubs.length === 1}">
-        <div class="k-race__cell k-race__cell_name">{{ race.name }}</div>
+    <div class="k-races-list__race" ng-repeat="race in races track by $index" ng-class="{ 'k-races-list_single-club': selectedClubs.length === 1}">
+        <div class="k-race__cell k-race__cell_name">
+            <a href="/#/race/{{race.id}}" ng-click="showRace(race);" onclick="return false;">{{ race.name }}</a>
+        </div>
         <div class="k-race__cell k-race__cell_club" ng-if="selectedClubs.length > 1">{{ clubsIds[ race.clubid ] }}</div>
         <div class="k-race__cell k-race__cell_date">{{ race.date | date:'EEEE, d MMM HH:mm' }}</div>
-        <div class="k-race__cell k-race__cell_winner">{{ race.winner }}</div>
+        <div class="k-race__cell k-race__cell_winner">
+            <a href="/#/pilot/{{race.winnerId }}">{{ race.winner }}</a>
+        </div>
         <div class="k-race__cell k-race__cell_kart">{{ race.winnerKart }}</div>
-        <div class="k-race__cell k-race__cell_laps">{{ race.laps }}</div>
+        <div class="k-race__cell k-race__cell_laps">{{ race.best }}</div>
     </div>
 </div>
 

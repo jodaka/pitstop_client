@@ -28,6 +28,8 @@
 .k-race-laps {
     .display-table;
     margin: 0 auto;
+    table-layout: fixed;
+    width: 100%;
 }
 
 .k-race-basic {
@@ -72,6 +74,8 @@
     line-height: 25px;
     font-weight: bold;
     text-align: center;
+
+    width: 13.5%;
 }
 
 .k-race-driver__cart {
@@ -97,15 +101,17 @@
 }
 
 .k-race-cell {
+    text-align: center;
     border-collapse: collapse;
     padding: @margin_micro @margin_small;
     line-height: 1.2em;
+    // width:
 }
 
 .k-race-cell_best {
-    font-weight: bold;
-    color: @color_1;
-    text-shadow: 0 0 2px @color_3;
+    // font-weight: bold;
+    // color: @color_1;
+    // text-shadow: 0 0 2px @color_3;
 }
 
 .k-race-chart {
@@ -132,4 +138,24 @@
 .k-race-cell_10,
 .k-race-cell_12 {
     background-color: @color_5;
+
+}
+
+.k-race-cell_1.k-race-cell_best,
+.k-race-cell_3.k-race-cell_best,
+.k-race-cell_5.k-race-cell_best,
+.k-race-cell_7.k-race-cell_best,
+.k-race-cell_9.k-race-cell_best,
+.k-race-cell_11.k-race-cell_best {
+    background-color: @color_5;
+}
+
+.k-race-cell_2.k-race-cell_best,
+.k-race-cell_4.k-race-cell_best,
+.k-race-cell_6.k-race-cell_best,
+.k-race-cell_8.k-race-cell_best,
+.k-race-cell_10.k-race-cell_best,
+.k-race-cell_12.k-race-cell_best {
+    background-color: @color_4;
+
 }

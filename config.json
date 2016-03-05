@@ -2,7 +2,7 @@
     "DEBUG": true,
     "version": "0.0.1",
     "api": {
-        "url": "http://pitstop.kudris.com/api/",
+        "url": "http://localhost:8881/",
         "race": "race/%s",
         "pilot": "pilot/%s/%s",
         "races": "races/%s/%s",

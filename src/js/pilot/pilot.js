@@ -46,14 +46,15 @@ function racesFactory( getPilot, $location, AppConfig ) {
                             }
                         }
 
-                        console.log( 222333, response );
-                        // // fixing timezone
-                        // for ( var z = 0; z < $scope.races.length; z++ ) {
-                        //     $scope.races[ z ].date = $scope.races[ z ].date.replace( /Z$/, '+0300' );
-                        // }
+                        // fixing timezone
+                        for ( var z = 0; z < $scope.races.length; z++ ) {
+                            $scope.races[ z ].date = $scope.races[ z ].date.replace( /Z$/, '+0300' );
+                            $scope.races[ z ].best = ( $scope.races[ z ].best / 1000 ).toFixed( 3 );
+                            $scope.races[ z ].average = ( $scope.races[ z ].average / 1000 ).toFixed( 3 );
+                        }
 
                         var paging = [];
-                        var perPage = 10;
+                        var perPage = 25;
                         var total = response.total;
                         var i = 1;
                         while ( total > perPage ) {
