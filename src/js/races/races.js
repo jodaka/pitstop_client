@@ -1,4 +1,3 @@
-/*global confirm:true */
 angular.module( 'k.directives' ).directive( 'races', [
 'getRaces', '$location',
 function racesFactory( getRaces, $location ) {

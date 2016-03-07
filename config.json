@@ -6,6 +6,7 @@
         "race": "race/%s",
         "pilot": "pilot/%s/%s",
         "races": "races/%s/%s",
+        "club": "club/%s/%s",
     },
     "clubs": {
         "Пулково": "586",

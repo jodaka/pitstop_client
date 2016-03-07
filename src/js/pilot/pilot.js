@@ -1,7 +1,6 @@
-/*global confirm:true */
 angular.module( 'k.directives' ).directive( 'pilot', [
-'getPilot', '$location', 'AppConfig',
-function racesFactory( getPilot, $location, AppConfig ) {
+'AppConfig', 'getPilot',
+function racesFactory( AppConfig, getPilot ) {
 
         var link = function ( $scope ) {
 
@@ -12,16 +11,6 @@ function racesFactory( getPilot, $location, AppConfig ) {
                     $scope.clubsIds[ $scope.clubs[ cl ] ] = cl;
                 }
             }
-
-            $scope.showRace = function ( race ) {
-                $location.path( '/race/' + race.id );
-            };
-
-            // $scope.changePage = function ( p ) {
-            //     if ( p !== $scope.page ) {
-            //         $location.path( '/races/' + $scope.selectedClubs.join( ',' ) + '/' + p );
-            //     }
-            // };
 
             var loadData = function () {
                 $scope.races = [];

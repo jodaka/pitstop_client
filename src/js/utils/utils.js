@@ -1,4 +1,3 @@
-/*global window document */
 angular.module( 'k.utils' ).factory( 'debounce', [
 function debounceFactory() {
 

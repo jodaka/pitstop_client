@@ -1,4 +1,3 @@
-/*global angular document window */
 ( function ( w, d ) {
 
     'use strict';
@@ -51,6 +50,10 @@
                     .when( '/pilot/:id?/:page?', {
                         templateUrl: 'partials/pilot/pilot.html',
                         controller: 'PilotCtrl'
+                    } )
+                    .when( '/club/:id?/:period?', {
+                        templateUrl: 'partials/club/club.html',
+                        controller: 'ClubCtrl'
                     } )
                     .otherwise( {
                         redirectTo: '/races'

@@ -1,4 +1,3 @@
-/*global confirm:true */
 angular.module( 'k.directives' ).directive( 'race', [
 'getRace',
 function raceFactory( getRace ) {
@@ -43,7 +42,7 @@ function raceFactory( getRace ) {
                         if ( data.drivers.hasOwnProperty( d ) ) {
                             var serie = [];
 
-                            data.drivers[ d ].average = data.drivers[ d ].average.toFixed(3);
+                            data.drivers[ d ].average = data.drivers[ d ].average.toFixed( 3 );
 
                             for ( i = 0; i < data.laps.length; i++ ) {
                                 var value = ( typeof data.laps[ i ][ d ] !== 'undefined' ) ? data.laps[ i ][ d ].time : null;
@@ -75,10 +74,8 @@ function raceFactory( getRace ) {
                         data: {
                             labels: labels,
                             datasets: series
-                        },
-
+                        }
                     } );
-
                     // options:{
                     //     scales:{
                     //         yAxes:[{
