@@ -26,11 +26,11 @@ function racesFactory( getRaces, $location ) {
 
                 getRaces( $scope.selectedClubs, $scope.page - 1 )
                     .then( function ( response ) {
-                        $scope.races = response.data;
+
+                        $scope.races = ( angular.isArray( response.data ) ) ? response.data : [ response.data ];
 
                         // fixing timezone
                         for ( var z = 0; z < $scope.races.length; z++ ) {
-                            $scope.races[ z ].date = $scope.races[ z ].date.replace( /Z$/, '+0600' );
                             $scope.races[ z ].best = ( $scope.races[ z ].best / 1000 ).toFixed( 3 );
                         }
 

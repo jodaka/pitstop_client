@@ -13,10 +13,8 @@ function raceFactory( getRace ) {
 
             getRace( $scope.raceId )
                 .then( function ( data ) {
-                    // console.log( data );
 
                     data.basic.best = data.basic.best / 1000;
-                    data.basic.date = data.basic.date.replace( /Z$/, '+0600' );
 
                     var labels = new Array( data.laps.length );
                     for ( var i = 0; i < data.laps.length; i++ ) {
