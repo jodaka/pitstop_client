@@ -1,6 +1,6 @@
 angular.module( 'k.directives' ).directive( 'races', [
-'getRaces', '$location',
-function racesFactory( getRaces, $location ) {
+'getRaces',
+function racesFactory( getRaces ) {
 
         var link = function ( $scope ) {
 
@@ -11,20 +11,19 @@ function racesFactory( getRaces, $location ) {
                 }
             }
 
-            $scope.showRace = function ( race ) {
-                $location.path( '/race/' + race.id );
+            $scope.setPage = function ( page ) {
+                $scope.changePage( {
+                    page: page
+                } );
             };
 
-            $scope.changePage = function ( p ) {
-                if ( p !== $scope.page ) {
-                    $location.path( '/races/' + $scope.selectedClubs.join( ',' ) + '/' + p );
-                }
-            };
-
+            // requesting data again
             var loadData = function () {
-                $scope.races = [];
 
-                getRaces( $scope.selectedClubs, $scope.page - 1 )
+                $scope.races = [];
+                var period = ( $scope.date === null ) ? $scope.page -1 : $scope.date;
+
+                getRaces( $scope.selectedClubs, period )
                     .then( function ( response ) {
 
                         $scope.races = ( angular.isArray( response.data ) ) ? response.data : [ response.data ];
@@ -54,14 +53,11 @@ function racesFactory( getRaces, $location ) {
                     } );
             };
 
+            // on club change
             $scope.$watch( 'selectedClubs', function ( newVal ) {
-
-                console.log( 111, newVal );
-
                 if ( newVal ) {
                     loadData();
                 }
-
             }, true );
         };
 
@@ -70,9 +66,11 @@ function racesFactory( getRaces, $location ) {
             replace: false,
             link: link,
             scope: {
+                date: '=',
                 clubs: '=',
                 page: '=',
-                selectedClubs: '='
+                selectedClubs: '=',
+                changePage: '&'
             },
             templateUrl: 'races/races'
         };

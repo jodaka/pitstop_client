@@ -5,6 +5,7 @@
 
 .k-races-list {
     .display-table;
+    table-layout: fixed;
 }
 
 .k-race__cell_name {
@@ -46,10 +47,12 @@
 }
 
 .k-races-list__race:hover {
+    transition: all 0.35s linear;
+
     .k-race__cell {
-        background-color: @color_2;
+        transition: background 0.35s linear;
+        background-color: lighten(@color_1, 10%);
         color: @color_3;
-        cursor: pointer;
     }
 }
 

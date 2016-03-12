@@ -1,3 +1,4 @@
+/*global require*/
 var gulp = require( 'gulp' );
 var uglify = require( 'gulp-uglify' );
 var config = require( '../config' );
@@ -6,18 +7,6 @@ var runSequence = require( 'run-sequence' );
 var moreLess = require( 'gulp-more-less' );
 var replace = require( 'gulp-replace' );
 var concat = require( 'gulp-concat' );
-var bump = require( 'gulp-bump' );
-
-gulp.task( 'build:bump-version', function () {
-
-    gulp.src( config.paths.root + '/config.json' )
-        // .pipe( bump( {
-        //     key: 'version'
-        // } ) )
-        // .on( 'error', handleErrors )
-        .pipe( gulp.dest( config.paths.root ) );
-} );
-
 
 gulp.task( 'build:copy-app', [ 'copy' ], function () {
 
@@ -27,6 +16,16 @@ gulp.task( 'build:copy-app', [ 'copy' ], function () {
         .pipe( gulp.dest( config.paths.peace ) );
 
 } );
+
+gulp.task( 'build:includesVersion', function () {
+
+    var ver = Date.now();
+
+    gulp.src( [ config.paths.peace + '/index.html' ] )
+        .pipe( replace( /_version_/g, 'ver=' + ver ) )
+        .pipe( gulp.dest( config.paths.peace ) );
+} );
+
 
 gulp.task( 'build:turnOffDebug', function () {
 
@@ -46,9 +45,9 @@ gulp.task( 'build:clean-app', function ( cb ) {
 gulp.task( 'build:copy', [ 'build:clean-app' ], function ( cb ) {
 
     runSequence(
-        'build:bump-version',
         'build:copy-app',
         'build:turnOffDebug',
+        'build:includesVersion',
         cb );
 
 } );
