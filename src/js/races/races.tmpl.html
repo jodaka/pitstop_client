@@ -26,7 +26,10 @@
 
 <div class="k-paging-holder">
     <div class="k-paging">
-        <div class="k-page" ng-class="{ 'k-page_selected': p == page }" ng-repeat="p in paging track by $index" ng-click="changePage(p)">
+        <div class="k-paging__page"
+            ng-class="{ 'k-paging__page_selected': p == page }"
+            ng-repeat="p in paging track by $index"
+            ng-click="changePage(p)">
             {{ p }}
         </div>
     </div>

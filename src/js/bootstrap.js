@@ -27,7 +27,6 @@
         // If no errors detected, we initialize Angular
         var app = angular.module( 'k', [
             'ngRoute',
-            'ngAnimate',
             'k.controllers',
             'k.directives',
             'k.services',

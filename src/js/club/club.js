@@ -4,28 +4,32 @@ function clubFactory( AppConfig, getClub ) {
 
         var link = function ( $scope ) {
 
-            $scope.clubs = AppConfig.clubs;
-            $scope.clubsIds = {};
-            for ( var cl in $scope.clubs ) {
-                if ( $scope.clubs.hasOwnProperty( cl ) ) {
-                    $scope.clubsIds[ $scope.clubs[ cl ] ] = cl;
-                }
-            }
+            $scope.loading = true;
 
             var loadData = function () {
 
-                getClub( $scope.clubId, '' )
-                    .then( function ( response ) {
+                $scope.loading = true;
 
-                        console.log(response);
+                getClub( $scope.clubId, $scope.period )
+                    .then( function ( data ) {
+
+                        console.log(data);
+
+                        for ( var z = 0; z < data.length; z++ ) {
+                            data[ z ].best = ( data[ z ].best / 1000 ).toFixed( 3 );
+                        }
+
+                        $scope.loading = false;
+                        $scope.karts = data;
                     } )
                     .catch( function ( err ) {
+
+                        $scope.loading = false
                         console.error( err );
                     } );
             };
 
             loadData();
-
         };
 
         return {
