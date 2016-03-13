@@ -13,8 +13,6 @@ function clubFactory( AppConfig, getClub ) {
                 getClub( $scope.clubId, $scope.period )
                     .then( function ( data ) {
 
-                        console.log(data);
-
                         for ( var z = 0; z < data.length; z++ ) {
                             data[ z ].best = ( data[ z ].best / 1000 ).toFixed( 3 );
                         }
@@ -23,8 +21,7 @@ function clubFactory( AppConfig, getClub ) {
                         $scope.karts = data;
                     } )
                     .catch( function ( err ) {
-
-                        $scope.loading = false
+                        $scope.loading = false;
                         console.error( err );
                     } );
             };
