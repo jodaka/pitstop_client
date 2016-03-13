@@ -3,7 +3,7 @@
     <h2 class="k-header">{{ race.basic.name }}</h2>
 
     <div class="k-race-basic">
-        <div class="k-race-basic__label k-race-basic__label_date">{{ race.basic.date | date:'EEEE, d MMM HH:mm' }} </div>
+        <div class="k-race-basic__label k-race-basic__label_date">{{ race.basic.date | raceDate }} </div>
 
         <div class="k-race-basic__label">Победитель:
             <span class="k-race-basic__value">{{ race.basic.winner }}, карт
