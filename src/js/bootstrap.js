@@ -42,7 +42,7 @@
                         templateUrl: 'partials/race/race.html',
                         controller: 'RaceCtrl'
                     } )
-                    .when( '/races/:clubs?/:page?', {
+                    .when( '/races/:clubs?/:period?/:page?', {
                         templateUrl: 'partials/races/races.html',
                         controller: 'RacesCtrl'
                     } )

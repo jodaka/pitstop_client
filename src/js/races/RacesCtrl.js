@@ -13,6 +13,14 @@ function RaceCtrlFactory( AppConfig, $scope, $routeParams, $location ) {
             }
         }
 
+        $scope.periodIsActive = function( period ) {
+
+            if ( $scope.period === 'all' && period === 'all' ) {
+                return true;
+            }
+
+        };
+
         $scope.selectClub = function ( id ) {
             var idx = $scope.selectedClubs.indexOf( id );
             if ( idx > -1 ) {
@@ -40,13 +48,14 @@ function RaceCtrlFactory( AppConfig, $scope, $routeParams, $location ) {
             }
 
             var period = ( date === null ) ? $scope.page : $scope.date;
-            $location.path( '/races/' + clubs.join( ',' ) + '/' + period );
+            $location.path( '/races/' + clubs.join( ',' ) + '/' + $scope.period + '/' + period );
         };
 
         var redirectToDefault = function () {
 
             $scope.page = 1;
             $scope.date = null;
+            $scope.period = 'all';
 
             var savedClubsList = localStorage.getItem( 'selectedClubs' );
             if ( savedClubsList ) {
@@ -59,11 +68,16 @@ function RaceCtrlFactory( AppConfig, $scope, $routeParams, $location ) {
             saveUrlParams();
         };
 
+        var period = $routeParams.period;
         var page = $routeParams.page;
         var date = null;
 
+        if ( period !== 'all' || period !== 'date' ) {
+            period = 'all';
+        }
+
         // check if page is actually a day
-        if ( /\d\d\d\d-\d\d-\d\d/.test( page ) ) {
+        if ( period === 'date' && /\d\d\d\d-\d\d-\d\d/.test( page ) ) {
 
             try {
                 date = new Date( page );
@@ -71,10 +85,12 @@ function RaceCtrlFactory( AppConfig, $scope, $routeParams, $location ) {
             } catch ( err ) {
                 page = 1;
                 date = null;
+                period = 'all';
             }
 
         } else {
 
+            period = 'all';
             page = Number( page );
             if ( isNaN( page ) || !Number.isInteger( page ) ) {
                 redirectToDefault();
@@ -82,6 +98,7 @@ function RaceCtrlFactory( AppConfig, $scope, $routeParams, $location ) {
             }
         }
 
+        $scope.period = period;
         $scope.date = date;
         $scope.page = page;
 

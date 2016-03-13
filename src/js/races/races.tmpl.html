@@ -10,17 +10,17 @@
 
     <div class="k-races-list__race" ng-repeat="race in races track by $index" ng-class="{ 'k-races-list_single-club': selectedClubs.length === 1}">
         <div class="k-race__cell k-race__cell_name">
-            <a class="k-link" href="/#/race/{{race.id}}">{{ race.name }}</a>
+            <a class="k-link" href="/#/race/{{::race.id}}">{{:: race.name }}</a>
         </div>
         <div class="k-race__cell k-race__cell_club" ng-if="selectedClubs.length > 1">
-            {{ clubsIds[ race.clubid ] }}
+            {{:: clubsIds[ race.clubid ] }}
         </div>
-        <div class="k-race__cell k-race__cell_date">{{ race.date | raceDate }}</div>
+        <div class="k-race__cell k-race__cell_date">{{:: race.date | raceDate }}</div>
         <div class="k-race__cell k-race__cell_winner">
-            <a class="k-link" href="/#/pilot/{{race.winnerId}}">{{ race.winner }}</a>
+            <a class="k-link" href="/#/pilot/{{::race.winnerId}}">{{:: race.winner }}</a>
         </div>
-        <div class="k-race__cell k-race__cell_kart">{{ race.winnerKart }}</div>
-        <div class="k-race__cell k-race__cell_laps">{{ race.best }}</div>
+        <div class="k-race__cell k-race__cell_kart">{{:: race.winnerKart }}</div>
+        <div class="k-race__cell k-race__cell_laps">{{:: race.best }}</div>
     </div>
 </div>
 
@@ -30,7 +30,7 @@
             ng-class="{ 'k-paging__page_selected': p == page }"
             ng-repeat="p in paging track by $index"
             ng-click="setPage(p)">
-            {{ p }}
+            {{:: p }}
         </div>
     </div>
 </div>

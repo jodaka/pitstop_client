@@ -1,23 +1,30 @@
 angular.module( 'k.utils' ).filter( 'raceDate', [
 function raceDateFactory() {
 
-        var days = [ 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье' ];
+        var days = [ 'Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота' ];
+        var months = [ 'Янв', 'Фев', 'Мар', 'Апр', 'Мая', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек' ];
 
-        return function ( date ) {
+        return function ( d ) {
 
-            date = new Date( date );
+            d = d.replace( 'Z', '+0300' );
+            d = new Date( d );
 
-            if ( date instanceof Date ) {
-                var res = days[ date.getDay() ] + ' ' + date.getDate() + ', ' + date.getHours() + ':' + date.getMinutes();
+            if ( d instanceof Date ) {
 
-                console.log( 111, date );
+                var day = days[ d.getDay() ];
+                var mon = months[ d.getMonth() ];
+                var date = d.getDate();
+                var hours = d.getHours();
+                var minutes = d.getMinutes();
+                if ( minutes === 0 ) {
+                    minutes = '00';
+                }
+                var res = day + ', ' + date + ' ' + mon + ', ' + hours + ':' + minutes;
                 return res;
+
             } else {
-                console.log( 222, date, date instanceof Date  );
+                console.warn( 222, d, d instanceof Date );
                 return date;
             }
-
-
         };
-
 } ] );
