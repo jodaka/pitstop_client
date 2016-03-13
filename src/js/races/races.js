@@ -1,6 +1,6 @@
 angular.module( 'k.directives' ).directive( 'races', [
-'getRaces',
-function racesFactory( getRaces ) {
+'getRaces', 'AppConfig',
+function racesFactory( getRaces, AppConfig ) {
 
         var link = function ( $scope ) {
 
@@ -8,6 +8,13 @@ function racesFactory( getRaces ) {
             for ( var cl in $scope.clubs ) {
                 if ( $scope.clubs.hasOwnProperty( cl ) ) {
                     $scope.clubsIds[ $scope.clubs[ cl ] ] = cl;
+                }
+            }
+
+            $scope.clubsNames = {};
+            for ( cl in AppConfig.clubsEn ) {
+                if ( AppConfig.clubsEn.hasOwnProperty( cl ) ) {
+                    $scope.clubsNames[ AppConfig.clubsEn[ cl ] ] = cl;
                 }
             }
 

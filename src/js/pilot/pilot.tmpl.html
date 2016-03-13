@@ -26,33 +26,33 @@
 
     <div class="k-races-list">
         <div class="k-races-list__race k-races-list__race_header" ng-class="{ 'k-races-list_single-club': selectedClubs.length === 1}">
-            <div class="k-race__cell k-race__cell_name">Заезд</div>
-            <div class="k-race__cell k-race__cell_club" ng-if="selectedClubs.length > 1">Клуб</div>
-            <div class="k-race__cell k-race__cell_date">Дата</div>
-            <div class="k-race__cell k-race__cell_kart">Карт</div>
-            <div class="k-race__cell k-race__cell_laps">Позиция</div>
-            <div class="k-race__cell k-race__cell_winner">Лучшее</div>
-            <div class="k-race__cell k-race__cell_laps">Среднее</div>
+            <div class="k-race__cell k-pilot__cell_name">Заезд</div>
+            <div class="k-race__cell k-pilot__cell_club">Клуб</div>
+            <div class="k-race__cell k-pilot__cell_date">Дата</div>
+            <div class="k-race__cell k-pilot__cell_kart">Карт</div>
+            <div class="k-race__cell k-pilot__cell_pos">Позиция</div>
+            <div class="k-race__cell k-pilot__cell_best">Лучшее</div>
+            <div class="k-race__cell k-pilot__cell_avg">Среднее</div>
         </div>
 
         <div class="k-races-list__race" ng-repeat="race in races track by $index" ng-class="{ 'k-races-list_single-club': selectedClubs.length === 1}">
-            <div class="k-race__cell k-race__cell_name">
-                <a class="k-link" href="/#/race/{{race.id}}">{{ race.name }}</a>
+            <div class="k-race__cell k-pilot__cell_name">
+                <a class="k-link" href="/#/race/{{race.id}}">{{:: race.name }}</a>
             </div>
 
-            <div class="k-race__cell k-race__cell_club" ng-if="selectedClubs.length > 1">{{ clubsIds[ race.clubid ] }}</div>
-            <div class="k-race__cell k-race__cell_date">{{ race.date | date:'EEEE, d MMM HH:mm' }}</div>
-            <div class="k-race__cell k-race__cell_kart">{{ race.kart }}</div>
-            <div class="k-race__cell k-race__cell_winner">{{ race.pos }}</div>
-            <div class="k-race__cell k-race__cell_laps">{{ race.best }}</div>
-            <div class="k-race__cell k-race__cell_laps">{{ race.average }}</div>
+            <div class="k-race__cell k-pilot__cell_club">{{:: clubsIds[ race.clubid ] }}</div>
+            <div class="k-race__cell k-pilot__cell_date">{{:: race.date | raceDate }}</div>
+            <div class="k-race__cell k-pilot__cell_kart">{{:: race.kart }}</div>
+            <div class="k-race__cell k-pilot__cell_pos">{{:: race.pos }}</div>
+            <div class="k-race__cell k-pilot__cell_best">{{:: race.best }}</div>
+            <div class="k-race__cell k-pilot__cell_avg">{{:: race.average }}</div>
         </div>
     </div>
 
     <div class="k-paging-holder">
         <div class="k-paging">
             <div class="k-paging__page" ng-class="{ 'k-paging__page_selected': p == page }" ng-repeat="p in paging track by $index" ng-click="changePage(p)">
-                {{ p }}
+                {{:: p }}
             </div>
         </div>
     </div>

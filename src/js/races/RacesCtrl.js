@@ -6,6 +6,7 @@ function RaceCtrlFactory( AppConfig, $scope, $routeParams, $location ) {
 
         $scope.clubs = AppConfig.clubs;
         $scope.clubsIds = {};
+        // $scope.clubsNames = {};
 
         for ( var cl in AppConfig.clubsEn ) {
             if ( AppConfig.clubsEn.hasOwnProperty( cl ) ) {
@@ -77,6 +78,10 @@ function RaceCtrlFactory( AppConfig, $scope, $routeParams, $location ) {
                 try {
                     $scope.selectedClubs = JSON.parse( savedClubsList );
                 } catch ( e ) {
+                    $scope.selectedClubs = [ '586', '686', '786' ];
+                }
+            } else {
+                if ( ! $scope.selectedClubs ) {
                     $scope.selectedClubs = [ '586', '686', '786' ];
                 }
             }

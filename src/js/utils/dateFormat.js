@@ -6,6 +6,10 @@ function raceDateFactory() {
 
         return function ( d ) {
 
+            if ( !d ) {
+                return;
+            }
+
             d = d.replace( 'Z', '+0300' );
             d = new Date( d );
 

@@ -1,8 +1,16 @@
 angular.module( 'k.directives' ).directive( 'race', [
-'getRace',
-function raceFactory( getRace ) {
+'AppConfig', 'getRace',
+function raceFactory( AppConfig, getRace ) {
 
         var link = function ( $scope, $element ) {
+
+            $scope.clubsIds = {};
+
+            for ( var cl in AppConfig.clubs ) {
+                if ( AppConfig.clubs.hasOwnProperty( cl ) ) {
+                    $scope.clubsIds[ AppConfig.clubs[ cl ] ] = cl;
+                }
+            }
 
             var round = function ( val ) {
                 if ( typeof val === 'number' ) {
@@ -23,7 +31,6 @@ function raceFactory( getRace ) {
 
                     var series = [];
                     var colors = [
-
                         'rgba(172, 207, 204, 0.8)',
                         'rgba(184, 174, 156, 0.8)',
                         'rgba(255, 255, 255, 0.8)',

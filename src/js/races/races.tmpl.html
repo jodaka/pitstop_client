@@ -13,7 +13,7 @@
             <a class="k-link" href="/#/race/{{::race.id}}">{{:: race.name }}</a>
         </div>
         <div class="k-race__cell k-race__cell_club" ng-if="selectedClubs.length > 1">
-            {{:: clubsIds[ race.clubid ] }}
+            <a class="k-link" href="/#/club/{{:: clubsNames[ race.clubid] }}">{{:: clubsIds[ race.clubid ] }}</a>
         </div>
         <div class="k-race__cell k-race__cell_date">{{:: race.date | raceDate }}</div>
         <div class="k-race__cell k-race__cell_winner">

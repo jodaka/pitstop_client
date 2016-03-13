@@ -3,43 +3,40 @@
     <h2 class="k-header">Список заездов</h2>
 
     <div class="k-clubs k-clubs_races">
-        <label class="k-club-select"
-            ng-class="{ 'k-club-select_active' : selectedClubs.indexOf(value) > -1}"
-            ng-repeat="(key,value) in clubs track by $index"
-            ng-click="selectClub(value)">
+        <label class="k-club-select" ng-class="{ 'k-club-select_active' : selectedClubs.indexOf(value) > -1}" ng-repeat="(key,value) in clubs track by $index" ng-click="selectClub(value)">
             {{:: key}}
         </label>
     </div>
 
-    <h3 class="k-header">Период</h3>
-    <div class="k-periods">
-        <label class="k-period"
-            ng-click="setPeriod('all')"
-            ng-class="{'k-period_active': periodIsActive('all')}">
-            Вся история
-        </label>
-        <label class="k-period"
-            ng-click="setPeriod(today)"
-            ng-class="{'k-period_active': periodIsActive(today)}">
-            Сегодня
-        </label>
-        <label class="k-period"
-            ng-click="setPeriod(yesterday)"
-            ng-class="{'k-period_active': periodIsActive(yesterday)}">
-            Вчера
-        </label>
-        <!-- <label class="k-period"
+    <div ng-show="!selectedClubs||selectedClubs.length===0" class="error">
+        Пожалуйста выберите хотя-бы один клуб
+    </div>
+
+    <div ng-if="selectedClubs.length>0">
+
+        <h3 class="k-header">Период</h3>
+        <div class="k-periods">
+            <label class="k-period" ng-click="setPeriod('all')" ng-class="{'k-period_active': periodIsActive('all')}">
+                Вся история
+            </label>
+            <label class="k-period" ng-click="setPeriod(today)" ng-class="{'k-period_active': periodIsActive(today)}">
+                Сегодня
+            </label>
+            <label class="k-period" ng-click="setPeriod(yesterday)" ng-class="{'k-period_active': periodIsActive(yesterday)}">
+                Вчера
+            </label>
+            <!-- <label class="k-period"
             ng-click="setPeriod('other')"
             ng-class="{'k-period_active': periodIsActive('other')}">
             Другой день
         </label> -->
-    </div>
+        </div>
 
-    <races
-        data-selected-clubs="selectedClubs"
-        data-clubs="clubs"
-        data-page="page"
-        data-change-page="changePage(page)"
-        data-date="date">
-    </races>
+        <races
+            data-selected-clubs="selectedClubs"
+            data-clubs="clubs" data-page="page"
+            data-change-page="changePage(page)"
+            data-date="date">
+        </races>
+    </div>
 </div>

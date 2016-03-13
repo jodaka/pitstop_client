@@ -39,16 +39,12 @@
 }
 
 .k-race-basic__label {
-    color: @color_1;
-}
-
-.k-race-basic__label_date {
+    color: @color_3;
     margin: @margin_micro 0;
 }
 
 .k-race-basic__value {
-    color: @color_3;
-    // font-weight: bold;
+    font-weight: bold;
 }
 
 .k-race-data {
@@ -65,6 +61,11 @@
     text-align: center;
 
     width: 13.5%;
+}
+
+.k-race-laps__drivers1 .k-race-driver
+{
+    width: 95%;
 }
 
 .k-race-laps__drivers2 .k-race-driver
@@ -111,9 +112,11 @@
 .k-race-lap {
     .display-row;
 
+    transition: all 0.35s linear;
     &:hover {
         .k-race-cell {
-            background-color: @color_2;
+            transition: background 0.35s linear;
+            background-color: lighten(@color_1, 10%);
             color: @color_3;
         }
     }
