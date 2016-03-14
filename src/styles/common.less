@@ -8,6 +8,12 @@ html {
     box-sizing: border-box;
 }
 
+body
+{
+    margin: 0;
+    padding: 0;
+}
+
 *,
 *:before,
 *:after {
@@ -32,6 +38,26 @@ html {
 {
     width: 75%;
     margin: 0 auto;
+}
+
+@media screen and (max-width: 1000px),(max-device-width:1000px) {
+    .k-page
+    {
+        width: 95%;
+    }
+}
+
+@media screen and (max-width: 400px),(max-device-width:400px){
+
+    html
+    {
+        font-size: 1em;
+    }
+
+    .k-page
+    {
+        width: 100%;
+    }
 }
 
 #kart {

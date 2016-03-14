@@ -87,3 +87,28 @@
         width: 10%;
     }
 }
+
+@media screen and (max-width: 400px),(max-device-width:400px){
+
+    .k-race__cell_kart
+    {
+        display: none;
+    }
+
+    .k-race__cell
+    {
+        // font-size: 10px;
+        white-space: nowrap;
+        line-height: 2.5em;
+        padding: 0 @margin_small/4 0 @margin_normal/4;
+    }
+
+    .k-races-list__race_header
+    {
+        .k-race__cell
+        {
+            // font-size: 14px;
+            font-weight: normal;
+        }
+    }
+}
