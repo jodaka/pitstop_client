@@ -1,12 +1,19 @@
 <div class="k-header">
 
-    <h2 class="k-header">{{:: race.basic.name }}</h2>
-
-    <div class="k-race-basic">
-        <div class="k-race-basic__label k-race-basic__label_date">Клуб: <span class="k-race-basic__value">{{:: clubsIds[race.basic.clubid] }}</span>, {{:: race.basic.date | raceDate }} </div>
-        <div class="k-race-basic__label">Победитель: <span class="k-race-basic__value">{{:: race.basic.winner }}</span>, карт <span class="k-race-basic__value">{{:: race.basic.winnerKart }}</span></div>
-        <div class="k-race-basic__label">Лучшее время: <span class="k-race-basic__value">{{:: race.basic.best }}</span></div>
+    <div class="k-path">
+        <div class="k-path__step">
+            <a href="/#/races/{{:: clubsNames[race.basic.clubid] }}/all/1" class="k-link"> {{:: clubsIds[race.basic.clubid] }} </a>
+        </div>
+        <div class="k-path__step">&raquo;</div>
+        <div class="k-path__step">
+            <a href="/#/races/{{:: clubsNames[race.basic.clubid] }}/date/{{:: race.basic.dateShort }}" class="k-link"> {{:: race.basic.date | raceDate }} </a>
+        </div>
+        <div class="k-path__step">&raquo;</div>
+        <div class="k-path__step">
+            {{:: race.basic.name }}
+        </div>
     </div>
+
 </div>
 
 <div class="k-race-data">
@@ -14,23 +21,30 @@
 
         <div class="k-race-data__cell k-race-data__cell_grid">
             <div class="k-race-laps k-race-laps__drivers{{driversCount}}">
-                <div class="k-race-drivers">
-                    <div class="k-race-cell k-race-cell__header">&nbsp;</div>
-                    <div class="k-race-driver" ng-repeat="(id, driver) in race.drivers track by $index">
+
+                <div class="k-table-header">
+                    <div class="k-table-header__cell">&nbsp;</div>
+                    <div class="k-table-header__cell k-race-driver" ng-repeat="(id, driver) in race.drivers track by $index">
                         <a class="k-link" href="/#/pilot/{{::id}}">{{::  driver.name }}</a>
-                        <div class="k-race-driver__cart">{{:: driver.kart }}</div>
+                        <div class="k-race-driver__cart" title="Номер карта">{{:: driver.kart }}</div>
                     </div>
                 </div>
                 <div class="k-race-lap" ng-repeat="lap in race.laps track by $index">
-                    <div class="k-race-cell k-race-cell__header">{{:: $index+1 }}</div>
+                    <div class="k-race-cell k-table-header-col__cell">{{:: $index+1 }}</div>
                     <div class="k-race-cell k-race-cell_{{ $index+1 }}" ng-class="{'k-race-cell_best':  lap[ dkey ].time == race.drivers[ dkey ].best }" ng-repeat="(dkey, dvalue) in race.drivers track by $index">
                         {{:: lap[ dkey ].time }}
                     </div>
                 </div>
-                <div class="k-race-lap">
-                    <div class="k-race-cell k-race-cell__header k-race-cell_average">A</div>
+                <div class="k-race-lap" title="Среднее время">
+                    <div class="k-race-cell k-table-header-col__cell k-race-cell_average">A</div>
                     <div class="k-race-cell k-race-cell_{{ $index+1 }} k-race-cell_average" ng-repeat="driver in race.drivers track by $index">
                         {{:: driver.average }}
+                    </div>
+                </div>
+                <div class="k-race-lap" title="Позиция">
+                    <div class="k-race-cell k-table-header-col__cell k-race-cell_average">P</div>
+                    <div class="k-race-cell k-race-cell_{{ $index+1 }} k-race-cell_average" ng-repeat="driver in race.drivers track by $index">
+                        {{:: driver.pos }}
                     </div>
                 </div>
             </div>

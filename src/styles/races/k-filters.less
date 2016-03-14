@@ -1,0 +1,63 @@
+.k-filters__table
+{
+    .display-table;
+    table-layout: fixed;
+    margin: @margin_normal 0 @margin_small 0;
+}
+
+.k-filters__col
+{
+    display: table-cell;
+    width: 50%;
+}
+
+.k-filters
+{
+    margin: 0;
+}
+
+.k-filter__header
+{
+    font-size: 0.9em;
+    margin: 0 0 0 0;
+    color: @color_2;
+    font-weight: 300;
+
+}
+
+.k-filter
+{
+    border-bottom: 2px solid @color_4;
+    display: inline-block;
+    text-align: center;
+
+    font-size: @fs_big;
+    line-height: @fs_big * 0.9;
+
+    margin-right: @margin_small;
+
+    font-weight: 300;
+    cursor: pointer;
+}
+
+.k-filter_active
+{
+    border-bottom: 2px solid @color_6 !important;
+}
+
+@media screen and (max-width: 400px),(max-device-width:400px){
+
+    .k-filters
+    {
+        margin: @margin_normal 0 @margin_normal @margin_small;
+    }
+
+    .k-filter
+    {
+        border-bottom: 4px solid @color_4;
+
+        font-size: 2em;
+        line-height: 0.8em;
+        margin-right: 1em;
+    }
+}

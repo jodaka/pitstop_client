@@ -5,10 +5,17 @@ function raceFactory( AppConfig, getRace ) {
         var link = function ( $scope, $element ) {
 
             $scope.clubsIds = {};
+            $scope.clubsNames = {};
 
             for ( var cl in AppConfig.clubs ) {
                 if ( AppConfig.clubs.hasOwnProperty( cl ) ) {
                     $scope.clubsIds[ AppConfig.clubs[ cl ] ] = cl;
+                }
+            }
+
+            for ( cl in AppConfig.clubsEn ) {
+                if ( AppConfig.clubsEn.hasOwnProperty( cl ) ) {
+                    $scope.clubsNames[ AppConfig.clubsEn[ cl ] ] = cl;
                 }
             }
 
@@ -23,6 +30,7 @@ function raceFactory( AppConfig, getRace ) {
                 .then( function ( data ) {
 
                     data.basic.best = data.basic.best / 1000;
+                    data.basic.dateShort = new Date( data.basic.date ).toISOString().slice( 0, 10 );
 
                     var labels = new Array( data.laps.length );
                     for ( var i = 0; i < data.laps.length; i++ ) {
@@ -54,8 +62,10 @@ function raceFactory( AppConfig, getRace ) {
 
                                 if ( value !== null ) {
                                     data.laps[ i ][ d ].time = round( value );
-                                }
 
+                                    // pos
+                                    data.drivers[ d ].pos = data.laps[ i ][ d ].pos;
+                                }
                                 serie.push( value );
                             }
 
