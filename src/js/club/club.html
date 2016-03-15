@@ -1,40 +1,52 @@
 <div class="k-page k-page_club">
 
-    <h2 class="k-header">Статистика по клубу</h2>
+    <nav-header data-section="club"></nav-header>
 
-    <div class="k-clubs k-clubs_club">
-        <label class="k-club-select"
-            ng-repeat="(key,value) in clubs track by $index"
-            ng-class="{ 'k-club-select_active' : clubId == value }"
-            ng-click="changeClub(value)">
-            {{:: key}}
-        </label>
-    </div>
+    <div class="k-filters__table">
+        <div class="k-filters__col">
 
-    <h3 class="k-header">Лучшие карты за период</h3>
+            <h3 class="k-filter__header">Фильтр по клубам</h3>
 
-    <div class="k-periods">
+            <div class="k-filters k-filters_clubs">
+                <label class="k-filter k-filter__club" ng-class="{ 'k-filter__club_active' : clubId == value}" ng-repeat="(key,value) in clubs track by $index" ng-click="changeClub(value)">
+                    {{:: key}}
+                </label>
+            </div>
+        </div>
 
-        <label class="k-period"
-            ng-click="setPeriod('month')"
-            ng-class="{'k-period_active': isActive('month')}">
-            Месяц
-        </label>
-        <label class="k-period"
-            ng-click="setPeriod('week')"
-            ng-class="{'k-period_active': isActive('week')}">
-            Неделя
-        </label>
-        <label class="k-period"
-            ng-click="setPeriod(today)"
-            ng-class="{'k-period_active': isActive(today)}">
-            Сегодня
-        </label>
-        <label class="k-period"
-            ng-click="setPeriod(yesterday)"
-            ng-class="{'k-period_active': isActive(yesterday)}">
-            Вчера
-        </label>
+        <div class="k-filters__col">
+
+            <h3 class="k-filter__header">Фильтр по периоду</h3>
+            <div class="k-filters k-periods">
+
+                <label class="k-filter k-period"
+                    ng-click="setPeriod('month')"
+                    ng-class="{'k-period_active': isActive('month')}">
+                    Месяц
+                </label>
+                <label class="k-filter k-period"
+                    ng-click="setPeriod('week')"
+                    ng-class="{'k-period_active': isActive('week')}">
+                    Неделя
+                </label>
+                <label class="k-filter k-period"
+                    ng-click="setPeriod(today)"
+                    ng-class="{'k-period_active': isActive(today)}">
+                    Сегодня
+                </label>
+                <label class="k-filter k-period"
+                    ng-click="setPeriod(yesterday)"
+                    ng-class="{'k-period_active': isActive(yesterday)}">
+                    Вчера
+                </label>
+
+                <!-- <label class="k-filter k-period"
+            ng-click="setPeriod('other')"
+            ng-class="{'k-period_active': periodIsActive('other')}">
+            Другой день
+        </label> -->
+            </div>
+        </div>
     </div>
 
     <club data-club-id="clubId" data-period="period"></club>

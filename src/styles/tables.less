@@ -9,17 +9,47 @@
     background-color: @color_2;
     color: @color_5;
     display: table-cell;
+
+}
+
+.k-table-header-col__cell {
     text-align: center;
 }
 
 .k-table-header__cell
 {
-    height: 50px;
-    line-height: 25px;
+
+    height: 4em;
+    line-height: 4em;
     font-weight: bold;
 
     .k-link
     {
         color: @color_5;
     }
+}
+
+.k-table
+{
+    .display-table;
+}
+
+.k-table-row
+{
+    display: table-row;
+}
+
+.k-table-header__cell,
+.k-table-cell
+{
+    padding: 0 @margin_normal/2 0 @margin_normal;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.k-table-cell
+{
+    display: table-cell;
+    line-height: 3em;
 }

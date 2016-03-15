@@ -4,7 +4,6 @@
 }
 
 .k-races-list {
-    .display-table;
     table-layout: fixed;
 }
 
@@ -30,28 +29,13 @@
 }
 
 .k-races-list__race {
-    .display-row;
-}
-
-.k-races-list__race_header {
-    font-weight: bold;
-
-    .k-race__cell {
-        background-color: @color_2;
-        line-height: 50px;
-        color: @color_5;
-    }
-}
-
-
-.k-races-list__race {
     background-color: @color_4;
 }
 
 .k-races-list__race:hover {
     transition: all 0.35s linear;
 
-    .k-race__cell {
+    .k-table-cell {
         transition: background 0.35s linear;
         background-color: lighten(@color_1, 10%);
         color: @color_3;
@@ -62,13 +46,9 @@
     background-color: @color_5;
 }
 
-.k-race__cell {
-    white-space: nowrap;
-    line-height: 3em;
-    padding: 0 @margin_normal/2 0 @margin_normal;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
+// .k-race__cell {
+
+// }
 
 .k-races-list_single-club
 {

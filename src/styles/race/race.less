@@ -1,14 +1,3 @@
-
-.k-kart-logo {
-    display: table-cell;
-    vertical-align: top;
-}
-
-.k-race-drivers,
-.k-race-data__row {
-    .display-row;
-}
-
 .k-race-data__cell {
     vertical-align: top;
 }
@@ -21,80 +10,48 @@
     width: 19%;
 }
 
-.k-race-laps {
-    .display-table;
-    margin: 0 auto;
-    table-layout: fixed;
-    width: 100%;
-}
-
-.k-race-basic {
-    padding: @margin_micro*4;
-    margin: @margin_small 0;
-    width: 100%;
-    color: @color_3;
-    background-color: @color_5;
-    border: 1px solid @color_4;
-    border-radius: 2px;
-}
-
-.k-race-basic__label {
-    color: @color_3;
-    margin: @margin_micro 0;
-}
-
-.k-race-basic__value {
-    font-weight: bold;
-}
-
-.k-race-data {
-    .display-table;
-    table-layout: fixed;
-}
-
-
 .k-race-driver {
     width: 13.5%;
 }
 
-.k-race-laps__drivers1 .k-race-driver
+.k-race-laps__drivers1 .k-race-header
 {
     width: 95%;
 }
 
-.k-race-laps__drivers2 .k-race-driver
+.k-race-laps__drivers2 .k-race-header
 {
     width: 45%;
 }
-.k-race-laps__drivers3 .k-race-driver
+.k-race-laps__drivers3 .k-race-header
 {
     width: 31.5%;
 }
-.k-race-laps__drivers4 .k-race-driver
+.k-race-laps__drivers4 .k-race-header
 {
     width: 23.5%;
 }
-.k-race-laps__drivers5 .k-race-driver
+.k-race-laps__drivers5 .k-race-header
 {
     width: 19%;
 }
-.k-race-laps__drivers6 .k-race-driver
+.k-race-laps__drivers6 .k-race-header
 {
     width: 15.8%;
 }
-.k-race-laps__drivers7 .k-race-driver
+.k-race-laps__drivers7 .k-race-header
 {
     width: 13.5%;
 }
-.k-race-laps__drivers8 .k-race-driver
+.k-race-laps__drivers8 .k-race-header
 {
     width: 11.8%;
 }
-.k-race-laps__drivers9 .k-race-driver
+.k-race-laps__drivers9 .k-race-header
 {
     width: 10.5%;
 }
-.k-race-laps__drivers10 .k-race-driver
+.k-race-laps__drivers10 .k-race-header
 {
     width: 9.5%;
 }
@@ -103,12 +60,39 @@
     font-weight: normal;
 }
 
+.k-race-header,
+.k-race-header_col
+{
+    height: 2em;
+    line-height: 2em;
+
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+
 .k-race-lap {
-    .display-row;
+
+    .k-table-header-col__cell
+    {
+        width: 5%;
+    }
+
+    .k-table-cell {
+        line-height: 2.2em;
+        text-align: center;
+        padding: 0;
+    }
+
+    .k-race-cell_average {
+        border-top: 25px solid @color_1;
+        line-height: 4em;
+    }
 
     transition: all 0.35s linear;
     &:hover {
-        .k-race-cell {
+
+        .k-table-cell {
             transition: background 0.35s linear;
             background-color: lighten(@color_1, 10%);
             color: @color_3;
@@ -116,27 +100,8 @@
     }
 }
 
-.k-race-cell {
-    text-align: center;
-    border-collapse: collapse;
-    padding: @margin_micro @margin_small;
-    line-height: 1.2em;
-    // width:
-}
-
-.k-race-cell_best {
-    // font-weight: bold;
-    // color: @color_1;
-    // text-shadow: 0 0 2px @color_3;
-}
-
 .k-race-chart {
     margin-top: @margin_big;
-}
-
-.k-race-cell_average {
-    border-top: 25px solid @color_1;
-    line-height: 40px;
 }
 
 .k-race-cell_1,

@@ -13,12 +13,17 @@ function clubFactory( AppConfig, getClub ) {
                 getClub( $scope.clubId, $scope.period )
                     .then( function ( data ) {
 
-                        for ( var z = 0; z < data.length; z++ ) {
-                            data[ z ].best = ( data[ z ].best / 1000 ).toFixed( 3 );
+                        for ( var z = 0; z < data.pilots.length; z++ ) {
+                            data.pilots[ z ].best = ( data.pilots[ z ].best / 1000 ).toFixed( 3 );
                         }
 
+                        for ( z = 0; z < data.karts.length; z++ ) {
+                            data.karts[ z ].best = ( data.karts[ z ].best / 1000 ).toFixed( 3 );
+                        }
+
+                        $scope.karts = data.karts;
+                        $scope.pilots = data.pilots;
                         $scope.loading = false;
-                        $scope.karts = data;
                     } )
                     .catch( function ( err ) {
                         $scope.loading = false;
