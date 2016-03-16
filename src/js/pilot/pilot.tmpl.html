@@ -1,51 +1,46 @@
 <div class="k-page k-page_pilot">
 
-    <h2 class="k-header">Статистика по пилоту {{:: name }}</h2>
+    <nav-header data-section="club"></nav-header>
 
-    <div class="k-driver__wrapper">
-        <div class="k-driver__stats">
+    <h3 class="k-header">Статистика по пилоту {{:: name }}</h3>
 
-            <div class="k-driver-club">
-                <div class="k-driver-club__row k-driver-club__header">
-                    <div class="k-driver-club__cell k-driver-club__cell_name"></div>
-                    <div class="k-driver-club__cell k-driver-club__cell_date">Количество гонок</div>
-                    <div class="k-driver-club__cell k-driver-club__cell_winner">Лучшее время</div>
-                </div>
-
-                <div class="k-driver-club__row" ng-repeat="(key,value) in clubStats track by $index">
-                    <div class="k-driver-club__cell k-driver-club__header ">{{:: clubsIds[key]}}</div>
-                    <div class="k-driver-club__cell">{{:: value.count}}</div>
-                    <div class="k-driver-club__cell">{{:: value.best}}</div>
-                </div>
-            </div>
-
+    <div class="k-table k-driver__stats">
+        <div class="k-table-header">
+            <div class="k-table-header__cell k-driver-club__cell_name"></div>
+            <div class="k-table-header__cell k-driver-club__cell_date">Количество гонок</div>
+            <div class="k-table-header__cell k-driver-club__cell_winner">Лучшее время</div>
+        </div>
+        <div class="k-table-row k-table-row_zebra" ng-repeat="(key,value) in clubStats track by $index">
+            <div class="k-table-cell k-driver-club__header ">{{:: clubsIds[key]}}</div>
+            <div class="k-table-cell">{{:: value.count}}</div>
+            <div class="k-table-cell">{{:: value.best}}</div>
         </div>
     </div>
 
     <h3 class="k-header">Заезды с участием пилота</h3>
 
-    <div class="k-races-list">
-        <div class="k-races-list__race k-races-list__race_header" ng-class="{ 'k-races-list_single-club': selectedClubs.length === 1}">
-            <div class="k-race__cell k-pilot__cell_name">Заезд</div>
-            <div class="k-race__cell k-pilot__cell_club">Клуб</div>
-            <div class="k-race__cell k-pilot__cell_date">Дата</div>
-            <div class="k-race__cell k-pilot__cell_kart">Карт</div>
-            <div class="k-race__cell k-pilot__cell_pos">Позиция</div>
-            <div class="k-race__cell k-pilot__cell_best">Лучшее</div>
-            <div class="k-race__cell k-pilot__cell_avg">Среднее</div>
+    <div class="k-table">
+        <div class="k-table-header">
+            <div class="k-table-header__cell k-pilot__cell_name">Заезд</div>
+            <div class="k-table-header__cell k-pilot__cell_club">Клуб</div>
+            <div class="k-table-header__cell k-pilot__cell_date">Дата</div>
+            <div class="k-table-header__cell k-pilot__cell_kart">Карт</div>
+            <div class="k-table-header__cell k-pilot__cell_pos">Позиция</div>
+            <div class="k-table-header__cell k-pilot__cell_best">Лучшее</div>
+            <div class="k-table-header__cell k-pilot__cell_avg">Среднее</div>
         </div>
 
-        <div class="k-races-list__race" ng-repeat="race in races track by $index" ng-class="{ 'k-races-list_single-club': selectedClubs.length === 1}">
-            <div class="k-race__cell k-pilot__cell_name">
+        <div class="k-table-row k-table-row_zebra" ng-repeat="race in races track by $index">
+            <div class="k-table-cell k-pilot__cell_name">
                 <a class="k-link" href="/#/race/{{race.id}}">{{:: race.name }}</a>
             </div>
 
-            <div class="k-race__cell k-pilot__cell_club">{{:: clubsIds[ race.clubid ] }}</div>
-            <div class="k-race__cell k-pilot__cell_date">{{:: race.date | raceDate }}</div>
-            <div class="k-race__cell k-pilot__cell_kart">{{:: race.kart }}</div>
-            <div class="k-race__cell k-pilot__cell_pos">{{:: race.pos }}</div>
-            <div class="k-race__cell k-pilot__cell_best">{{:: race.best }}</div>
-            <div class="k-race__cell k-pilot__cell_avg">{{:: race.average }}</div>
+            <div class="k-table-cell k-pilot__cell_club">{{:: clubsIds[ race.clubid ] }}</div>
+            <div class="k-table-cell k-pilot__cell_date">{{:: race.date | raceDate }}</div>
+            <div class="k-table-cell k-pilot__cell_kart">{{:: race.kart }}</div>
+            <div class="k-table-cell k-pilot__cell_pos">{{:: race.pos }}</div>
+            <div class="k-table-cell k-pilot__cell_best">{{:: race.best }}</div>
+            <div class="k-table-cell k-pilot__cell_avg">{{:: race.average }}</div>
         </div>
     </div>
 

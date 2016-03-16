@@ -28,27 +28,19 @@
     width: 10%;
 }
 
-.k-races-list__race {
-    background-color: @color_4;
-}
+.k-races-list {
 
-.k-races-list__race:hover {
-    transition: all 0.35s linear;
+    .k-table-row_zebra:hover {
+        transition: all 0.35s linear;
 
-    .k-table-cell {
-        transition: background 0.35s linear;
-        background-color: lighten(@color_1, 10%);
-        color: @color_3;
+        .k-table-cell {
+            transition: background 0.35s linear;
+            background-color: lighten(@color_1, 10%);
+            color: @color_3;
+        }
     }
+
 }
-
-.k-races-list__race:nth-child(even) {
-    background-color: @color_5;
-}
-
-// .k-race__cell {
-
-// }
 
 .k-races-list_single-club
 {
