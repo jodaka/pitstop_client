@@ -15,7 +15,7 @@
                     <div class="k-table-header__cell">Лучшее время</div>
                 </div>
 
-                <div class="k-table-row k-club-stat__row" ng-repeat="data in karts track by $index">
+                <div class="k-table-row k-table-row_zebra" ng-repeat="data in karts track by $index">
                     <div class="k-table-cell">
                         {{:: $index+1 }}
                     </div>
@@ -25,7 +25,6 @@
                     <div class="k-table-cell">{{:: data.best }}</div>
                 </div>
             </div>
-
         </div>
 
         <div class="k-table-cell k-club-stat__pilots_holder">
@@ -40,7 +39,7 @@
                     <div class="k-table-header__cell">Заезд</div>
                 </div>
 
-                <div class="k-table-row k-club-stat__row" ng-repeat="data in pilots track by $index">
+                <div class="k-table-row k-table-row_zebra" ng-repeat="data in pilots track by $index">
                     <div class="k-table-cell">
                         {{:: $index+1 }}
                     </div>

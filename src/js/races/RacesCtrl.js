@@ -1,18 +1,10 @@
 /*global localStorage*/
 angular.module( 'k.controllers' ).controller( 'RacesCtrl', [
-'AppConfig', '$scope', '$routeParams', '$location',
-function RaceCtrlFactory( AppConfig, $scope, $routeParams, $location ) {
+'clubsDict', '$scope', '$routeParams', '$location',
+function RaceCtrlFactory( clubsDict, $scope, $routeParams, $location ) {
         'use strict';
 
-        $scope.clubs = AppConfig.clubs;
-        $scope.clubsIds = {};
-        // $scope.clubsNames = {};
-
-        for ( var cl in AppConfig.clubsEn ) {
-            if ( AppConfig.clubsEn.hasOwnProperty( cl ) ) {
-                $scope.clubsIds[ AppConfig.clubsEn[ cl ] ] = cl;
-            }
-        }
+        $scope.clubs = clubsDict.getTitles();
 
         $scope.setPeriod = function ( period ) {
 
@@ -37,16 +29,6 @@ function RaceCtrlFactory( AppConfig, $scope, $routeParams, $location ) {
             return false;
         };
 
-        $scope.selectClub = function ( id ) {
-            var idx = $scope.selectedClubs.indexOf( id );
-            if ( idx > -1 ) {
-                $scope.selectedClubs.splice( idx, 1 );
-            } else {
-                $scope.selectedClubs.push( id );
-            }
-            saveUrlParams();
-        };
-
         $scope.changePage = function ( page ) {
             if ( page && page !== $scope.page ) {
                 $scope.page = page;
@@ -55,16 +37,8 @@ function RaceCtrlFactory( AppConfig, $scope, $routeParams, $location ) {
         };
 
         var saveUrlParams = function () {
-
-            localStorage.setItem( 'selectedClubs', JSON.stringify( $scope.selectedClubs ) );
-            var clubs = [];
-
-            for ( var i = 0; i < $scope.selectedClubs.length; i++ ) {
-                clubs.push( $scope.clubsIds[ $scope.selectedClubs[ i ] ] );
-            }
-
             var period = ( $scope.date === null ) ? $scope.page : $scope.date;
-            $location.path( '/races/' + clubs.join( ',' ) + '/' + $scope.period + '/' + period );
+            $location.path( '/races/' + $scope.clubName + '/' + $scope.period + '/' + period );
         };
 
         var redirectToDefault = function () {
@@ -73,18 +47,8 @@ function RaceCtrlFactory( AppConfig, $scope, $routeParams, $location ) {
             $scope.date = null;
             $scope.period = 'all';
 
-            var savedClubsList = localStorage.getItem( 'selectedClubs' );
-            if ( savedClubsList ) {
-                try {
-                    $scope.selectedClubs = JSON.parse( savedClubsList );
-                } catch ( e ) {
-                    $scope.selectedClubs = [ '586', '686', '786' ];
-                }
-            } else {
-                if ( ! $scope.selectedClubs ) {
-                    $scope.selectedClubs = [ '586', '686', '786' ];
-                }
-            }
+            $scope.clubName = 'pulkovo';
+            $scope.clubId = clubsDict.getIdByName( $scope.clubName );
             saveUrlParams();
         };
 
@@ -127,20 +91,16 @@ function RaceCtrlFactory( AppConfig, $scope, $routeParams, $location ) {
         $scope.date = date;
         $scope.page = page;
 
-        $scope.selectedClubs = [];
-        var clubsParam = $routeParams.clubs;
-        if ( !clubsParam ) {
+        $scope.clubName = $routeParams.club;
+        if ( $scope.clubName ) {
+            $scope.clubName = $scope.clubName.toLowerCase();
+        }
+
+        $scope.selectedClub = clubsDict.getIdByName( $scope.clubName );
+
+        if ( !$scope.selectedClub ) {
             redirectToDefault();
             return;
         }
-
-        clubsParam = clubsParam.split( ',' );
-        for ( var i = 0; i < clubsParam.length; i++ ) {
-            if ( AppConfig.clubsEn.hasOwnProperty( clubsParam[ i ] ) ) {
-                $scope.selectedClubs.push( String( AppConfig.clubsEn[ clubsParam[ i ] ] ) );
-            }
-        }
-
-        console.log( 5555, $scope.selectedClubs );
 
 } ] );

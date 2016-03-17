@@ -4,7 +4,7 @@ function ClubCtrlFactory( AppConfig, $scope, $routeParams, $location ) {
 
         $scope.clubs = AppConfig.clubs;
 
-        $scope.clubName = $routeParams.id;
+        $scope.clubName = $routeParams.club;
         if ( $scope.clubName ) {
             $scope.clubName = $scope.clubName.toLowerCase();
         }

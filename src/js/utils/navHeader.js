@@ -1,24 +1,45 @@
 angular.module( 'k.directives' ).directive( 'navHeader', [
-'AppConfig',
-function navHeaderFactory( AppConfig ) {
+'clubsDict', '$routeParams', '$location', '$rootScope',
+function navHeaderFactory( clubsDict, $routeParams, $location, $rootScope ) {
 
         var link = function ( $scope ) {
 
-            console.log( 'header', $scope );
+            $scope.clubs = clubsDict.getTitles();
+            $scope.clubName = $routeParams.club;
 
-            $scope.history = [];
+            if ( $scope.clubName ) {
+                $scope.clubName = $scope.clubName.toLowerCase();
+            }
 
-            switch ($scope.section) {
-                case 'race':
-                    $scope.history.push({
-                        'link': '/#/races',
-                        'text': 'back to list'
-                    });
-                    break;
-                default:
+            $scope.clubId = clubsDict.getIdByName( $scope.clubName );
+
+            var currentPath = $location.path();
+
+            $scope.getLinkPath = function( id ) {
+                var name = clubsDict.getNameById( id );
+                if ($scope.section === 'races' || $scope.section === 'club') {
+                    var re = new RegExp( $scope.clubName );
+                    return '/#' + currentPath.replace( re, name );
+                } else {
+                    return '/#/races/' + name + '/all/1';
+                }
             };
 
+            $scope.gimmeBackLink = function() {
+                return $rootScope.previousPage;
+            };
 
+            $scope.icanhas = function( chzbrgr ) {
+                switch (chzbrgr) {
+                    case 'dataFilter':
+                        return ( $scope.section === 'races' || $scope.section === 'club' );
+                        break;
+                    case 'back':
+                        return ( $rootScope.previousPage && ( $scope.section === 'pilot' || $scope.section === 'race' ));
+                    default:
+                        return false;
+                }
+            };
         };
 
         return {

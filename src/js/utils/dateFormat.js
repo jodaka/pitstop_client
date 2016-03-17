@@ -9,14 +9,9 @@ function raceDateFactory() {
             if ( !d ) {
                 return;
             }
-            console.log(d);
 
             d = d.replace( 'Z', '+03:00' );
-            console.log(d);
-
             d = new Date( d );
-
-            console.log(d);
 
             if ( d instanceof Date ) {
 

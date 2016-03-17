@@ -42,7 +42,7 @@
                         templateUrl: 'partials/race/race.html',
                         controller: 'RaceCtrl'
                     } )
-                    .when( '/races/:clubs?/:period?/:page?', {
+                    .when( '/races/:club?/:period?/:page?', {
                         templateUrl: 'partials/races/races.html',
                         controller: 'RacesCtrl'
                     } )
@@ -50,7 +50,7 @@
                         templateUrl: 'partials/pilot/pilot.html',
                         controller: 'PilotCtrl'
                     } )
-                    .when( '/club/:id?/:period?', {
+                    .when( '/club/:club?/:period?', {
                         templateUrl: 'partials/club/club.html',
                         controller: 'ClubCtrl'
                     } )
@@ -63,9 +63,19 @@
             $compileProvider.debugInfoEnabled( false );
         } ] );
 
+        app.run( [ '$rootScope', function ( $rootScope ) {
+            $rootScope.$on( '$locationChangeSuccess', function (scope, newState, oldState) {
+                if ( newState !== oldState ) {
+                    $rootScope.previousPage = oldState;
+                }
+            } );
+        } ] );
+
         angular.bootstrap( node, [ 'k' ], {
             strictDi: true
         } );
+
+
     };
 
     d.addEventListener( 'DOMContentLoaded', initApplication );

@@ -1,14 +1,31 @@
-<div class="k-nav-header">
-    <div class="k-nav-section">
-        <a href="/#/races/">Все заезды</a>
-    </div>
-    <div class="k-nav-section">
-        <a href="/#/club/pulkovo">Клубы</a>
+<div class="k-filters__table">
+
+    <div class="k-filters__col">
+        <div class="k-filters k-filters_clubs">
+            <label class="k-filter k-filter__club" ng-class="{ 'k-filter__club_active' : clubId == value}" ng-repeat="(key,value) in clubs track by $index">
+                <a class="k-link_filter" href="{{:: getLinkPath(value) }}">{{:: key}}</a>
+            </label>
         </div>
-    <div class="k-nav-section">
-        <a href="/#">Пилоты</a>
     </div>
-    <div class="k-nav-section">
-        <input class="k-nav__search" type="text" placeholder="Поиск">
+</div>
+
+<h3 class="k-header" ng-show="icanhas('back')">
+    <a class="k-link" href="{{:: gimmeBackLink()}}">← Назад </a>
+</h3>
+
+
+<div class="k-filters__table" ng-show="icanhas('dataFilter')">
+    <div class="k-filters__col">
+
+        <h3 class="k-filter__header">Фильтр по данным</h3>
+        <label class="k-filter k-period k-period_active" ng-if="section=='races'">Данные по заездам</label>
+        <label class="k-filter k-period" ng-if="section!='races'">
+            <a href="/#/races/{{::clubName}}/all/1" class="k-link_filter">Данные по заездам</a>
+        </label>
+
+        <label class="k-filter k-period k-period_active" ng-if="section=='club'">Лучшие результаты</label>
+        <label class="k-filter k-period" ng-if="section!='club'">
+            <a href="/#/club/{{::clubName}}/" class="k-link_filter">Лучшие результаты</a>
+        </label>
     </div>
 </div>
