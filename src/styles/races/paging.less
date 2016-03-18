@@ -8,18 +8,22 @@
     display: inline-block;
     line-height: 40px;
     text-align: center;
-    background-color: @color_3;
+    background-color: @color_5;
     margin-right: 5px;
-    color: @color_1;
+    color: @color_3;
 
     &:hover {
         cursor: pointer;
         background-color: @color_2;
-        color: @color_3;
+        color: @color_4;
     }
 }
 
 .k-paging__page_selected {
-    background-color: @color_4;
-    color: @color_3;
+    background-color: @color_2;
+    color: @color_1;
+    &:hover {
+        cursor: default;
+        color: @color_1;
+    }
 }
