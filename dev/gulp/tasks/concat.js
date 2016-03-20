@@ -76,7 +76,7 @@ gulp.task( 'js-deps-concat', function () {
     var paths = [
         config.paths.bower + '/angularjs/angular.js',
         config.paths.bower + '/angular-route/angular-route.js',
-        config.paths.bower + '/Chart.js/Chart.js'
+        // config.paths.bower + '/Chart.js/Chart.js'
         //config.paths.bower + '/angular-animate/angular-animate.js',
     ];
 
