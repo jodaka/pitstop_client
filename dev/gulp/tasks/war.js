@@ -1,14 +1,17 @@
 /*global require*/
-var gulp = require( 'gulp' );
-var uglify = require( 'gulp-uglify' );
-var config = require( '../config' );
-var del = require( 'del' );
-var runSequence = require( 'run-sequence' );
-var moreLess = require( 'gulp-more-less' );
-var replace = require( 'gulp-replace' );
-var concat = require( 'gulp-concat' );
+let gulp = require( 'gulp' );
+let uglify = require( 'gulp-uglify' );
+let config = require( '../config' );
+let del = require( 'del' );
+let runSequence = require( 'run-sequence' );
+let moreLess = require( 'gulp-more-less' );
+let replace = require( 'gulp-replace' );
 
-gulp.task( 'build:copy-app', [ 'copy' ], function () {
+let handleErrors = ( err ) => {
+    console.error( err );
+};
+
+gulp.task( 'build:copy-app', [ 'copy' ], () => {
 
     return gulp.src( config.paths.www_site + '/**/*', {
             base: './app/'
@@ -17,9 +20,9 @@ gulp.task( 'build:copy-app', [ 'copy' ], function () {
 
 } );
 
-gulp.task( 'build:includesVersion', function () {
+gulp.task( 'build:includesVersion', () => {
 
-    var ver = Date.now();
+    let ver = Date.now();
 
     gulp.src( [ config.paths.peace + '/index.html' ] )
         .pipe( replace( /_version_/g, 'ver=' + ver ) )
@@ -27,7 +30,7 @@ gulp.task( 'build:includesVersion', function () {
 } );
 
 
-gulp.task( 'build:turnOffDebug', function () {
+gulp.task( 'build:turnOffDebug', () => {
 
     gulp.src( [ config.paths.peace + '/js/main.js' ] )
         .pipe( replace( /(.DEBUG.)\s*:\s*true/, '$1:false' ) )
@@ -35,16 +38,15 @@ gulp.task( 'build:turnOffDebug', function () {
 
 } );
 
-gulp.task( 'build:clean-app', function ( cb ) {
-    del( [ config.paths.www_site ] ).then( function () {
-        cb();
-    } );
+gulp.task( 'build:clean-app', () => {
+    return del( [ config.paths.www_site ] );
 } );
 
 
-gulp.task( 'build:copy', [ 'build:clean-app' ], function ( cb ) {
+gulp.task( 'build:copy', ( cb ) => {
 
     runSequence(
+        'build:clean-app',
         'build:copy-app',
         'build:turnOffDebug',
         'build:includesVersion',
@@ -52,13 +54,9 @@ gulp.task( 'build:copy', [ 'build:clean-app' ], function ( cb ) {
 
 } );
 
-var handleErrors = function ( err ) {
-    console.error( err );
-};
+gulp.task( 'build:minify-js', [ 'build:copy' ], () => {
 
-gulp.task( 'build:minify-js', [ 'build:copy' ], function () {
-
-    var paths = [
+    let paths = [
         config.paths.peace + '/js/*.js',
     ];
 
@@ -68,10 +66,9 @@ gulp.task( 'build:minify-js', [ 'build:copy' ], function () {
 
 } );
 
+gulp.task( 'build:minify-css', [ 'build:copy' ], () => {
 
-gulp.task( 'build:minify-css', [ 'build:copy' ], function () {
-
-    var paths = [
+    let paths = [
         config.paths.peace + '/css/*.css',
     ];
 
@@ -81,31 +78,8 @@ gulp.task( 'build:minify-css', [ 'build:copy' ], function () {
             'less': false
         } ) )
         .pipe( gulp.dest( config.paths.peace + '/css/' ) );
-
 } );
-
 
 gulp.task( 'build:minify', [ 'build:minify-css', 'build:minify-js' ] );
 
-gulp.task( 'build:concat-polyfills', [ 'build:minify' ], function () {
-
-    // put all polyfills here
-    var paths = [
-            config.paths.peace + '/js/bootstrap.js'
-        ];
-
-    return gulp.src( paths )
-        .pipe( concat( 'bootstrap.js' ) )
-        .pipe( gulp.dest( config.paths.peace + '/js/' ) );
-
-} );
-
-
-gulp.task( 'build:clean', [ 'build:concat-polyfills' ], function ( cb ) {
-
-    // setTimeout( function () {
-    //     del( [ config.paths.peace ], cb );
-    // }, 100 );
-} );
-
-gulp.task( 'build', [ 'build:clean' ] );
+gulp.task( 'build', [ 'build:minify' ] );

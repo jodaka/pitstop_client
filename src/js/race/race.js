@@ -55,7 +55,7 @@ function raceFactory( clubsDict, getRace ) {
                                 if ( lapCounter === 0 ) {
                                     driverData.average = driverData.average.toFixed( 3 );
                                     kartChanges[ 0 ][ driverId ] = driverData.kart;
-                                    driverData.kart = lapData[ driverId ].k;
+                                    driverData.kart = lapData[ driverId ] && lapData[ driverId ].k || null;
                                     driverData.kartChanges = 0;
                                     driverData.lapsFinished = 0;
 
@@ -98,8 +98,6 @@ function raceFactory( clubsDict, getRace ) {
                         }
                     }
 
-                    console.log( posChanges, kartChanges, data.laps );
-
                     $scope.posChanges = posChanges;
                     $scope.startKarts = kartChanges[ 0 ];
                     delete kartChanges[ 0 ];
@@ -109,7 +107,6 @@ function raceFactory( clubsDict, getRace ) {
                     $scope.driversCount = Object.keys( data.drivers ).length;
                     $scope.changesCount = Object.keys( kartChanges ).length;
 
-                    /*global Chart */
                     // var ctx = $element[ 0 ].querySelector( '.k-race-chart' ).getContext( '2d' );
                     //
                     // var myChart = new Chart( ctx, {
@@ -134,6 +131,6 @@ function raceFactory( clubsDict, getRace ) {
             scope: {
                 raceId: '='
             },
-            templateUrl: 'race/race'
+            templateUrl: 'partials/race/race.tmpl.html'
         };
 } ] );

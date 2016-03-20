@@ -2,11 +2,11 @@
  * Serve the site with live reload
  **/
 
-var gulp = require( 'gulp' );
-var browserSync = require( 'browser-sync' );
-var config = require( '../config' );
+let gulp = require( 'gulp' );
+let browserSync = require( 'browser-sync' );
+let config = require( '../config' );
 
-gulp.task( 'serve', [ 'copy' ], function () {
+gulp.task( 'serve', [ 'copy' ], () => {
 
     browserSync.init( {
         server: {

@@ -42,6 +42,6 @@ function clubFactory( AppConfig, getClub ) {
                 clubId: '=',
                 period: '='
             },
-            templateUrl: 'club/club'
+            templateUrl: 'partials/club/club.tmpl.html'
         };
 } ] );

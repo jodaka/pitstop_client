@@ -2,13 +2,11 @@ var gulp = require( 'gulp' );
 var config = require( '../config' );
 var del = require( 'del' );
 
-gulp.task( 'clean', function ( cb ) {
+gulp.task( 'clean', () => {
 
-    var paths = [
+    return del( [
         config.paths.build,
         config.paths.www_site
-    ];
-
-    del( paths, cb );
+    ] );
 
 } );

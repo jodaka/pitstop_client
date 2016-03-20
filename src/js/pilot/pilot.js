@@ -74,6 +74,6 @@ function racesFactory( AppConfig, getPilot ) {
                 pilotId: '=',
                 page: '='
             },
-            templateUrl: 'pilot/pilot'
+            templateUrl: 'partials/pilot/pilot.tmpl.html'
         };
 } ] );

@@ -79,6 +79,6 @@ function racesFactory( getRaces, AppConfig ) {
                 selectedClubs: '=',
                 changePage: '&'
             },
-            templateUrl: 'races/races'
+            templateUrl: 'partials/races/races.tmpl.html'
         };
 } ] );
