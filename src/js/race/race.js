@@ -22,81 +22,103 @@ function raceFactory( clubsDict, getRace ) {
                     data.basic.best = data.basic.best / 1000;
                     data.basic.dateShort = new Date( data.basic.date ).toISOString().slice( 0, 10 );
 
+                    // var series = [];
+                    // var colors = [
+                    //     'rgba(172, 207, 204, 0.8)',
+                    //     'rgba(184, 174, 156, 0.8)',
+                    //     'rgba(255, 255, 255, 0.8)',
+                    //     'rgba(138, 9, 23, 0.8)',
+                    //     'rgba(41, 217, 194, 0.8)',
+                    //     'rgba(255, 255, 166, 0.8)',
+                    //     'rgba(174, 238, 0, 0.8)',
+                    //     'rgba(89, 82, 65, 0.8)',
+                    //     'rgba(255, 53, 139, 0.8)'
+                    // ];
+
                     var kartChanges = {};
-
-                    var labels = new Array( data.laps.length );
-                    for ( var i = 0; i < data.laps.length; i++ ) {
-                        labels[ i ] = i + 1;
-                    }
-
-                    var series = [];
-                    var colors = [
-                        'rgba(172, 207, 204, 0.8)',
-                        'rgba(184, 174, 156, 0.8)',
-                        'rgba(255, 255, 255, 0.8)',
-                        'rgba(138, 9, 23, 0.8)',
-                        'rgba(41, 217, 194, 0.8)',
-                        'rgba(255, 255, 166, 0.8)',
-                        'rgba(174, 238, 0, 0.8)',
-                        'rgba(89, 82, 65, 0.8)',
-                        'rgba(255, 53, 139, 0.8)'
-                    ];
-
+                    var posChanges = {};
                     kartChanges[ 0 ] = {};
-                    for ( var d in data.drivers ) {
+                    posChanges[ 0 ] = {};
 
-                        if ( data.drivers.hasOwnProperty( d ) ) {
+                    // var labels = new Array( data.laps.length );
+                    for ( var lapCounter = 0, len = data.laps.length; lapCounter < len; lapCounter++ ) {
 
-                            kartChanges[ 0 ][ d ] = data.drivers[ d ].kart;
-                            var serie = [];
-                            data.drivers[ d ].average = data.drivers[ d ].average.toFixed( 3 );
+                        // labels[ lapCounter ] = lapCounter + 1;
+                        var lapData = data.laps[ lapCounter ];
+                        var lapNum = lapData.num;
 
-                            for ( i = 0; i < data.laps.length; i++ ) {
-                                var value = ( typeof data.laps[ i ][ d ] !== 'undefined' ) ? data.laps[ i ][ d ].t : null;
+                        for ( var driverId in data.drivers ) {
+                            if ( data.drivers.hasOwnProperty( driverId ) ) {
 
-                                if ( value !== null ) {
-                                    data.laps[ i ][ d ].t = round( value );
+                                var driverData = data.drivers[ driverId ];
 
-                                    if ( data.laps[ i ][ d ].k !== data.drivers[ d ].kart ) {
+                                if ( lapCounter === 0 ) {
+                                    driverData.average = driverData.average.toFixed( 3 );
+                                    kartChanges[ 0 ][ driverId ] = driverData.kart;
+                                    driverData.kart = lapData[ driverId ].k;
+                                    driverData.kartChanges = 0;
+                                    driverData.lapsFinished = 0;
 
-                                        if ( typeof kartChanges[ i ] === 'undefined') {
-                                            kartChanges[ i ] = {};
+                                    // posChanges[ lapCounter ][ driverId ] = lapData[ driverId ].p;
+                                    driverData.p = driverData.startPos;
+                                }
+
+                                var time = ( typeof lapData[ driverId ] !== 'undefined' ) ? lapData[ driverId ].t : null;
+
+                                if ( time !== null ) {
+
+                                    driverData.lapsFinished++;
+
+                                    if ( driverData.kart !== lapData[ driverId ].k ) {
+
+                                        if ( typeof kartChanges[ lapNum + 1 ] === 'undefined' ) {
+                                            kartChanges[ lapNum + 1 ] = {};
                                         }
-                                        kartChanges[ i ][ d ] = data.drivers[ d ].kart + '→' + data.laps[ i ][ d ].k;
-                                        data.drivers[ d ].kart = data.laps[ i ][ d ].k;
+
+                                        kartChanges[ lapNum + 1 ][ driverId ] = driverData.kart + '→' + lapData[ driverId ].k;
+                                        driverData.kart = lapData[ driverId ].k;
+
+                                        driverData.kartChanges++;
                                     }
 
-                                    // pos
-                                    data.drivers[ d ].pos = data.laps[ i ][ d ].p;
-                                }
-                                serie.push( value );
-                            }
+                                    if ( driverData.p !== lapData[ driverId ].p ) {
+                                        if ( typeof posChanges[ lapNum + 1 ] === 'undefined' ) {
+                                            posChanges[ lapNum + 1 ] = {};
+                                        }
+                                        posChanges[ lapNum + 1 ][ driverId ] = ( driverData.p > lapData[ driverId ].p ) ? driverData.p + '↑' + lapData[ driverId ].p : driverData.p + '↓' + lapData[ driverId ].p;
+                                        driverData.p = lapData[ driverId ].p;
+                                    }
 
-                            series.push( {
-                                fill: true,
-                                tension: 0.25,
-                                borderColor: colors[ series.length ],
-                                label: data.drivers[ d ].name,
-                                data: serie
-                            } );
+                                    driverData.pos = lapData[ driverId ].p;
+                                    lapData[ driverId ].t = round( time );
+                                } else {
+                                    // serie.push( value );
+                                }
+                            }
                         }
                     }
 
+                    console.log( posChanges, kartChanges, data.laps );
+
+                    $scope.posChanges = posChanges;
+                    $scope.startKarts = kartChanges[ 0 ];
+                    delete kartChanges[ 0 ];
                     $scope.kartChanges = kartChanges;
+
                     $scope.race = data;
                     $scope.driversCount = Object.keys( data.drivers ).length;
                     $scope.changesCount = Object.keys( kartChanges ).length;
-                    
-                    /*global Chart */
-                    var ctx = $element[ 0 ].querySelector( '.k-race-chart' ).getContext( '2d' );
 
-                    var myChart = new Chart( ctx, {
-                        type: 'line',
-                        data: {
-                            labels: labels,
-                            datasets: series
-                        }
-                    } );
+                    /*global Chart */
+                    // var ctx = $element[ 0 ].querySelector( '.k-race-chart' ).getContext( '2d' );
+                    //
+                    // var myChart = new Chart( ctx, {
+                    //     type: 'line',
+                    //     data: {
+                    //         labels: labels,
+                    //         datasets: series
+                    //     }
+                    // } );
                     $scope.loading = false;
                 } )
                 .catch( function () {
