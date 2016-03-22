@@ -15,10 +15,10 @@ gulp.task( 'serve', [ 'copy' ], () => {
         https: false
     } );
 
-    gulp.watch( config.paths.src + '/styles/*.less', [ 'styles-copy' ] )
+    gulp.watch( config.paths.src + '/styles/*.less', [ 'styles-compile' ] )
         .on( 'change', browserSync.reload );
 
-    gulp.watch( config.paths.src + '/styles/**/*.less', [ 'styles-copy' ] )
+    gulp.watch( config.paths.src + '/styles/**/*.less', [ 'styles-compile' ] )
         .on( 'change', browserSync.reload );
 
     gulp.watch( config.paths.src + '/js/*.js', [ 'js-copy' ] )

@@ -158,3 +158,89 @@
 .k-race-cell_12.k-race-cell_best {
     background-color: @color_4;
 }
+
+
+.k-race-kart
+{
+    white-space: nowrap;
+    margin-bottom: 1em;
+    // display: table;
+    // border: 1px solid red;
+}
+
+
+
+.k-race-kart__driver,
+.k-race-kart__part,
+.k-race-kart__change,
+.k-race-kart__distance
+{
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+
+
+.k-race-kart__driver
+{
+    min-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.k-race-kart__part
+{
+    min-width: 60px;
+}
+
+.k-race-kart__part_first
+{
+    min-width: auto;
+}
+
+.k-race-kart__lap
+{
+    font-size: 0.6em;
+}
+
+.k-race-kart__wrapper
+{
+    display: table;
+}
+
+.k-race-kart__change
+{
+    background-color: @color_4;
+    color: @color_3;
+    display: table-cell;
+    padding: 1em;
+    // border-radius: 50px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.k-race-kart__distance
+{
+    display: table-cell;
+    width: 90%;
+    text-align: center;
+    min-width: 1em;
+    color: @color_5;
+    position: relative;
+}
+
+.k-arrow
+{
+    width: 100%;
+    position: absolute;
+    bottom: 1em;
+    height: 3px;
+    background-color: @color_2;
+}
+
+.k-race-kart__change
+{
+    width: 50px;
+}
