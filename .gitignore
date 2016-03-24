@@ -1,6 +1,5 @@
 app/
 node_modules/
-bower_components/
 build/
 peace/
 .tern-project

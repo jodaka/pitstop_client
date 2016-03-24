@@ -40,8 +40,8 @@ gulp.task( 'js-include-config', () => {
 gulp.task( 'js-deps-concat', () => {
 
     let paths = [
-        config.paths.bower + '/angularjs/angular.js',
-        config.paths.bower + '/angular-route/angular-route.js',
+        config.paths.npm + '/angular/angular.js',
+        config.paths.npm + '/angular-route/angular-route.js',
     ];
 
     return gulp.src( paths )

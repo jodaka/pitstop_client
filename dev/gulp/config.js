@@ -13,7 +13,6 @@ exports.paths.peace = exports.paths.root + '/peace';
 exports.paths.peace_dest = exports.paths.root + '/dist';
 exports.paths.src = exports.paths.root + '/src';
 exports.paths.build = exports.paths.root + '/build';
-exports.paths.bower = exports.paths.root + '/bower_components';
 exports.paths.npm = exports.paths.root + '/node_modules';
 
 exports.defaultLang = 'en';
