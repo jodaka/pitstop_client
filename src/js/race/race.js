@@ -123,6 +123,8 @@ function raceFactory( clubsDict, getRace ) {
                         if ( data.drivers.hasOwnProperty( driverId ) ) {
 
                             driverData = data.drivers[ driverId ];
+                            driverData.best = round( driverData.best );
+                            
                             var prevSegment = driverData.kartChanges[ driverData.kartChanges.length - 1 ];
 
                             if ( !prevSegment.retired ) {
@@ -144,6 +146,7 @@ function raceFactory( clubsDict, getRace ) {
                     }
 
                     $scope.posChanges = posChanges;
+                    console.log( 333, data.drivers );
                     // $scope.startKarts = kartChanges[ 0 ];
                     // delete kartChanges[ 0 ];
                     // $scope.kartChanges = kartChanges;
