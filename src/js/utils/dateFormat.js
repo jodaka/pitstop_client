@@ -4,13 +4,21 @@ function raceDateFactory() {
         var days = [ 'Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота' ];
         var months = [ 'Янв', 'Фев', 'Мар', 'Апр', 'Мая', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек' ];
 
+        var addLeadingZero = function( num ) {
+            if (num < 10) {
+                return '0'+num;
+            } else {
+                return num;
+            }
+        };
+
         return function ( d ) {
 
             if ( !d ) {
                 return;
             }
 
-            d = d.replace( 'Z', '+03:00' );
+            // d = d.replace( 'Z', '+03:00' );
             d = new Date( d );
 
             if ( d instanceof Date ) {
@@ -18,11 +26,8 @@ function raceDateFactory() {
                 var day = days[ d.getDay() ];
                 var mon = months[ d.getMonth() ];
                 var date = d.getDate();
-                var hours = d.getHours();
-                var minutes = d.getMinutes();
-                if ( minutes === 0 ) {
-                    minutes = '00';
-                }
+                var hours = addLeadingZero( d.getHours() );
+                var minutes = addLeadingZero( d.getMinutes());
                 var res = day + ', ' + date + ' ' + mon + ', ' + hours + ':' + minutes;
                 return res;
 
