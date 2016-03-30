@@ -7,26 +7,26 @@
         <div class="k-filters__col"> -->
 
             <!-- <h3 class="k-filter__header">Фильтр по периоду</h3> -->
-<div class="k-filters k-periods">
+<div class="k-filters k-filters_period">
 
-    <label class="k-filter k-period"
+    <label class="k-filter k-filter_period"
         ng-click="setPeriod('month')"
-        ng-class="{'k-period_active': isActive('month')}">
+            ng-class="{'k-filter_active': isActive('month')}">
         Месяц
     </label>
-    <label class="k-filter k-period"
+    <label class="k-filter k-filter_period"
         ng-click="setPeriod('week')"
-        ng-class="{'k-period_active': isActive('week')}">
+        ng-class="{'k-filter_active': isActive('week')}">
         Неделя
     </label>
-    <label class="k-filter k-period"
+    <label class="k-filter k-filter_period"
         ng-click="setPeriod(today)"
-        ng-class="{'k-period_active': isActive(today)}">
+        ng-class="{'k-filter_active': isActive(today)}">
         Сегодня
     </label>
-    <label class="k-filter k-period"
+    <label class="k-filter k-filter_period"
         ng-click="setPeriod(yesterday)"
-        ng-class="{'k-period_active': isActive(yesterday)}">
+        ng-class="{'k-filter_active': isActive(yesterday)}">
         Вчера
     </label>
 
