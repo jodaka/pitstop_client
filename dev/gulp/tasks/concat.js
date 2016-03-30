@@ -9,10 +9,10 @@ let moreLess = require( 'gulp-more-less' );
 gulp.task( 'js-concat', [ 'js-include-config' ], () => {
 
     let paths = [
-            config.paths.src + '/js/modulesInit.js',
+            config.paths.src + '/components/modulesInit.js',
             config.paths.build + '/js/configInclude.js',
             config.paths.build + '/js/directives-templates.js',
-            config.paths.src + '/js/**/*.js',
+            config.paths.src + '/components/**/*.js',
         ];
 
     return gulp.src( paths )
@@ -54,8 +54,8 @@ gulp.task( 'js-deps-concat', () => {
 gulp.task( 'styles-compile', () => {
 
     let paths = [
-        config.paths.src + '/styles/*.less',
-        config.paths.src + '/styles/**/*.less'
+        config.paths.src + '/components/*.less',
+        config.paths.src + '/components/**/*.less'
     ];
 
     return gulp.src( paths )

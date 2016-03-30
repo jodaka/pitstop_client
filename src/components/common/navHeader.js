@@ -49,6 +49,6 @@ function navHeaderFactory( clubsDict, $routeParams, $location, $rootScope ) {
             scope: {
                 section: '@'
             },
-            templateUrl: 'utils/navHeader'
+            templateUrl: 'partials/common/navHeader.tmpl.html'
         };
 } ] );

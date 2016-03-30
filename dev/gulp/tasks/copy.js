@@ -5,7 +5,7 @@ gulp.task( 'js-copy', [ 'js-deps-concat', 'js-concat' ], () => {
 
     let paths = [
         config.paths.build + '/js/main.js',
-        config.paths.src + '/js/bootstrap.js',
+        config.paths.src + '/components/bootstrap.js',
         config.paths.build + '/js/angular-deps.js'
     ];
 
@@ -14,7 +14,7 @@ gulp.task( 'js-copy', [ 'js-deps-concat', 'js-concat' ], () => {
 } );
 
 gulp.task( 'html-templates-copy', () => {
-    return gulp.src( config.paths.src + '/js/**/*.html' )
+    return gulp.src( config.paths.src + '/components/**/*.html' )
         .pipe( gulp.dest( config.paths.www_site + '/partials/' ) );
 } );
 

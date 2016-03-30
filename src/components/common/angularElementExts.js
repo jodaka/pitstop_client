@@ -8,7 +8,7 @@
      *
      *
      * So any jqLite element can use methods using simple syntax:
-     *     angular.element.tt.method_name()
+     *     angular.element.k.method_name()
      *
      */
 
