@@ -54,8 +54,7 @@ gulp.task( 'js-deps-concat', () => {
 gulp.task( 'styles-compile', () => {
 
     let paths = [
-        config.paths.src + '/components/*.less',
-        config.paths.src + '/components/**/*.less'
+        config.paths.src + '/components/*.less'
     ];
 
     return gulp.src( paths )

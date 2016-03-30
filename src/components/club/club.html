@@ -2,37 +2,37 @@
 
     <nav-header data-section="club"></nav-header>
 
-    <div class="k-filters__table">
+    <!-- <div class="k-filters__table">
 
-        <div class="k-filters__col">
+        <div class="k-filters__col"> -->
 
-            <h3 class="k-filter__header">Фильтр по периоду</h3>
-            <div class="k-filters k-periods">
+            <!-- <h3 class="k-filter__header">Фильтр по периоду</h3> -->
+<div class="k-filters k-periods">
 
-                <label class="k-filter k-period"
-                    ng-click="setPeriod('month')"
-                    ng-class="{'k-period_active': isActive('month')}">
-                    Месяц
-                </label>
-                <label class="k-filter k-period"
-                    ng-click="setPeriod('week')"
-                    ng-class="{'k-period_active': isActive('week')}">
-                    Неделя
-                </label>
-                <label class="k-filter k-period"
-                    ng-click="setPeriod(today)"
-                    ng-class="{'k-period_active': isActive(today)}">
-                    Сегодня
-                </label>
-                <label class="k-filter k-period"
-                    ng-click="setPeriod(yesterday)"
-                    ng-class="{'k-period_active': isActive(yesterday)}">
-                    Вчера
-                </label>
+    <label class="k-filter k-period"
+        ng-click="setPeriod('month')"
+        ng-class="{'k-period_active': isActive('month')}">
+        Месяц
+    </label>
+    <label class="k-filter k-period"
+        ng-click="setPeriod('week')"
+        ng-class="{'k-period_active': isActive('week')}">
+        Неделя
+    </label>
+    <label class="k-filter k-period"
+        ng-click="setPeriod(today)"
+        ng-class="{'k-period_active': isActive(today)}">
+        Сегодня
+    </label>
+    <label class="k-filter k-period"
+        ng-click="setPeriod(yesterday)"
+        ng-class="{'k-period_active': isActive(yesterday)}">
+        Вчера
+    </label>
 
-            </div>
-        </div>
-    </div>
+</div>
+        <!-- </div>
+    </div> -->
 
     <club data-club-id="clubId" data-period="period"></club>
 

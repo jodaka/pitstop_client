@@ -15,24 +15,24 @@ gulp.task( 'serve', [ 'copy' ], () => {
         https: false
     } );
 
-    gulp.watch( config.paths.src + '/styles/*.less', [ 'styles-compile' ] )
+    gulp.watch( config.paths.src + '/components/*.less', [ 'styles-compile' ] )
         .on( 'change', browserSync.reload );
 
-    gulp.watch( config.paths.src + '/styles/**/*.less', [ 'styles-compile' ] )
+    gulp.watch( config.paths.src + '/components/**/*.less', [ 'styles-compile' ] )
         .on( 'change', browserSync.reload );
 
-    gulp.watch( config.paths.src + '/js/*.js', [ 'js-copy' ] )
+    gulp.watch( config.paths.src + '/components/*.js', [ 'js-copy' ] )
         .on( 'change', browserSync.reload );
 
-    gulp.watch( config.paths.src + '/js/**/*.js', [ 'js-copy' ] )
+    gulp.watch( config.paths.src + '/components/**/*.js', [ 'js-copy' ] )
         .on( 'change', browserSync.reload );
 
     gulp.watch( config.paths.src + '/html/*.html', [ 'html-copy' ] )
         .on( 'change', browserSync.reload );
 
-    gulp.watch( config.paths.src + '/js/**/*.html', [ 'html-templates-copy' ] )
+    gulp.watch( config.paths.src + '/components/**/*.html', [ 'html-templates-copy' ] )
         .on( 'change', browserSync.reload );
 
-    gulp.watch( config.paths.src + '/js/**/*.tmpl.html', [ 'js-copy' ] )
+    gulp.watch( config.paths.src + '/components/**/*.tmpl.html', [ 'js-copy' ] )
         .on( 'change', browserSync.reload );
 } );

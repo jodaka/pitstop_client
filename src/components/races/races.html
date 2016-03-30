@@ -1,28 +1,29 @@
 <div class="k-page k-page_races">
+
     <nav-header data-section="races"></nav-header>
 
-    <div class="k-filters__table">
-        <div class="k-filters__col">
+    <!-- <div class="k-filters__table">
+        <div class="k-filters__col"> -->
 
-            <h3 class="k-filter__header">Фильтр по периоду</h3>
-            <div class="k-filters k-periods">
-                <label class="k-filter k-period" ng-click="setPeriod('all')" ng-class="{'k-period_active': periodIsActive('all')}">
-                    Вся история
-                </label>
-                <label class="k-filter k-period" ng-click="setPeriod(today)" ng-class="{'k-period_active': periodIsActive(today)}">
-                    Сегодня
-                </label>
-                <label class="k-filter k-period" ng-click="setPeriod(yesterday)" ng-class="{'k-period_active': periodIsActive(yesterday)}">
-                    Вчера
-                </label>
-                <!-- <label class="k-filter k-period"
-            ng-click="setPeriod('other')"
-            ng-class="{'k-period_active': periodIsActive('other')}">
-            Другой день
-            </label> -->
-            </div>
-        </div>
-    </div>
+            <!-- <h3 class="k-filter__header">Фильтр по периоду</h3> -->
+<div class="k-filters k-periods">
+    <label class="k-filter k-period" ng-click="setPeriod('all')" ng-class="{'k-period_active': periodIsActive('all')}">
+        Вся история
+    </label>
+    <label class="k-filter k-period" ng-click="setPeriod(today)" ng-class="{'k-period_active': periodIsActive(today)}">
+        Сегодня
+    </label>
+    <label class="k-filter k-period" ng-click="setPeriod(yesterday)" ng-class="{'k-period_active': periodIsActive(yesterday)}">
+        Вчера
+    </label>
+    <!-- <label class="k-filter k-period"
+ng-click="setPeriod('other')"
+ng-class="{'k-period_active': periodIsActive('other')}">
+Другой день
+</label> -->
+</div>
+        <!-- </div>
+    </div> -->
 
     <races data-selected-clubs="selectedClub" data-clubs="clubs" data-page="page" data-change-page="changePage(page)" data-date="date"></races>
 </div>

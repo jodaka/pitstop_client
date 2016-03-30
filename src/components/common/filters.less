@@ -1,19 +1,44 @@
-.k-filters__table
+// .k-filters__table
+// {
+//     // .display-table;
+//     // table-layout: fixed;
+//     margin: @margin_normal 0 @margin_small 0;
+// }
+//
+// .k-filters__col
+// {
+//     display: table-cell;
+//     width: 50%;
+// }
+//
+
+.k-filter__club_active
 {
-    .display-table;
-    table-layout: fixed;
-    margin: @margin_normal 0 @margin_small 0;
+    .k-filter_active;
 }
 
-.k-filters__col
+.k-period_active
 {
-    display: table-cell;
-    width: 50%;
+    .k-filter_active;
 }
+
 
 .k-filters
 {
     margin: 0;
+    display: inline-block;
+}
+
+.k-filters_clubs
+{
+    background-color: @color_5;
+}
+
+.k-filters_spacer
+{
+    width: 1.8em;
+    height: 1.8em;
+    // background-color: @color_5;
 }
 
 .k-filter__header
