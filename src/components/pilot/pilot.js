@@ -12,11 +12,22 @@ function racesFactory( AppConfig, getPilot ) {
                 }
             }
 
+            $scope.changePage = function ( page ) {
+                if ( page && page !== $scope.page ) {
+                    $scope.page = page;
+                    console.log( 'page set ', page );
+                    loadData();
+                }
+            };
+
             var loadData = function () {
                 $scope.races = [];
 
                 getPilot( $scope.pilotId, $scope.page - 1 )
                     .then( function ( response ) {
+
+                        console.log( 11111, response, $scope.page );
+
                         $scope.races = response.races;
                         $scope.clubStats = {};
                         $scope.name = response.name;
@@ -56,6 +67,9 @@ function racesFactory( AppConfig, getPilot ) {
                         }
 
                         $scope.paging = paging;
+                        setTimeout( function () {
+                            $scope.$apply()
+                        }, 4 );
                     } )
                     .catch( function ( err ) {
                         console.error( err );
