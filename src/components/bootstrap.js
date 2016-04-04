@@ -42,9 +42,8 @@
                         templateUrl: 'partials/race/race.html',
                         controller: 'RaceCtrl'
                     } )
-                    .when( '/live', {
-                        templateUrl: 'partials/live/live.html',
-                        controller: 'LiveCtrl'
+                    .when( '/live/:club', {
+                        templateUrl: 'partials/live/live.html'
                     } )
                     .when( '/races/:club?/:period?/:page?', {
                         templateUrl: 'partials/races/races.html',
