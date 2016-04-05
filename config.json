@@ -8,6 +8,9 @@
         "races": "races/%s/%s",
         "club": "club/%s/%s",
     },
+    "ws": {
+        "url": "ws://localhost:8882"
+    },
     "clubs": {
         "Пулково": "586",
         "Драйв": "686",
