@@ -20,7 +20,6 @@ function wsFactory( AppConfig, EVENTS ) {
             if ( ws ) {
                 var wsParams = params[1];
                 wsParams.event = params[0];
-                console.log('33333', params, wsParams );
                 ws.send( JSON.stringify( wsParams ) );
             }
 
@@ -42,7 +41,6 @@ function wsFactory( AppConfig, EVENTS ) {
             console.log( 1, ' ws connection established' );
 
             keepAliveInterval = setInterval( function () {
-                console.log( ' sending ping' );
                 ws.send( 'ping' );
             }, 30000 );
 
@@ -63,6 +61,10 @@ function wsFactory( AppConfig, EVENTS ) {
                 return null;
             }
 
+            if ( evt.data === 'pong' ) {
+                return null;
+            };
+
             try {
 
                 var data = JSON.parse( evt.data );
@@ -78,7 +80,7 @@ function wsFactory( AppConfig, EVENTS ) {
                 }
 
             } catch ( e ) {
-                console.error( e );
+                console.error( e, evt.data );
             }
 
             return null;

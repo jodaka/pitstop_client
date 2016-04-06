@@ -133,7 +133,11 @@ function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
         };
 
         var event_race_state = function ( response ) {
-            processRaceState( response );
+            if ( response !== null ) {
+                processRaceState( response );
+            } else {
+                event_no_active_race();
+            }
         };
 
         var event_subscribe_id = function ( response ) {
@@ -150,7 +154,7 @@ function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
 
             console.log( ' got HEAT', response );
 
-            if ( raceid === response.raceId ) {
+            if ( response !== null && raceid === response.raceId ) {
 
                 console.log( 'got our heat ' );
 
@@ -158,15 +162,22 @@ function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
                 console.log( 'wow got heat', response, ' current race', raceid, 'lap ', lapNum );
 
                 processHeat( response.heat, lapNum );
-                
+
                 setTimeout( function () {
                     $scope.$digest();
                 }, 0 );
             }
         };
 
+        var event_no_active_race = function() {
+
+            console.log('NO ACTIVE RACE');
+        }
+
         ws.on( EVENTS.WS_CONNECTED, event_connect );
         ws.on( EVENTS.RACE_STATE, event_race_state );
+        ws.on( EVENTS.RACE_STARTED, event_subscribe_id );
+        ws.on( EVENTS.RACE_FINISHED, event_no_active_race );
         ws.on( EVENTS.RACE_SUBSCRIBED, event_subscribe_id );
         ws.on( EVENTS.HEAT, event_heat_data );
 
