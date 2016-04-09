@@ -1,10 +1,11 @@
 angular.module( 'k.directives' ).directive( 'club', [
-'AppConfig', 'getClub',
-function clubFactory( AppConfig, getClub ) {
+'clubsDict', 'getClub',
+function clubFactory( clubsDict, getClub ) {
 
         var link = function ( $scope ) {
 
             $scope.loading = true;
+            $scope.clubName = clubsDict.getNameById( $scope.clubId );
 
             var loadData = function () {
 

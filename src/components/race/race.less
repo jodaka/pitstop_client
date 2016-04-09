@@ -69,7 +69,14 @@
     text-align: center;
     padding: 0;
     margin: 0;
+
+    .k-link_pilot
+    {
+        color: @color_4;
+    }
+
 }
+
 
 .k-race-lap {
 
@@ -129,6 +136,7 @@
 .k-race-cell_9,
 .k-race-cell_11 {
     background-color: @color_4;
+    color: @color_2;
 }
 
 .k-race-cell_2,
@@ -257,4 +265,17 @@
     bottom: 0;
     margin-left: 47%;
     font-size: 0.8em;
+}
+
+
+@media screen and (max-width: 400px),(max-device-width:400px) {
+    .k-table-header-col__cell
+    {
+        white-space: normal;
+    }
+
+    .k-race-lap .k-table-header-col__cell
+    {
+        line-height: 1em;
+    }
 }

@@ -11,7 +11,7 @@
             <div class="k-table-header__cell k-driver-club__cell_winner">Лучшее время</div>
         </div>
         <div class="k-table-row k-table-row_zebra" ng-repeat="(key,value) in clubStats track by $index">
-            <div class="k-table-cell k-driver-club__header ">{{:: clubsIds[key]}}</div>
+            <div class="k-table-cell k-driver-club__header ">{{:: key}}</div>
             <div class="k-table-cell">{{:: value.count}}</div>
             <div class="k-table-cell">{{:: value.best}}</div>
         </div>
@@ -32,11 +32,11 @@
 
         <div class="k-table-row k-table-row_zebra" ng-repeat="race in races track by $index">
             <div class="k-table-cell k-pilot__cell_name">
-                <a class="k-link" href="/#/race/{{race.id}}">{{:: race.name }}</a>
+                <a class="k-link" href="/#/race/{{::race.clubName}}/{{::race.id}}">{{:: race.name }}</a>
             </div>
 
             <div class="k-table-cell k-pilot__cell_club">{{:: clubsIds[ race.clubid ] }}</div>
-            <div class="k-table-cell k-pilot__cell_date">{{:: race.date | raceDate }}</div>
+            <div class="k-table-cell k-pilot__cell_date" ng-bind-html="race.date | raceDate"></div>
             <div class="k-table-cell k-pilot__cell_kart">{{:: race.kart }}</div>
             <div class="k-table-cell k-pilot__cell_pos">{{:: race.pos }}</div>
             <div class="k-table-cell k-pilot__cell_best">{{:: race.best }}</div>

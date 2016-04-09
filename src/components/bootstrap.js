@@ -38,7 +38,7 @@
             function ( $routeProvider ) {
 
                 $routeProvider
-                    .when( '/race/:id', {
+                    .when( '/race/:club/:id', {
                         templateUrl: 'partials/race/race.html',
                         controller: 'RaceCtrl'
                     } )
@@ -66,12 +66,19 @@
             $compileProvider.debugInfoEnabled( false );
         } ] );
 
-        app.run( [ '$rootScope', function ( $rootScope ) {
-            $rootScope.$on( '$locationChangeSuccess', function (scope, newState, oldState) {
-                if ( newState !== oldState ) {
-                    $rootScope.previousPage = oldState;
-                }
-            } );
+        app.run( [ '$rootScope', 'AppConfig',
+            function ( $rootScope, $AppConfig ) {
+
+                $rootScope.$on( '$locationChangeSuccess', function ( scope, newState, oldState ) {
+                    if ( newState !== oldState ) {
+                        $rootScope.previousPage = oldState;
+                    }
+                } );
+
+                $AppConfig.api.url = location.protocol + $AppConfig.api.url.replace( /%s/, location.hostname );
+
+                console.log( $AppConfig.api.url );
+
         } ] );
 
         angular.bootstrap( node, [ 'k' ], {

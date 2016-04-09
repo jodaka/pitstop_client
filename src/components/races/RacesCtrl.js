@@ -12,9 +12,19 @@ function RaceCtrlFactory( clubsDict, $scope, $routeParams, $location ) {
                 $scope.period = period;
             } else {
                 $scope.period = 'date';
-                $scope.date = period;
-            }
 
+                switch ( period ) {
+                    case 'today':
+                        $scope.date = $scope.today;
+                        break;
+                    case 'yesterday':
+                        $scope.date = $scope.yesterday;
+                        break;
+                    default:
+                        $scope.date = period;
+                        break;
+                }
+            }
             saveUrlParams();
         };
 

@@ -9,9 +9,9 @@
 
     <div class="k-table-row k-table-row_zebra k-races-list_single-club" ng-repeat="race in races track by $index">
         <div class="k-table-cell k-race__cell_name">
-            <a class="k-link" href="/#/race/{{::race.id}}">{{:: race.name }}</a>
+            <a class="k-link" href="/#/race/{{::clubName}}/{{::race.id}}">{{:: race.name }}</a>
         </div>
-        <div class="k-table-cell k-race__cell_date">{{:: race.date | raceDate }}</div>
+        <div class="k-table-cell k-race__cell_date" ng-bind-html="race.date | raceDate"></div>
         <div class="k-table-cell k-race__cell_winner">
             <a class="k-link" href="/#/pilot/{{::race.winnerId}}">{{:: race.winner }}</a>
         </div>

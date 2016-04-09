@@ -2,28 +2,17 @@
 
     <nav-header data-section="races"></nav-header>
 
-    <!-- <div class="k-filters__table">
-        <div class="k-filters__col"> -->
+    <div class="k-filters k-filters_period">
+        <label class="k-filter k-filter_period" ng-class="{'k-filter_active': periodIsActive('all')}">
+            <a class="k-link_filter" ng-click="setPeriod('all')">Вся история</a>
+        </label>
+        <label class="k-filter k-filter_period" ng-class="{'k-filter_active': periodIsActive(today)}">
+            <a class="k-link_filter" ng-click="setPeriod('today')">Сегодня</a>
+        </label>
+        <label class="k-filter k-filter_period" ng-class="{'k-filter_active': periodIsActive(yesterday)}">
+            <a class="k-link_filter" ng-click="setPeriod('yesterday')">Вчера</a>
+        </label>
+    </div>
 
-            <!-- <h3 class="k-filter__header">Фильтр по периоду</h3> -->
-<div class="k-filters k-filters_period">
-    <label class="k-filter k-filter_period" ng-click="setPeriod('all')" ng-class="{'k-filter_active': periodIsActive('all')}">
-        Вся история
-    </label>
-    <label class="k-filter k-filter_period" ng-click="setPeriod(today)" ng-class="{'k-filter_active': periodIsActive(today)}">
-        Сегодня
-    </label>
-    <label class="k-filter k-filter_period" ng-click="setPeriod(yesterday)" ng-class="{'k-filter_active': periodIsActive(yesterday)}">
-        Вчера
-    </label>
-    <!-- <label class="k-filter k-filter_period"
-ng-click="setPeriod('other')"
-ng-class="{'k-filter_active': periodIsActive('other')}">
-Другой день
-</label> -->
-</div>
-        <!-- </div>
-    </div> -->
-
-    <races data-selected-clubs="selectedClub" data-clubs="clubs" data-page="page" data-change-page="changePage(page)" data-date="date"></races>
+    <races data-selected-clubs="selectedClub" data-page="page" data-change-page="changePage(page)" data-date="date"></races>
 </div>

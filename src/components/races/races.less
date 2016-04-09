@@ -1,88 +1,81 @@
-.k-clubs_races
-{
+.k-clubs_races {
     margin-bottom: @margin_big;
 }
-
 .k-races-list {
     table-layout: fixed;
 }
-
-.k-race__cell_name {
-    width: 24%;
-}
-
-.k-race__cell_club {
-    width: 11%;
-}
-
-.k-race__cell_date {
-    width: 25%;
-}
-
-.k-race__cell_winner {
-    width: 20%;
-}
-
-.k-race__cell_kart,
-.k-race__cell_laps {
-    width: 10%;
-}
-
+// .k-race__cell_name {
+//     width: 24%;
+// }
+//
+// .k-race__cell_club {
+//     width: 11%;
+// }
+//
+// .k-race__cell_date {
+//     width: 25%;
+// }
+//
+// .k-race__cell_winner {
+//     width: 20%;
+// }
+//
+// .k-race__cell_kart,
+// .k-race__cell_laps {
+//     width: 10%;
+// }
 .k-races-list {
-
     .k-table-row_zebra:hover {
         transition: all 0.35s linear;
-
         .k-table-cell {
             transition: background 0.35s linear;
             background-color: lighten(@color_1, 10%);
             color: @color_3;
         }
     }
-
 }
-
-.k-races-list_single-club
-{
-    .k-race__cell_name {
-        width: 35%;
-    }
-
-    .k-race__cell_date {
-        width: 25%;
-    }
-
-    .k-race__cell_winner {
-        width: 20%;
-    }
-
-    .k-race__cell_kart,
-    .k-race__cell_laps {
-        width: 10%;
-    }
+.k-race__cell_name {
+    width: 35%;
 }
-
-@media screen and (max-width: 400px),(max-device-width:400px){
-
-    .k-race__cell_kart
-    {
+.k-race__cell_date {
+    width: 25%;
+}
+.k-race__cell_winner {
+    width: 20%;
+}
+.k-race__cell_kart,
+.k-race__cell_laps {
+    width: 20%;
+}
+@media screen and (max-width: 400px),(max-device-width:400px) {
+    .no-mobile {
         display: none;
     }
-
-    .k-race__cell
-    {
+    .k-race__cell {
         // font-size: 10px;
         white-space: nowrap;
         line-height: 2.5em;
         padding: 0 @margin_small/4 0 @margin_normal/4;
     }
-
-    .k-races-list__race_header
-    {
-        .k-race__cell
-        {
+    .k-races-list__race_header {
+        .k-race__cell {
             // font-size: 14px;
             font-weight: normal;
         }
+    }
+    .k-race__cell_name {
+        width: 25%;
+    }
+    .k-race__cell_date {
+        width: 30%;
+    }
+    .k-race__cell_winner {
+        width: 25%;
+    }
+    .k-race__cell_kart {
+        display: none;
+    }
+    .k-race__cell_laps {
+        width: 20%;
     }
 }

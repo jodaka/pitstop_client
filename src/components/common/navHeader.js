@@ -17,7 +17,7 @@ function navHeaderFactory( clubsDict, $routeParams, $location, $rootScope ) {
 
             $scope.getLinkPath = function( id ) {
                 var name = clubsDict.getNameById( id );
-                if ($scope.section === 'races' || $scope.section === 'club') {
+                if ($scope.section === 'races' || $scope.section === 'club' || $scope.section === 'live' ) {
                     var re = new RegExp( $scope.clubName );
                     return '/#' + currentPath.replace( re, name );
                 } else {
@@ -32,7 +32,7 @@ function navHeaderFactory( clubsDict, $routeParams, $location, $rootScope ) {
             $scope.icanhas = function( chzbrgr ) {
                 switch (chzbrgr) {
                     case 'dataFilter':
-                        return ( $scope.section === 'races' || $scope.section === 'club' );
+                        return ( $scope.section === 'races' || $scope.section === 'club' || $scope.section === 'live' );
                         break;
                     case 'back':
                         return ( $rootScope.previousPage && ( $scope.section === 'pilot' || $scope.section === 'race' ));

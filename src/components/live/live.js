@@ -116,6 +116,9 @@ function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
                 }
             }
 
+            $scope.raceName = raceData.name ;
+            $scope.timeLeft = raceData.timeLeft;
+
             $scope.drivers = drivers;
             $scope.driversCount = Object.keys( drivers ).length;
             $scope.laps = laps;
@@ -124,6 +127,13 @@ function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
             setTimeout( function () {
                 $scope.$digest();
             } );
+        };
+
+        $scope.formatTimeLeft = function( time ) {
+            time = Math.floor( time / 1000 );
+            var mins = Math.floor( time / 60 );
+            var sec = time - mins * 60;
+            return mins + ':' + sec;
         };
 
         var event_connect = function () {
@@ -156,7 +166,7 @@ function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
 
             if ( response !== null && raceid === response.raceId ) {
 
-                console.log( 'got our heat ' );
+                $scope.timeLeft = response.timeLeft;
 
                 var lapNum = Number( response.heat[ Object.keys( response.heat )[ 0 ] ].laps );
                 console.log( 'wow got heat', response, ' current race', raceid, 'lap ', lapNum );

@@ -1,15 +1,14 @@
 <div class="k-loading" ng-show="loading&&!fail">Загрузка</div>
 <div class="k-path" ng-hide="loading">
+
     <div class="k-path__step">
-        <a href="/#/races/{{:: clubName }}/all/1" class="k-link"> {{:: clubTitle }} </a>
+        {{:: raceName }}
     </div>
+
     <div class="k-path__step">&raquo;</div>
+
     <div class="k-path__step">
-        <a href="/#/races/{{:: clubName }}/date/{{:: race.basic.dateShort }}" class="k-link"> {{:: race.basic.date | raceDate }} </a>
-    </div>
-    <div class="k-path__step">&raquo;</div>
-    <div class="k-path__step">
-        {{:: race.basic.name }}
+        Осталось времени: {{ formatTimeLeft( timeLeft ) }}
     </div>
 </div>
 
@@ -18,7 +17,7 @@
     <div class="k-table-header">
         <div class="k-table-header__cell k-race-header_col">&nbsp;</div>
         <div class="k-table-header__cell k-race-header" ng-repeat="(id, driver) in drivers track by $index">
-            <a class="k-link" href="/#/pilot/{{::id}}">{{::  driver.name }}</a>
+            <a class="k-link k-link_pilot" href="/#/pilot/{{::id}}">{{::  driver.name }}</a>
         </div>
     </div>
 
@@ -66,7 +65,7 @@
     <div class="k-table-header">
         <div class="k-table-header__cell k-race-header_col">&nbsp;</div>
         <div class="k-table-header__cell k-race-header" ng-repeat="(id, driver) in drivers track by $index">
-            <a class="k-link" href="/#/pilot/{{::id}}">{{::  driver.name }}</a>
+            <a class="k-link k-link_pilot" href="/#/pilot/{{::id}}">{{::  driver.name }}</a>
         </div>
     </div>
     <div class="k-table-row k-race-lap" ng-repeat="(lid, lap) in laps track by $index" ng-init="lapIndex = $index">

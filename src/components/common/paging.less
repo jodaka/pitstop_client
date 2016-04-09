@@ -3,10 +3,10 @@
 }
 
 .k-paging__page {
-    width: 40px;
-    height: 40px;
+    width: 2.5em;
+    height: 2.5em;
     display: inline-block;
-    line-height: 40px;
+    line-height: 2.5em;
     text-align: center;
     background-color: @color_5;
     margin-right: 5px;
@@ -14,16 +14,29 @@
 
     &:hover {
         cursor: pointer;
-        background-color: @color_2;
-        color: @color_4;
+        background-color: @color_3;
+        color: @color_1;
     }
 }
 
 .k-paging__page_selected {
-    background-color: @color_2;
+    background-color: @color_3;
     color: @color_1;
     &:hover {
         cursor: default;
         color: @color_1;
+    }
+}
+
+@media screen and (max-width: 400px),(max-device-width:400px) {
+    .k-paging
+    {
+        width: 100%;
+        display: table;
+    }
+
+    .k-paging__page
+    {
+        display: table-cell;
     }
 }

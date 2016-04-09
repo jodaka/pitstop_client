@@ -1,22 +1,10 @@
 angular.module( 'k.directives' ).directive( 'races', [
-'getRaces', 'AppConfig',
-function racesFactory( getRaces, AppConfig ) {
+'getRaces', 'clubsDict',
+function racesFactory( getRaces, clubsDict ) {
 
         var link = function ( $scope ) {
 
-            $scope.clubsIds = {};
-            for ( var cl in $scope.clubs ) {
-                if ( $scope.clubs.hasOwnProperty( cl ) ) {
-                    $scope.clubsIds[ $scope.clubs[ cl ] ] = cl;
-                }
-            }
-
-            $scope.clubsNames = {};
-            for ( cl in AppConfig.clubsEn ) {
-                if ( AppConfig.clubsEn.hasOwnProperty( cl ) ) {
-                    $scope.clubsNames[ AppConfig.clubsEn[ cl ] ] = cl;
-                }
-            }
+            $scope.clubName = clubsDict.getNameById( $scope.selectedClubs );
 
             $scope.setPage = function ( page ) {
                 $scope.changePage( {
