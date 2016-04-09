@@ -76,16 +76,12 @@
                 } );
 
                 $AppConfig.api.url = location.protocol + $AppConfig.api.url.replace( /%s/, location.hostname );
-
-                console.log( $AppConfig.api.url );
-
+                $AppConfig.ws.url = $AppConfig.ws.url.replace( /%s/, location.hostname );
         } ] );
 
         angular.bootstrap( node, [ 'k' ], {
             strictDi: true
         } );
-
-
     };
 
     d.addEventListener( 'DOMContentLoaded', initApplication );

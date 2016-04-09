@@ -2,37 +2,20 @@
 
     <nav-header data-section="club"></nav-header>
 
-    <!-- <div class="k-filters__table">
-
-        <div class="k-filters__col"> -->
-
-            <!-- <h3 class="k-filter__header">Фильтр по периоду</h3> -->
-<div class="k-filters k-filters_period">
-
-    <label class="k-filter k-filter_period"
-        ng-click="setPeriod('month')"
-            ng-class="{'k-filter_active': isActive('month')}">
-        Месяц
-    </label>
-    <label class="k-filter k-filter_period"
-        ng-click="setPeriod('week')"
-        ng-class="{'k-filter_active': isActive('week')}">
-        Неделя
-    </label>
-    <label class="k-filter k-filter_period"
-        ng-click="setPeriod(today)"
-        ng-class="{'k-filter_active': isActive(today)}">
-        Сегодня
-    </label>
-    <label class="k-filter k-filter_period"
-        ng-click="setPeriod(yesterday)"
-        ng-class="{'k-filter_active': isActive(yesterday)}">
-        Вчера
-    </label>
-
-</div>
-        <!-- </div>
-    </div> -->
+    <div class="k-filters k-filters_period">
+        <label class="k-filter k-filter_period" ng-class="{'k-filter_active': isActive('month')}">
+            <a href="javascript:void(0)" class="k-link k-link_filter" ng-click="setPeriod('month')">Месяц</a>
+        </label>
+        <label class="k-filter k-filter_period" ng-class="{'k-filter_active': isActive('week')}">
+            <a href="javascript:void(0)" class="k-link k-link_filter" ng-click="setPeriod('week')">Неделя</a>
+        </label>
+        <label class="k-filter k-filter_period" ng-class="{'k-filter_active': isActive(today)}">
+            <a href="javascript:void(0)" class="k-link k-link_filter" ng-click="setPeriod('today')">Сегодня</a>
+        </label>
+        <label class="k-filter k-filter_period" ng-class="{'k-filter_active': isActive(yesterday)}">
+            <a href="javascript:void(0)" class="k-link k-link_filter" ng-click="setPeriod('yesterday')">Вчера</a>
+        </label>
+    </div>
 
     <club data-club-id="clubId" data-period="period"></club>
 

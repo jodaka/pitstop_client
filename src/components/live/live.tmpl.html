@@ -7,9 +7,7 @@
 
     <div class="k-path__step">&raquo;</div>
 
-    <div class="k-path__step">
-        Осталось времени: {{ formatTimeLeft( timeLeft ) }}
-    </div>
+    <div class="k-path__step k-live__remaining"><!-- placeholder --></div>
 </div>
 
 <h3 class="k-header">Сводные данные</h3>
@@ -99,6 +97,4 @@
 
 </div>
 
-<pre>{{ drivers | json }}</pre>
-<!-- <canvas class="k-race-chart" width="800" height="300" ng-hide="loading||fail"></canvas> -->
 <div class="k-error" ng-show="fail">Не удалось загрузить данные. Попробуйте позднее</div>

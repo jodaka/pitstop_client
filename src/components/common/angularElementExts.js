@@ -47,7 +47,7 @@
             Object.defineProperty( this, 'k', {
                 value: new NgElementExts( this )
             } );
-            return this.tt;
+            return this.k;
         },
         configurable: true,
         writeable: false

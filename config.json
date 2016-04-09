@@ -9,7 +9,7 @@
         "club": "club/%s/%s",
     },
     "ws": {
-        "url": "ws://localhost:8882"
+        "url": "ws://%s:8882"
     },
     "clubs": {
         "Пулково": "586",

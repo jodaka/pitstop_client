@@ -2,209 +2,271 @@ angular.module( 'k.directives' ).directive( 'live', [
 'clubsDict', '$routeParams', 'ws', 'eventsList',
 function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
 
-    var link = function ( $scope ) {
+        var link = function ( $scope, $element ) {
 
-        var clubId = clubsDict.getIdByName( $routeParams.club );
-        var subId = null;
+            var clubId = clubsDict.getIdByName( $routeParams.club );
+            var subId = null;
 
-        var round = function ( val ) {
-            if ( typeof val === 'number' ) {
-                return val.toFixed( 3 );
-            }
-            return 0;
-        };
+            var round = function ( val ) {
+                if ( typeof val === 'number' ) {
+                    return val.toFixed( 3 );
+                }
+                return 0;
+            };
 
-        var drivers = {};
-        var laps = {};
-        var raceid = null;
+            var remainingHolder = $element.k.querySelector( '.k-live__remaining' )[ 0 ];
+            var remainingTimeout = null;
 
-        var posChanges = {
-            0: {}
-        };
-        var changesCount = 0;
+            var tickRemainingTime = function ( time ) {
 
-        var processHeat = function ( heat, lapNum ) {
+                if ( remainingTime > 0 ) {
 
-            for ( var driverId in heat ) {
+                    time = Math.floor( time / 1000 );
+                    var mins = Math.floor( time / 60 );
+                    var sec = time - mins * 60;
+                    if ( sec < 10 ) {
+                        sec = '0'+sec;
+                    }
+                    var res = mins + ':' + sec;
 
-                if ( heat.hasOwnProperty( driverId ) ) {
+                    remainingHolder.innerHTML = 'Осталось времени: ' + res;
+                    remainingTime = remainingTime - 1000;
 
-                    var driverData = drivers[ driverId ];
+                    if ( remainingTimeout ) {
+                        clearTimeout( remainingTimeout );
+                    }
 
-                    if ( lapNum === 0 || typeof driverData === 'undefined' ) {
+                    remainingTimeout = setTimeout( function () {
+                        tickRemainingTime( remainingTime );
+                    }, 1000 );
+                } else {
+                    remainingHolder.innerHTML = 'Гонка завершена';
+                }
+            };
 
-                        drivers[ driverId ] = heat[ driverId ];
-                        driverData = drivers[ driverId ];
+            var remainingTime, drivers, laps, raceid, raceLapsData, posChanges, changesCount;
 
-                        driverData.kartChanges = [ {
-                            'kart': driverData.kart,
-                            'lap': 0,
-                            'distance': 0
+            var resetData = function () {
+
+                drivers = {};
+                laps = {};
+                raceid = null;
+                raceLapsData = {};
+                posChanges = {
+                    0: {}
+                };
+                changesCount = 0;
+                remainingTime = 0;
+            };
+
+            var processHeat = function ( heat ) {
+
+                for ( var driverId in heat ) {
+
+                    if ( heat.hasOwnProperty( driverId ) ) {
+
+                        var driverData = drivers[ driverId ];
+                        var lapNum = driverData && driverData.laps || 0;
+
+                        if ( lapNum === 0 || typeof driverData === 'undefined' ) {
+
+                            drivers[ driverId ] = heat[ driverId ];
+                            driverData = drivers[ driverId ];
+
+                            driverData.kartChanges = [ {
+                                'kart': driverData.kart,
+                                'lap': 0,
+                                'distance': 0
                             } ];
 
-                        driverData.segmentTime = 0;
-                        driverData.kart = heat[ driverId ] && heat[ driverId ].kart || null;
-                        driverData.lapsFinished = 0;
-                        driverData.average = Number( driverData.average / 1000 ).toFixed( 3 );
-                        driverData.p = driverData.position;
-                        driverData.startPos = driverData.position;
-                    }
-
-                    var time = ( typeof heat[ driverId ] !== 'undefined' ) ? Number( heat[ driverId ].time ) / 1000 : null;
-
-                    if ( time !== null ) {
-
-                        if ( driverData.laps !== heat[ driverId ].laps ) {
-                            driverData.lapsFinished++;
-                        }
-
-                        driverData.segmentTime += time;
-                        driverData.laps = heat[ driverId ].laps;
-                        driverData.best = Number( heat[ driverId ].best / 1000 ).toFixed( 3 );
-                        driverData.average = Number( heat[ driverId ].average / 1000 ).toFixed( 3 );
-
-                        if ( driverData.kart !== heat[ driverId ].kart ) {
-
-                            var distance = lapNum - driverData.kartChanges[ driverData.kartChanges.length - 1 ].lap;
-
-                            driverData.kartChanges.push( {
-                                'lap': lapNum + 1,
-                                'distance': distance,
-                                'kart': heat[ driverId ].kart,
-                                'perc': distance * 100 / driverData.lapsFinished,
-                                'retired': heat[ driverId ].kart === 0,
-                                'average': Number( driverData.segmentTime / distance ).toFixed( 3 )
-                            } );
-
                             driverData.segmentTime = 0;
-
-                            if ( driverData.kartChanges.length > changesCount ) {
-                                changesCount = driverData.kartChanges.length;
-                            }
-
-                            driverData.kart = heat[ driverId ].kart;
+                            driverData.kart = heat[ driverId ] && heat[ driverId ].kart || null;
+                            driverData.lapsFinished = 0;
+                            driverData.average = Number( driverData.average / 1000 ).toFixed( 3 );
+                            driverData.p = driverData.position;
+                            driverData.startPos = driverData.position;
                         }
 
-                        if ( driverData.p !== heat[ driverId ].position ) {
-                            if ( typeof posChanges[ lapNum + 1 ] === 'undefined' ) {
-                                posChanges[ lapNum + 1 ] = {};
+                        var time = ( typeof heat[ driverId ] !== 'undefined' ) ? Number( heat[ driverId ].time ) / 1000 : null;
+
+                        if ( time !== null ) {
+
+                            if ( lapNum !== heat[ driverId ].laps ) {
+                                driverData.lapsFinished++;
                             }
-                            posChanges[ lapNum + 1 ][ driverId ] = ( driverData.p > heat[ driverId ].position ) ? driverData.p + '↑' + heat[ driverId ].position : driverData.p + '↓' + heat[ driverId ].position;
-                            driverData.p = heat[ driverId ].position;
+
+                            driverData.segmentTime += time;
+                            driverData.laps = heat[ driverId ].laps;
+                            driverData.best = Number( heat[ driverId ].best / 1000 ).toFixed( 3 );
+                            driverData.average = Number( heat[ driverId ].average / 1000 ).toFixed( 3 );
+
+                            if ( driverData.kart !== heat[ driverId ].kart ) {
+
+                                var distance = driverData.laps - driverData.kartChanges[ driverData.kartChanges.length - 1 ].lap;
+
+                                driverData.kartChanges.push( {
+                                    'lap': driverData.laps + 1,
+                                    'distance': distance,
+                                    'kart': heat[ driverId ].kart,
+                                    'perc': distance * 100 / driverData.lapsFinished,
+                                    'retired': heat[ driverId ].kart === 0,
+                                    'average': Number( driverData.segmentTime / distance ).toFixed( 3 )
+                                } );
+
+                                driverData.segmentTime = 0;
+
+                                if ( driverData.kartChanges.length > changesCount ) {
+                                    changesCount = driverData.kartChanges.length;
+                                }
+
+                                driverData.kart = heat[ driverId ].kart;
+                            }
+
+                            if ( driverData.p !== heat[ driverId ].position ) {
+                                if ( typeof posChanges[ lapNum + 1 ] === 'undefined' ) {
+                                    posChanges[ lapNum + 1 ] = {};
+                                }
+                                posChanges[ lapNum + 1 ][ driverId ] = ( driverData.p > heat[ driverId ].position ) ? driverData.p + '↑' + heat[ driverId ].position : driverData.p + '↓' + heat[ driverId ].position;
+                                driverData.p = heat[ driverId ].position;
+                            }
+
+                            driverData.pos = heat[ driverId ].position;
+                            heat[ driverId ].time = round( time );
+
                         }
-
-                        driverData.pos = heat[ driverId ].position;
-                        heat[ driverId ].time = round( time );
-
                     }
                 }
-            }
 
-            if ( lapNum > 0 ) {
-                laps[ lapNum ] = heat;
-            }
-        };
-
-        var processRaceState = function ( raceData ) {
-
-            raceid = raceData.raceid;
-            var rawData = raceData.laps;
-
-            for ( var lap in rawData ) {
-                if ( rawData.hasOwnProperty( lap ) ) {
-                    processHeat( rawData[ lap ], Number( lap ) );
+                if ( lapNum > 0 ) {
+                    laps[ lapNum ] = heat;
                 }
-            }
+            };
 
-            $scope.raceName = raceData.name ;
-            $scope.timeLeft = raceData.timeLeft;
+            var processRaceState = function () {
 
-            $scope.drivers = drivers;
-            $scope.driversCount = Object.keys( drivers ).length;
-            $scope.laps = laps;
-            $scope.posChanges = posChanges;
+                laps = {};
 
-            setTimeout( function () {
-                $scope.$digest();
-            } );
-        };
+                for ( var lap in raceLapsData ) {
+                    if ( raceLapsData.hasOwnProperty( lap ) ) {
+                        processHeat( raceLapsData[ lap ] );
+                    }
+                }
 
-        $scope.formatTimeLeft = function( time ) {
-            time = Math.floor( time / 1000 );
-            var mins = Math.floor( time / 60 );
-            var sec = time - mins * 60;
-            return mins + ':' + sec;
-        };
+                $scope.drivers = drivers;
+                $scope.driversCount = Object.keys( drivers ).length;
+                $scope.laps = laps;
+                $scope.posChanges = posChanges;
 
-        var event_connect = function () {
-            ws.emit( EVENTS.CLUB_SUBSCRIBE, {
-                clubId: clubId
-            });
-        };
-
-        var event_race_state = function ( response ) {
-            if ( response !== null ) {
-                processRaceState( response );
-            } else {
-                event_no_active_race();
-            }
-        };
-
-        var event_subscribe_id = function ( response ) {
-
-            subId = response;
-
-            ws.emit( EVENTS.RACE_GET_STATE, {
-                clubId: clubId,
-                subId: subId
-            });
-        };
-
-        var event_heat_data = function ( response ) {
-
-            console.log( ' got HEAT', response );
-
-            if ( response !== null && raceid === response.raceId ) {
-
-                $scope.timeLeft = response.timeLeft;
-
-                var lapNum = Number( response.heat[ Object.keys( response.heat )[ 0 ] ].laps );
-                console.log( 'wow got heat', response, ' current race', raceid, 'lap ', lapNum );
-
-                processHeat( response.heat, lapNum );
+                tickRemainingTime();
 
                 setTimeout( function () {
                     $scope.$digest();
-                }, 0 );
+                } );
+            };
+
+            var event_connect = function () {
+                ws.emit( EVENTS.CLUB_SUBSCRIBE, {
+                    clubId: clubId
+                } );
+            };
+
+            var event_race_state = function ( response ) {
+
+                if ( response !== null ) {
+                    console.log( 111, response );
+
+                    raceid = response.raceid;
+                    raceLapsData = response.data;
+                    $scope.raceName = response.name;
+                    remainingTime = response.timeLeft;
+
+                    processRaceState();
+
+                } else {
+                    event_no_active_race();
+                }
+            };
+
+            /**
+             * Upon detecting new race we need to
+             * reset data from previous race
+             */
+            var requestRaceState = function () {
+
+                resetData();
+
+                ws.emit( EVENTS.RACE_GET_STATE, {
+                    clubId: clubId,
+                    subId: subId
+                } );
+            };
+
+
+            var event_subscribe_id = function ( response ) {
+                subId = response;
+                requestRaceState();
+            };
+
+            var event_heat_data = function ( response ) {
+
+                console.log( ' got HEAT', response );
+
+                if ( response !== null && raceid === response.raceId ) {
+
+                    var heat = response.heat;
+
+                    for ( let d = 0; d < heat.drivers.length; d++ ) {
+
+                        let dataPortion = heat.drivers[ d ];
+                        //
+                        // drivers[ dataPortion.id ] = {
+                        //     id: dataPortion.id,
+                        //     name: dataPortion.name,
+                        //     best: dataPortion.best,
+                        //     average: dataPortion.average,
+                        //     kart: dataPortion.kart,
+                        //     pos: dataPortion.position
+                        // };
+
+                        if ( !raceLapsData.hasOwnProperty( dataPortion.laps ) ) {
+                            raceLapsData[ dataPortion.laps ] = {};
+                        }
+
+                        raceLapsData[ dataPortion.laps ][ dataPortion.id ] = dataPortion;
+                    }
+
+
+                    remainingTime = heat.timeLeft;
+                    processRaceState();
+                }
+            };
+
+            var event_no_active_race = function () {
+                console.log( 'RACE FINISHED EVENT !!11' );
+                console.log( 'NO ACTIVE RACE' );
+            };
+
+            ws.on( EVENTS.WS_CONNECTED, event_connect );
+            ws.on( EVENTS.RACE_STATE, event_race_state );
+            ws.on( EVENTS.RACE_STARTED, requestRaceState );
+            ws.on( EVENTS.RACE_FINISHED, event_no_active_race );
+            ws.on( EVENTS.RACE_SUBSCRIBED, event_subscribe_id );
+            ws.on( EVENTS.HEAT, event_heat_data );
+
+            if ( ws.isConnected() ) {
+                event_connect();
             }
+
+            // TODO on destroy unsubscribe from all WS events
         };
 
-        var event_no_active_race = function() {
 
-            console.log('NO ACTIVE RACE');
-        }
-
-        ws.on( EVENTS.WS_CONNECTED, event_connect );
-        ws.on( EVENTS.RACE_STATE, event_race_state );
-        ws.on( EVENTS.RACE_STARTED, event_subscribe_id );
-        ws.on( EVENTS.RACE_FINISHED, event_no_active_race );
-        ws.on( EVENTS.RACE_SUBSCRIBED, event_subscribe_id );
-        ws.on( EVENTS.HEAT, event_heat_data );
-
-        if (ws.isConnected()) {
-            event_connect();
-        }
-
-        // TODO on destroy unsubscribe from all WS events
-    };
-
-
-    return {
-        restrict: 'E',
-        replace: false,
-        link: link,
-        scope: {},
-        templateUrl: 'partials/live/live.tmpl.html'
-    };
+        return {
+            restrict: 'E',
+            replace: false,
+            link: link,
+            scope: {},
+            templateUrl: 'partials/live/live.tmpl.html'
+        };
 
 } ] );
