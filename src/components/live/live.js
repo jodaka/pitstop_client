@@ -25,7 +25,7 @@ function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
                     var mins = Math.floor( time / 60 );
                     var sec = time - mins * 60;
                     if ( sec < 10 ) {
-                        sec = '0'+sec;
+                        sec = '0' + sec;
                     }
                     var res = mins + ':' + sec;
 
@@ -87,7 +87,10 @@ function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
                             driverData.startPos = driverData.position;
                         }
 
-                        var time = ( typeof heat[ driverId ] !== 'undefined' ) ? Number( heat[ driverId ].time ) / 1000 : null;
+                        var time = ( typeof heat[ driverId ] !== 'undefined' ) ? Number( heat[ driverId ].time / 1000 ) : null;
+                        // if ( time > 1000) {
+                        //     time = time / 1000;
+                        // }
 
                         if ( time !== null ) {
 
@@ -134,37 +137,51 @@ function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
                             heat[ driverId ].time = round( time );
 
                         }
+
+                        if ( !laps.hasOwnProperty( lapNum ) ) {
+                            laps[ lapNum ] = {};
+                        }
+                        laps[ lapNum ][ driverId ] = heat[ driverId ];
+                        console.log( 'saving ', lapNum, driverId, 'data', heat[ driverId ] );
+
                     }
                 }
 
-                if ( lapNum > 0 ) {
-                    laps[ lapNum ] = heat;
-                }
             };
 
-            var processRaceState = function () {
-
-                laps = {};
-
-                for ( var lap in raceLapsData ) {
-                    if ( raceLapsData.hasOwnProperty( lap ) ) {
-                        processHeat( raceLapsData[ lap ] );
-                    }
-                }
-
+            var pingAngular = function () {
                 $scope.drivers = drivers;
                 $scope.driversCount = Object.keys( drivers ).length;
                 $scope.laps = laps;
                 $scope.posChanges = posChanges;
 
                 tickRemainingTime();
-
                 setTimeout( function () {
                     $scope.$digest();
-                } );
+                }, 4 );
+                console.log( 1111, $scope.laps );
             };
 
-            var event_connect = function () {
+            var processRaceState = function () {
+
+                for ( var lap in raceLapsData ) {
+                    if ( raceLapsData.hasOwnProperty( lap ) ) {
+                        processHeat( raceLapsData[ lap ] );
+                    }
+                }
+                pingAngular();
+                // $scope.drivers = drivers;
+                // $scope.driversCount = Object.keys( drivers ).length;
+                // $scope.laps = laps;
+                // $scope.posChanges = posChanges;
+                //
+                // tickRemainingTime();
+                // setTimeout( function () {
+                //     $scope.$digest();
+                // }, 4 );
+            };
+
+            var event_subscribe_club = function () {
                 ws.emit( EVENTS.CLUB_SUBSCRIBE, {
                     clubId: clubId
                 } );
@@ -215,29 +232,31 @@ function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
 
                     var heat = response.heat;
 
+                    var heatDrivers = {};
                     for ( let d = 0; d < heat.drivers.length; d++ ) {
 
                         let dataPortion = heat.drivers[ d ];
-                        //
-                        // drivers[ dataPortion.id ] = {
-                        //     id: dataPortion.id,
-                        //     name: dataPortion.name,
-                        //     best: dataPortion.best,
-                        //     average: dataPortion.average,
-                        //     kart: dataPortion.kart,
-                        //     pos: dataPortion.position
-                        // };
-
-                        if ( !raceLapsData.hasOwnProperty( dataPortion.laps ) ) {
-                            raceLapsData[ dataPortion.laps ] = {};
-                        }
-
-                        raceLapsData[ dataPortion.laps ][ dataPortion.id ] = dataPortion;
+                        heatDrivers[ dataPortion.id ] = dataPortion;
                     }
-
-
+                    //
+                    //     // drivers[ dataPortion.id ] = {
+                    //     //     id: dataPortion.id,
+                    //     //     name: dataPortion.name,
+                    //     //     best: dataPortion.best,
+                    //     //     average: dataPortion.average,
+                    //     //     kart: dataPortion.kart,
+                    //     //     pos: dataPortion.position
+                    //     // };
+                    //
+                    //     if ( !raceLapsData.hasOwnProperty( dataPortion.laps ) ) {
+                    //         raceLapsData[ dataPortion.laps ] = {};
+                    //     }
+                    //
+                    //     raceLapsData[ dataPortion.laps ][ dataPortion.id ] = dataPortion;
+                    // }
+                    processHeat( heatDrivers );
                     remainingTime = heat.timeLeft;
-                    processRaceState();
+                    pingAngular();
                 }
             };
 
@@ -246,16 +265,36 @@ function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
                 console.log( 'NO ACTIVE RACE' );
             };
 
-            ws.on( EVENTS.WS_CONNECTED, event_connect );
+
+            resetData();
+
+            $scope.$on( 'routeChange', function () {
+                console.log( 'unsubscribing', ws );
+
+                ws.off( EVENTS.WS_CONNECTED, event_subscribe_club );
+                ws.off( EVENTS.RACE_STATE, event_race_state );
+                ws.off( EVENTS.RACE_STARTED, requestRaceState );
+                ws.off( EVENTS.RACE_FINISHED, event_no_active_race );
+                ws.off( EVENTS.RACE_SUBSCRIBED, event_subscribe_id );
+                ws.off( EVENTS.HEAT, event_heat_data );
+
+                ws.disconnect();
+            } );
+
+            console.log( 'subscribing', ws );
+            ws.on( EVENTS.WS_CONNECTED, event_subscribe_club );
             ws.on( EVENTS.RACE_STATE, event_race_state );
             ws.on( EVENTS.RACE_STARTED, requestRaceState );
             ws.on( EVENTS.RACE_FINISHED, event_no_active_race );
             ws.on( EVENTS.RACE_SUBSCRIBED, event_subscribe_id );
             ws.on( EVENTS.HEAT, event_heat_data );
 
-            if ( ws.isConnected() ) {
-                event_connect();
-            }
+            ws.connect();
+            // if ( ws.isConnected() ) {
+            //     console.log('connected');
+            //     event_subscribe_club();
+            // }
+
 
             // TODO on destroy unsubscribe from all WS events
         };

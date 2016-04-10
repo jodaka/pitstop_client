@@ -75,6 +75,13 @@
                     }
                 } );
 
+                $rootScope.$on( '$routeChangeStart', function ( evt, next, current ) {
+                    if ( typeof current !== 'undefined' ) {
+                        var nextName = next.$$route.templateUrl.replace( /.*\/(.*?)\.html/, '$1' );
+                        $rootScope.$broadcast( 'routeChange', nextName );
+                    }
+                } );
+
                 $AppConfig.api.url = location.protocol + $AppConfig.api.url.replace( /%s/, location.hostname );
                 $AppConfig.ws.url = $AppConfig.ws.url.replace( /%s/, location.hostname );
         } ] );

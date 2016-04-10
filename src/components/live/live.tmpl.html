@@ -67,10 +67,11 @@
         </div>
     </div>
     <div class="k-table-row k-race-lap" ng-repeat="(lid, lap) in laps track by $index" ng-init="lapIndex = $index">
-        <div class="k-table-cell k-table-header-col__cell">{{ lid }}</div>
+        <div class="k-table-cell k-table-header-col__cell">{{ $index + 1 }}</div>
         <div class="k-table-cell k-race-cell_{{ $index+1 }}" ng-class="{'k-race-cell_best':  lap[ dkey ].t == drivers[ dkey ].best }" ng-repeat="(dkey, dvalue) in drivers track by $index">
-            <span class="k-cell_pos" ng-if="posChanges[ lapIndex+1 ][ dkey ]" title="Смена позиции">{{ posChanges[ lapIndex+1 ][ dkey ]}}</span> {{ lap[ dkey ].time }}
-            <span class="k-cell_change" ng-if="kartChanges[ lapIndex+1 ][ dkey ]" title="{{ kartChanges[ lapIndex+1 ][ dkey ]}}">⇄</span>
+            <!-- <span class="k-cell_pos" ng-if="posChanges[ lapIndex+1 ][ dkey ]" title="Смена позиции">{{ posChanges[ lapIndex+1 ][ dkey ]}}</span>  -->
+            {{ lap[ dkey ].time }}
+            <!-- <span class="k-cell_change" ng-if="kartChanges[ lapIndex+1 ][ dkey ]" title="{{ kartChanges[ lapIndex+1 ][ dkey ]}}">⇄</span> -->
         </div>
     </div>
 </div>

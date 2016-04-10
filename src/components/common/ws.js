@@ -13,6 +13,7 @@ function wsFactory( AppConfig, EVENTS ) {
         var wsConnected = false;
 
         var emitter = new EventEmitter();
+        var eventer;
 
         var emit = function () {
             var params = Array.prototype.slice.call( arguments, 0 );
@@ -26,16 +27,16 @@ function wsFactory( AppConfig, EVENTS ) {
             emitter.emit.apply( this, params );
         };
 
-        // basic EventEmitter wrapper to provide websocket events
-        var eventer = {
-            on: emitter.on,
-            off: emitter.off,
-            emit: emit,
-            emitLocal: emitter.emit,
-            isConnected: function () {
-                return wsConnected;
+        var disconnectWS = function() {
+
+            if ( ws && wsConnected ) {
+                ws.onclose = function(){};
+                ws.connected = false;
+                ws.close();
+                ws = null;
             }
         };
+
 
         var wsOnopen = function () {
             console.log( 1, ' ws connection established' );
@@ -129,7 +130,20 @@ function wsFactory( AppConfig, EVENTS ) {
             ws.onerror = wsOnerror;
         };
 
-        connectWS();
+        // basic EventEmitter wrapper to provide websocket events
+        eventer = {
+            on: emitter.on,
+            off: emitter.off,
+            emit: emit,
+            emitLocal: emitter.emit,
+            isConnected: function () {
+                return wsConnected;
+            },
+            disconnect: disconnectWS,
+            connect: connectWS
+        };
+
+        // connectWS();
 
         return eventer;
 
