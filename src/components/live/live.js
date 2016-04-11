@@ -142,8 +142,6 @@ function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
                             laps[ lapNum ] = {};
                         }
                         laps[ lapNum ][ driverId ] = heat[ driverId ];
-                        console.log( 'saving ', lapNum, driverId, 'data', heat[ driverId ] );
-
                     }
                 }
 
@@ -159,7 +157,6 @@ function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
                 setTimeout( function () {
                     $scope.$digest();
                 }, 4 );
-                console.log( 1111, $scope.laps );
             };
 
             var processRaceState = function () {
@@ -170,15 +167,6 @@ function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
                     }
                 }
                 pingAngular();
-                // $scope.drivers = drivers;
-                // $scope.driversCount = Object.keys( drivers ).length;
-                // $scope.laps = laps;
-                // $scope.posChanges = posChanges;
-                //
-                // tickRemainingTime();
-                // setTimeout( function () {
-                //     $scope.$digest();
-                // }, 4 );
             };
 
             var event_subscribe_club = function () {
@@ -190,8 +178,6 @@ function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
             var event_race_state = function ( response ) {
 
                 if ( response !== null ) {
-                    console.log( 111, response );
-
                     raceid = response.raceid;
                     raceLapsData = response.data;
                     $scope.raceName = response.name;
@@ -225,8 +211,6 @@ function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
             };
 
             var event_heat_data = function ( response ) {
-
-                console.log( ' got HEAT', response );
 
                 if ( response !== null && raceid === response.raceId ) {
 
@@ -265,7 +249,6 @@ function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
                 console.log( 'NO ACTIVE RACE' );
             };
 
-
             resetData();
 
             $scope.$on( 'routeChange', function () {
@@ -290,13 +273,6 @@ function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
             ws.on( EVENTS.HEAT, event_heat_data );
 
             ws.connect();
-            // if ( ws.isConnected() ) {
-            //     console.log('connected');
-            //     event_subscribe_club();
-            // }
-
-
-            // TODO on destroy unsubscribe from all WS events
         };
 
 
