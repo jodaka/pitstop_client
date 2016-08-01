@@ -1,6 +1,6 @@
 angular.module( 'k.directives' ).directive( 'live', [
-'clubsDict', '$routeParams', 'ws', 'eventsList',
-function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
+    'clubsDict', '$routeParams', 'ws', 'eventsList',
+    function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
 
         var link = function ( $scope, $element ) {
 
@@ -16,6 +16,8 @@ function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
 
             var remainingHolder = $element.k.querySelector( '.k-live__remaining' )[ 0 ];
             var remainingTimeout = null;
+            var remainingTime = null;
+            var drivers, laps, raceid, raceLapsData, posChanges, changesCount;
 
             var tickRemainingTime = function ( time ) {
 
@@ -30,7 +32,7 @@ function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
                     var res = mins + ':' + sec;
 
                     remainingHolder.innerHTML = 'Осталось времени: ' + res;
-                    remainingTime = remainingTime - 1000;
+                    remainingTime -= 1000;
 
                     if ( remainingTimeout ) {
                         clearTimeout( remainingTimeout );
@@ -44,7 +46,6 @@ function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
                 }
             };
 
-            var remainingTime, drivers, laps, raceid, raceLapsData, posChanges, changesCount;
 
             var resetData = function () {
 
@@ -217,9 +218,9 @@ function raceFactory( clubsDict, $routeParams, ws, EVENTS ) {
                     var heat = response.heat;
 
                     var heatDrivers = {};
-                    for ( let d = 0; d < heat.drivers.length; d++ ) {
+                    for ( var d = 0; d < heat.drivers.length; d++ ) {
 
-                        let dataPortion = heat.drivers[ d ];
+                        var dataPortion = heat.drivers[ d ];
                         heatDrivers[ dataPortion.id ] = dataPortion;
                     }
                     //

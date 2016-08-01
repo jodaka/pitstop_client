@@ -15,9 +15,9 @@ function navHeaderFactory( clubsDict, $routeParams, $location, $rootScope ) {
 
             var currentPath = $location.path();
 
-            $scope.getLinkPath = function( id ) {
+            $scope.getLinkPath = function ( id ) {
                 var name = clubsDict.getNameById( id );
-                if ($scope.section === 'races' || $scope.section === 'club' || $scope.section === 'live' ) {
+                if ( $scope.section === 'races' || $scope.section === 'club' || $scope.section === 'live' ) {
                     var re = new RegExp( $scope.clubName );
                     return '/#' + currentPath.replace( re, name );
                 } else {
@@ -25,17 +25,17 @@ function navHeaderFactory( clubsDict, $routeParams, $location, $rootScope ) {
                 }
             };
 
-            $scope.gimmeBackLink = function() {
+            $scope.gimmeBackLink = function () {
                 return $rootScope.previousPage;
             };
 
-            $scope.icanhas = function( chzbrgr ) {
-                switch (chzbrgr) {
+            $scope.icanhas = function ( chzbrgr ) {
+                switch ( chzbrgr ) {
                     case 'dataFilter':
                         return ( $scope.section === 'races' || $scope.section === 'club' || $scope.section === 'live' );
                         break;
                     case 'back':
-                        return ( $rootScope.previousPage && ( $scope.section === 'pilot' || $scope.section === 'race' ));
+                        return ( $rootScope.previousPage && ( $scope.section === 'pilot' || $scope.section === 'race' ) );
                     default:
                         return false;
                 }
