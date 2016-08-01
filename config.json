@@ -1,8 +1,8 @@
 {
     "DEBUG": true,
-    "version": "0.0.1",
+    "version": "0.0.2",
     "api": {
-        "url": "//%s:8881/",
+        "url": "https://pitstop.top/api/",
         "race": "race/%s",
         "pilot": "pilot/%s/%s",
         "races": "races/%s/%s",
