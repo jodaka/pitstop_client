@@ -11,49 +11,35 @@
 </div>
 
 <h3 class="k-header">Сводные данные</h3>
-<div class="k-table k-race-laps__drivers{{driversCount}}" ng-hide="loading">
-    <div class="k-table-header">
-        <div class="k-table-header__cell k-race-header_col">&nbsp;</div>
-        <div class="k-table-header__cell k-race-header" ng-repeat="(id, driver) in race.drivers track by $index">
-            <a class="k-link k-link_pilot" href="/#/pilot/{{::id}}">{{::  driver.name }}</a>
-        </div>
+<div class="k-table" ng-hide="loading">
+    <div class="k-table-header k-races-list__race_header">
+        <div class="k-table-header__cell">&nbsp;</div>
+        <div class="k-table-header__cell">Позиция</div>
+        <div class="k-table-header__cell">Лучшее время</div>
+        <div class="k-table-header__cell">Среднее время</div>
+        <div class="k-table-header__cell">Кругов пройдено</div>
+        <div class="k-table-header__cell">Карт</div>
     </div>
 
-    <div class="k-table-row k-race-lap">
-        <div class="k-table-cell k-table-header-col__cell">Лучшее время</div>
-        <div class="k-table-cell k-race-cell_{{:: $index+1 }}" ng-repeat="driver in race.drivers track by $index">
+    <div class="k-table-row k-table-row_zebra" 
+        ng-repeat="driver in overallInfo track by $index">
+        <div class="k-table-cell">
+            {{:: driver.name }}
+        </div>
+        <div class="k-table-cell">
+            {{:: driver.pos }}
+        </div>
+        <div class="k-table-cell">
             {{:: driver.best }}
         </div>
-    </div>
-    <div class="k-table-row k-race-lap">
-        <div class="k-table-cell k-table-header-col__cell">Среднее время</div>
-        <div class="k-table-cell k-race-cell_{{:: $index+1 }}" ng-repeat="driver in race.drivers track by $index">
+        <div class="k-table-cell">
             {{:: driver.average }}
         </div>
-    </div>
-    <div class="k-table-row k-race-lap">
-        <div class="k-table-cell k-table-header-col__cell">Позиция старт → финиш</div>
-        <div class="k-table-cell k-race-cell_{{:: $index+1 }}" ng-repeat="driver in race.drivers track by $index">
-            <span ng-if="driver.startPos!==driver.pos">{{:: driver.startPos }} → {{:: driver.pos }}</span>
-            <span ng-if="driver.startPos===driver.pos">{{:: driver.pos }}</span>
-        </div>
-    </div>
-    <div class="k-table-row k-race-lap">
-        <div class="k-table-cell k-table-header-col__cell">Кругов пройдено</div>
-        <div class="k-table-cell k-race-cell_{{:: $index+1 }}" ng-repeat="driver in race.drivers track by $index">
+        <div class="k-table-cell">
             {{:: driver.lapsFinished }}
         </div>
-    </div>
-    <div class="k-table-row k-race-lap" ng-if="changesCount > 0">
-        <div class="k-table-cell k-table-header-col__cell">Замен картов</div>
-        <div class="k-table-cell k-race-cell_{{:: $index+1 }}" ng-repeat="driver in race.drivers track by $index">
-            {{:: driver.kartChanges.length-1 }}
-        </div>
-    </div>
-    <div class="k-table-row k-race-lap" ng-if="changesCount==0">
-        <div class="k-table-cell k-table-header-col__cell">Карт</div>
-        <div class="k-table-cell k-race-cell_{{:: $index+1 }}" ng-repeat="(did, driver) in race.drivers track by $index">
-            {{:: driver.kartChanges[0].kart }}
+        <div class="k-table-cell">
+            {{:: driver.kart }}
         </div>
     </div>
 </div>
@@ -69,13 +55,14 @@
     <div class="k-table-row k-race-lap" ng-repeat="lap in race.laps track by $index" ng-init="lapIndex = $index">
         <div class="k-table-cell k-table-header-col__cell">{{:: $index+1 }}</div>
         <div class="k-table-cell k-race-cell_{{:: $index+1 }}" ng-class="{'k-race-cell_best':  lap[ dkey ].t == race.drivers[ dkey ].best }" ng-repeat="(dkey, dvalue) in race.drivers track by $index">
-            <span class="k-cell_pos" ng-if="posChanges[ lapIndex+1 ][ dkey ]" title="Смена позиции">{{:: posChanges[ lapIndex+1 ][ dkey ]}}</span> {{:: lap[ dkey ].t }}
+            <span class="k-cell_pos" ng-if="posChanges[ lapIndex+1 ][ dkey ]" title="Смена позиции">{{:: posChanges[ lapIndex+1 ][ dkey ]}}</span> 
+            {{:: lap[ dkey ].t }}
             <span class="k-cell_change" ng-if="kartChanges[ lapIndex+1 ][ dkey ]" title="{{::kartChanges[ lapIndex+1 ][ dkey ]}}">⇄</span>
         </div>
     </div>
 </div>
 
-<h3 class="k-header" ng-hide="loading" ng-if="changesCount > 1">Гоночные отрезки</h3>
+<!--<h3 class="k-header" ng-hide="loading" ng-if="changesCount > 1">Гоночные отрезки</h3>
 <div class="k-race-kart" ng-hide="loading" ng-if="changesCount > 1" ng-repeat="(did, driver) in race.drivers track by $index">
     <div class="k-race-kart__driver">{{:: driver.name }}</div>
 
@@ -94,8 +81,7 @@
             </div>
         </div>
     </div>
+</div>-->
 
-</div>
-<!-- <pre>{{ race.drivers | json }}</pre> -->
-<canvas class="k-race-chart" width="800" height="300" ng-hide="loading||fail"></canvas>
+<!--<canvas class="k-race-chart" width="800" height="300" ng-hide="loading||fail"></canvas>-->
 <div class="k-error" ng-show="fail">Не удалось загрузить данные. Попробуйте позднее</div>

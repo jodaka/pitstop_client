@@ -21,7 +21,9 @@
 </div>
 
 <div class="k-paging-holder" ng-if="date===null">
+    
     <div class="k-paging">
+        <h5>Страницы</h5>
         <div class="k-paging__page"
             ng-class="{ 'k-paging__page_selected': p == page }"
             ng-repeat="p in paging track by $index"

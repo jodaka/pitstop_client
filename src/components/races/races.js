@@ -1,65 +1,60 @@
-angular.module( 'k.directives' ).directive( 'races', [
-'getRaces', 'clubsDict',
-function racesFactory( getRaces, clubsDict ) {
+angular.module('k.directives').directive('races', [
+    'getRaces', 'clubsDict', '$filter',
+    (getRaces, clubsDict, $filter) => {
+        const link = ($scope) => {
+            $scope.clubName = clubsDict.getNameById($scope.selectedClubs);
 
-        var link = function ( $scope ) {
-
-            $scope.clubName = clubsDict.getNameById( $scope.selectedClubs );
-
-            $scope.setPage = function ( page ) {
-                $scope.changePage( {
-                    page: page
-                } );
+            $scope.setPage = (page) => {
+                $scope.changePage({
+                    page
+                });
             };
 
             // requesting data again
-            var loadData = function () {
-
+            const loadData = () => {
                 $scope.races = [];
-                var period = ( $scope.date === null ) ? $scope.page -1 : $scope.date;
+                const period = ($scope.date === null) ? $scope.page - 1 : $scope.date;
 
-                getRaces( $scope.selectedClubs, period )
-                    .then( function ( response ) {
+                getRaces($scope.selectedClubs, period)
+                    .then((response) => {
+                        $scope.races = (angular.isArray(response.data)) ? response.data : [response.data];
 
-                        $scope.races = ( angular.isArray( response.data ) ) ? response.data : [ response.data ];
-
-                        // fixing timezone
-                        for ( var z = 0; z < $scope.races.length; z++ ) {
-                            $scope.races[ z ].best = ( $scope.races[ z ].best / 1000 ).toFixed( 3 );
+                        for (let z = 0; z < $scope.races.length; z++) {
+                            $scope.races[z].best = $filter('lapTime')($scope.races[z].best);
                         }
 
-                        var paging = [];
-                        var perPage = 25;
-                        var total = response.total;
-                        var i = 1;
-                        while ( total > perPage ) {
-                            paging.push( i );
-                            i++;
+                        const paging = [];
+                        const perPage = 25;
+                        let total = response.total;
+                        let i = 1;
+                        while (total > perPage) {
+                            paging.push(i);
+                            i += 1;
                             total -= perPage;
-                            if ( i > 10 ) {
+                            if (i > 25) {
                                 break;
                             }
                         }
 
                         $scope.paging = paging;
-                    } )
-                    .catch( function ( err ) {
-                        console.error( err );
-                    } );
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    });
             };
 
             // on club change
-            $scope.$watch( 'selectedClubs', function ( newVal ) {
-                if ( newVal ) {
+            $scope.$watch('selectedClubs', (newVal) => {
+                if (newVal) {
                     loadData();
                 }
-            }, true );
+            }, true);
         };
 
         return {
             restrict: 'E',
             replace: false,
-            link: link,
+            link,
             scope: {
                 date: '=',
                 clubs: '=',
@@ -69,4 +64,4 @@ function racesFactory( getRaces, clubsDict ) {
             },
             templateUrl: 'partials/races/races.tmpl.html'
         };
-} ] );
+    }]);
