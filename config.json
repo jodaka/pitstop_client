@@ -2,11 +2,11 @@
     "DEBUG": true,
     "version": "0.0.1",
     "api": {
-        "url": "//%s:8881/",
+        "url": "https://pitstop.top/api/",
         "race": "race/%s",
         "pilot": "pilot/%s/%s",
         "races": "races/%s/%s",
-        "club": "club/%s/%s",
+        "club": "club/%s/%s"
     },
     "ws": {
         "url": "ws://%s:8882"

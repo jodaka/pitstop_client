@@ -1,41 +1,73 @@
-angular.module( 'k.utils' ).filter( 'raceDate', [ '$sce',
-function raceDateFactory( $sce ) {
+const addLeadingZero = (num) => {
+    if (num < 10) {
+        return `0${num}`;
+    }
+    return num;
+};
 
-        var days = [ 'Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота' ];
-        var months = [ 'Янв', 'Фев', 'Мар', 'Апр', 'Мая', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек' ];
+angular.module('k.utils').filter('raceDate', ['$sce',
+    ($sce) => {
+        const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+        const months = ['Янв', 'Фев', 'Мар', 'Апр', 'Мая', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
 
-        var addLeadingZero = function ( num ) {
-            if ( num < 10 ) {
-                return '0' + num;
-            } else {
-                return num;
-            }
-        };
-
-        return function ( d ) {
-
-            if ( !d ) {
+        return function(d) {
+            if (!d) {
                 return;
             }
+            d = new Date(d);
 
-            // d = d.replace( 'Z', '+03:00' );
-            d = new Date( d );
-
-            if ( d instanceof Date ) {
-
-                var day = days[ d.getDay() ];
-                var mon = months[ d.getMonth() ];
-                var date = d.getDate();
-                var hours = addLeadingZero( d.getHours() );
-                var minutes = addLeadingZero( d.getMinutes() );
-                var res = '<span class="no-mobile">' + day + ', </span>' + date + ' ' + mon + ', ' + hours + ':' + minutes;
-                // return res;
-                //
-                return $sce.trustAsHtml( res );
-
-            } else {
-                console.warn( 222, d, d instanceof Date );
-                return $sce.trustAsHtml( date );
+            if (d instanceof Date) {
+                const day = days[d.getDay()];
+                const mon = months[d.getMonth()];
+                const date = d.getDate();
+                const hours = addLeadingZero(d.getHours());
+                const minutes = addLeadingZero(d.getMinutes());
+                const res = `<span class="no-mobile">${day}, </span>${date} ${mon}, ${hours}:${minutes}`;
+                return $sce.trustAsHtml(res);
             }
+            return $sce.trustAsHtml(date);
         };
-} ] );
+    }]);
+
+
+angular.module('k.utils').filter('lapTime', [
+    () => {
+        const toPrecision = num => (num / 1000).toFixed(3);
+
+        return function(num) {
+            if (num < 60000) {
+                return toPrecision(num);
+            }
+
+            let hours = 0;
+            let mins = 0;
+            let sec = num;
+
+            while (sec > 60000) {
+                mins += 1;
+                sec -= 60000;
+                if (mins === 60) {
+                    mins = 0;
+                    hours += 1;
+                }
+            }
+
+            let res = '';
+            if (hours > 0) {
+                res += `${hours}:`;
+                mins = addLeadingZero(mins);
+            }
+            if (mins > 0) {
+                res += `${mins}:`;
+                if (sec < 9000) {
+                    res += `0${toPrecision(sec)}`;
+                } else {
+                    res += toPrecision(sec);
+                }
+            } else {
+                res += toPrecision(sec);
+            }
+
+            return res;
+        };
+    }]);
