@@ -43,7 +43,6 @@
                 })
                 .state('app.races', {
                     url: 'races/:club',
-                    // template: '<H2>LOL</h2>'
                     template: '<races-list></races-list>'
                 });
 

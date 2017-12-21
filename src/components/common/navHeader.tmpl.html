@@ -2,10 +2,10 @@
 
     <div class="k-filters k-filters_clubs">
         <label class="k-filter k-filter__club" 
-            ng-class="{ 'k-filter_active' : $ctrl.clubId == $ctrl.clubs[clubName].id}" 
-            ng-repeat="clubName in $ctrl.clubs track by club.id">
+            ng-class="{ 'k-filter_active' : $ctrl.clubId == club.id}" 
+            ng-repeat="(clubName, club) in $ctrl.clubs track by club.id">
             <a class="k-link_filter" 
-                ui-sref="app.races({club: {{:: clubName }} })">{{:: $ctrl.clubs[clubName].title }}</a>
+                ui-sref="app.races({'club': '{{:: clubName }}' })">{{:: club.title }}</a>
         </label>
     </div>
 

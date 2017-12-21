@@ -3,11 +3,11 @@
 console.log(8);
 class RacesList {
 
-    constructor (clubsDict, $stateParams) {
+    constructor (clubsDict, $stateParams, $state) {
         console.log(998);
         this.clubs = clubsDict.getClubs();
         this.clubsDict = clubsDict;
-        // this.$location = $location;
+        this.$state = $state;
 
         let period = $stateParams.period;
         let page = $stateParams.page;
@@ -59,10 +59,17 @@ class RacesList {
     }
 
     saveUrlParams () {
-        const period = (this.date === null) ? this.page : this.date;
-        const path = `/races/${this.clubName}/${this.period}/${period}`;
-        console.warn('redirect to ', path);
-        // this.$location.path();
+        const page = (this.date === null) ? this.page : this.date;
+        console.warn('redirect to ', {
+            club: this.clubName,
+            period: this.period,
+            page
+        });
+        this.$state.go('app.races', {
+            club: this.clubName,
+            period: this.period,
+            page
+        });
     }
 
     setPeriod (period) {
@@ -119,5 +126,5 @@ class RacesList {
 angular.module('k.components').component('racesList', {
     templateUrl: 'partials/races/races.html',
     // controller: RacesList
-    controller: ['clubsDict', '$stateParams', RacesList]
+    controller: ['clubsDict', '$stateParams', '$state', RacesList]
 });
