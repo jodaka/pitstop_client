@@ -1,65 +1,16 @@
 /* global localStorage*/
-angular.module('k.controllers').controller('RacesCtrl', [
-    'clubsDict', '$scope', '$routeParams', '$location',
-    function RaceCtrlFactory (clubsDict, $scope, $routeParams, $location) {
-        $scope.clubs = clubsDict.getTitles();
 
-        const saveUrlParams = function() {
-            const period = ($scope.date === null) ? $scope.page : $scope.date;
-            $location.path(`/races/${$scope.clubName}/${$scope.period}/${period}`);
-        };
+console.log(8);
+class RacesList {
 
-        $scope.setPeriod = function(period) {
-            if (period === 'all') {
-                $scope.period = period;
-            } else {
-                $scope.period = 'date';
+    constructor (clubsDict, $stateParams) {
+        console.log(998);
+        this.clubs = clubsDict.getClubs();
+        this.clubsDict = clubsDict;
+        // this.$location = $location;
 
-                switch (period) {
-                case 'today':
-                    $scope.date = $scope.today;
-                    break;
-                case 'yesterday':
-                    $scope.date = $scope.yesterday;
-                    break;
-                default:
-                    $scope.date = period;
-                    break;
-                }
-            }
-            saveUrlParams();
-        };
-
-        $scope.periodIsActive = function(period) {
-            if ($scope.period === 'all' && period === 'all') {
-                return true;
-            }
-            if ($scope.period === 'date' && period === $scope.date) {
-                return true;
-            }
-
-            return false;
-        };
-
-        $scope.changePage = function(page) {
-            if (page && page !== $scope.page) {
-                $scope.page = page;
-                saveUrlParams();
-            }
-        };
-
-        const redirectToDefault = function() {
-            $scope.page = 1;
-            $scope.date = null;
-            $scope.period = 'all';
-
-            $scope.clubName = 'pulkovo';
-            $scope.clubId = clubsDict.getIdByName($scope.clubName);
-            saveUrlParams();
-        };
-
-        let period = $routeParams.period;
-        let page = $routeParams.page;
+        let period = $stateParams.period;
+        let page = $stateParams.page;
         let date = null;
 
         if (!(period === 'all' || period === 'date')) {
@@ -67,9 +18,9 @@ angular.module('k.controllers').controller('RacesCtrl', [
         }
 
         const today = new Date();
-        $scope.today = today.toISOString().slice(0, 10);
+        this.today = today.toISOString().slice(0, 10);
         today.setDate(today.getDate() - 1);
-        $scope.yesterday = new Date(today.getTime()).toISOString().slice(0, 10);
+        this.yesterday = new Date(today.getTime()).toISOString().slice(0, 10);
 
         // check if page is actually a day
         if (period === 'date' && (/\d\d\d\d-\d\d-\d\d/).test(page)) {
@@ -85,24 +36,88 @@ angular.module('k.controllers').controller('RacesCtrl', [
             period = 'all';
             page = Number(page);
             if (isNaN(page) || !Number.isInteger(page)) {
-                redirectToDefault();
+                this.redirectToDefault();
                 return;
             }
         }
 
-        $scope.period = period;
-        $scope.date = date;
-        $scope.page = page;
+        this.period = period;
+        this.date = date;
+        this.page = page;
 
-        $scope.clubName = $routeParams.club;
-        if ($scope.clubName) {
-            $scope.clubName = $scope.clubName.toLowerCase();
+        this.clubName = $stateParams.club;
+        if (this.clubName) {
+            this.clubName = this.clubName.toLowerCase();
         }
 
-        $scope.selectedClub = clubsDict.getIdByName($scope.clubName);
+        this.selectedClub = clubsDict.getIdByName(this.clubName);
 
-        if (!$scope.selectedClub) {
-            redirectToDefault();
+        if (!this.selectedClub) {
+            this.redirectToDefault();
             return;
         }
-    }]);
+    }
+
+    saveUrlParams () {
+        const period = (this.date === null) ? this.page : this.date;
+        const path = `/races/${this.clubName}/${this.period}/${period}`;
+        console.warn('redirect to ', path);
+        // this.$location.path();
+    }
+
+    setPeriod (period) {
+        if (period === 'all') {
+            this.period = period;
+        } else {
+            this.period = 'date';
+
+            switch (period) {
+            case 'today':
+                this.date = this.today;
+                break;
+            case 'yesterday':
+                this.date = this.yesterday;
+                break;
+            default:
+                this.date = period;
+                break;
+            }
+        }
+        this.saveUrlParams();
+    }
+
+    periodIsActive (period) {
+        if (this.period === 'all' && period === 'all') {
+            return true;
+        }
+        if (this.period === 'date' && period === this.date) {
+            return true;
+        }
+
+        return false;
+    }
+
+    changePage (page) {
+        if (page && page !== this.page) {
+            this.page = page;
+            this.saveUrlParams();
+        }
+    }
+
+    redirectToDefault () {
+        this.page = 1;
+        this.date = null;
+        this.period = 'all';
+
+        this.clubName = 'pulkovo';
+        this.clubId = this.clubsDict.getIdByName(this.clubName);
+        this.saveUrlParams();
+    }
+
+}
+
+angular.module('k.components').component('racesList', {
+    templateUrl: 'partials/races/races.html',
+    // controller: RacesList
+    controller: ['clubsDict', '$stateParams', RacesList]
+});

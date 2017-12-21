@@ -1,12 +1,8 @@
-var gulp = require( 'gulp' );
-var config = require( '../config' );
-var del = require( 'del' );
+const gulp = require('gulp');
+const config = require('../config');
+const del = require('del');
 
-gulp.task( 'clean', () => {
-
-    return del( [
-        config.paths.build,
-        config.paths.www_site
-    ] );
-
-} );
+gulp.task('clean', () => del([
+    config.paths.build,
+    config.paths.www_site
+]));
