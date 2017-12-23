@@ -12,9 +12,7 @@ class ClubTop {
 
         if (clubsDict.getClubs().hasOwnProperty(this.clubName)) {
             this.clubId = clubsDict.getIdByName(this.clubName);
-            console.log(1, this.clubId);
         } else {
-            console.log(2, 'redirect');
             $state.go('app.club', { club: 'pulkovo', period: 'week' });
             return;
         }

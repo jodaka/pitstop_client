@@ -43,8 +43,6 @@ class RaceDetails {
             const lapData = data.laps[lapCounter];
             const lapNum = lapData.num;
 
-            console.log(12345, data.drivers);
-
             const driverIdsList = Object.keys(data.drivers);
 
             for (let dIdx = 0, dLength = driverIdsList.length; dIdx < dLength; dIdx++) {
