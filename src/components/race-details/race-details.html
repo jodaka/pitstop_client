@@ -12,7 +12,7 @@
 
     <div class="k-loading" ng-show="$ctrl.loading&&!$ctrl.fail">Загрузка</div>
 
-    <h2>{{::$ctrl.race.basic.name}}</h2>
+    <h2 class="k-header">{{::$ctrl.race.basic.name}}</h2>
 
     <h3 class="k-header">Сводные данные</h3>
     <div class="k-table" ng-hide="$ctrl.loading">
@@ -55,7 +55,7 @@
             <div class="k-table-header__cell k-race-header" 
                 ng-repeat="(id, driver) in ::$ctrl.race.drivers track by $index">
                 <a class="k-link k-link_pilot" 
-                    ui-sref="app.pilot({ pilotId: '{{::id}}' })">{{::  driver.name }}
+                    ui-sref="app.pilot({ pilotId: '{{::id}}', page: '1' })">{{::  driver.name }}
                 </a>
             </div>
         </div>

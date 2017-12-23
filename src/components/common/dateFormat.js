@@ -25,7 +25,7 @@ angular.module('k.utils').filter('raceDate', ['$sce',
                 const res = `<span class="no-mobile">${day}, </span>${date} ${mon}, ${hours}:${minutes}`;
                 return $sce.trustAsHtml(res);
             }
-            return $sce.trustAsHtml(date);
+            return d;
         };
     }]);
 

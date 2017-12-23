@@ -16,6 +16,11 @@ class NavigationHeader {
     }
 
     changeClub (club, stateName = this.stateName) {
+        // when in race state, changing club doesn't makes sense
+        if (stateName === 'app.race') {
+            return;
+        }
+
         const params = {
             club,
             period: stateName === 'app.races' ? 'all' : 'week'

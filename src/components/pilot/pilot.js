@@ -1,81 +1,88 @@
-angular.module( 'k.directives' ).directive( 'pilot', [
-'clubsDict', 'getPilot',
-function racesFactory( clubsDict, getPilot ) {
+class PilotDetails {
+    constructor (clubsDict, $stateParams, $state, $scope, getPilot) {
+        this.clubsDict = clubsDict;
+        this.$stateParams = $stateParams;
+        this.$state = $state;
+        this.$scope = $scope;
+        this.getPilot = getPilot;
 
-        var link = function ( $scope ) {
+        const clubs = clubsDict.getClubs();
+        console.log(222, clubs);
 
-            $scope.changePage = function ( page ) {
-                if ( page && page !== $scope.page ) {
-                    $scope.page = page;
-                    console.log( 'page set ', page );
-                    loadData();
-                }
+        this.pilotId = Number($stateParams.pilotId);
+        this.page = $stateParams.page;
+
+        // checking page
+        if (isNaN(this.page) || !Number.isInteger(this.page)) {
+            this.page = 1;
+        }
+
+        // checking pilot id
+        if (isNaN(this.pilotId) || !Number.isInteger(this.pilotId)) {
+            $state.go('/');
+            return;
+        }
+
+        this.loadData();
+    }
+
+    changePage (page) {
+        if (page && page !== this.page) {
+            this.$state.go('app.pilot', {
+                pilotId: this.pilotId,
+                page
+            });
+        }
+    }
+
+    processPilotData (response) {
+        this.races = response.races;
+        this.clubStats = {};
+        this.name = response.name;
+
+        Object.keys(response.clubs).forEach((clubId) => {
+            console.log(1, clubId);
+            this.clubStats[this.clubsDict.getTitleById(clubId)] = {
+                count: response.clubs[clubId].count,
+                best: (Number(response.clubs[clubId].best) / 1000).toFixed(3)
             };
+        });
 
-            var clubs = clubsDict.getNames();
-            console.log( 222, clubs );
+        // fixing timezone
+        for (let z = 0; z < this.races.length; z++) {
+            this.races[z].best = (this.races[z].best / 1000).toFixed(3);
+            this.races[z].average = (this.races[z].average / 1000).toFixed(3);
+            this.races[z].clubName = this.clubsDict.getNameById(this.races[z].clubid);
+            this.races[z].clubTitle = this.clubsDict.getTitleById(this.races[z].clubid);
+        }
 
-            var loadData = function () {
-                $scope.races = [];
+        const paging = [];
+        const perPage = 25;
+        let total = response.total;
+        let i = 1;
+        while (total > perPage) {
+            paging.push(i);
+            i += 1;
+            total -= perPage;
+            if (i > 10) {
+                break;
+            }
+        }
 
-                getPilot( $scope.pilotId, $scope.page - 1 )
-                    .then( function ( response ) {
+        this.paging = paging;
+        console.log('DONE');
+    }
 
-                        console.log( 11111, response );
+    loadData () {
+        this.getPilot(this.pilotId, this.page - 1)
+            .then(response => this.processPilotData(response))
+            .catch((err) => {
+                console.error(err);
+            });
+    }
+}
 
-                        $scope.races = response.races;
-                        $scope.clubStats = {};
-                        $scope.name = response.name;
-
-                        for ( var cl in response.clubs ) {
-                            $scope.clubStats[ clubsDict.getTitleById( cl ) ] = {
-                                count: response.clubs[ cl ].count,
-                                best: ( Number( response.clubs[ cl ].best ) / 1000 ).toFixed( 3 )
-                            };
-                        }
-
-                        // fixing timezone
-                        for ( var z = 0; z < $scope.races.length; z++ ) {
-                            $scope.races[ z ].best = ( $scope.races[ z ].best / 1000 ).toFixed( 3 );
-                            $scope.races[ z ].average = ( $scope.races[ z ].average / 1000 ).toFixed( 3 );
-                            $scope.races[ z ].clubName = clubsDict.getNameById( $scope.races[ z ].clubid );
-                        }
-
-                        var paging = [];
-                        var perPage = 25;
-                        var total = response.total;
-                        var i = 1;
-                        while ( total > perPage ) {
-                            paging.push( i );
-                            i++;
-                            total -= perPage;
-                            if ( i > 10 ) {
-                                break;
-                            }
-                        }
-
-                        $scope.paging = paging;
-                        setTimeout( function () {
-                            $scope.$apply()
-                        }, 4 );
-                    } )
-                    .catch( function ( err ) {
-                        console.error( err );
-                    } );
-            };
-
-            loadData();
-
-        };
-
-        return {
-            restrict: 'E',
-            replace: false,
-            link: link,
-            scope: {
-                pilotId: '=',
-                page: '='
-            },
-            templateUrl: 'partials/pilot/pilot.tmpl.html'
-        };
-} ] );
+angular.module('k.components').component('pilotDetails', {
+    templateUrl: 'partials/pilot/pilot.html',
+    controller: ['clubsDict', '$stateParams', '$state', '$scope', 'getPilot', PilotDetails]
+});

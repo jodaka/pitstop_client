@@ -33,7 +33,7 @@
             </div>
             <div class="k-table-cell k-race__cell_date" ng-bind-html="race.date | raceDate"></div>
             <div class="k-table-cell k-race__cell_winner">
-                <a class="k-link" href="/#/pilot/{{::race.winnerId}}">{{:: race.winner }}</a>
+                <a class="k-link" ui-sref="app.pilot({pilotId: '{{::race.winnerId}}', page: '1'})">{{:: race.winner }}</a>
             </div>
             <div class="k-table-cell k-race__cell_kart">{{:: race.winnerKart }}</div>
             <div class="k-table-cell k-race__cell_laps">{{:: race.best }}</div>

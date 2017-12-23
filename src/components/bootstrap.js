@@ -11,7 +11,6 @@
      * Loads CSS/JS dependencies and init angular application
      */
     const initApplication = () => {
-        // this is a main holder
         const node = d.querySelector('.k-main');
 
         // If no errors detected, we initialize Angular
@@ -24,11 +23,6 @@
             'k.utils',
             'k.config'
         ]);
-
-        // Angular 1.6 #! router fix
-        // app.config(['$locationProvider', function($locationProvider) {
-        //     $locationProvider.hashPrefix('');
-        // }]);
 
         app.config(['$stateProvider', '$locationProvider', '$urlRouterProvider', function($stateProvider, $locationProvider, $urlRouterProvider) {
             $locationProvider.html5Mode(false);
@@ -85,6 +79,18 @@
                             type: 'string'
                         }
                     }
+                })
+                .state('app.pilot', {
+                    url: 'pilot/:pilotId/:page',
+                    template: '<pilot-details></pilot-details>',
+                    params: {
+                        pilotId: {
+                            type: 'string'
+                        },
+                        page: {
+                            type: 'string'
+                        }
+                    }
                 });
 
             // .state('app.races.incomplete', {
@@ -124,46 +130,14 @@
             // });
         }]);
 
-        // app.config(['$compileProvider', ($compileProvider) => {
-        //     $compileProvider.debugInfoEnabled(true);
-        // }]);
+        app.config(['$compileProvider', ($compileProvider) => {
+            $compileProvider.debugInfoEnabled(true);
+        }]);
 
         app.run(['$rootScope', 'AppConfig',
             function($rootScope, $AppConfig) {
-                $rootScope.$on('$stateChangeError', console.log.bind(console));
-
-                $rootScope.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams) => {
-                    console.log(`$stateChangeStart to ${toState.to}- fired when the transition begins. toState,toParams : \n`, toState, toParams);
-                });
-
-                $rootScope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) => {
-                    console.log(`$stateChangeSuccess to ${toState.name}- fired once the state transition is complete.`);
-                });
-
-                $rootScope.$on('$viewContentLoaded', (event) => {
-                    console.log('$viewContentLoaded - fired after dom rendered', event);
-                });
-
-                $rootScope.$on('$stateNotFound', (event, unfoundState, fromState, fromParams) => {
-                    console.log(`$stateNotFound ${unfoundState.to}  - fired when a state cannot be found by its name.`);
-                    console.log(unfoundState, fromState, fromParams);
-                });
-
-                // $rootScope.$on('$locationChangeSuccess', (scope, newState, oldState) => {
-                //     if (newState !== oldState) {
-                //         $rootScope.previousPage = oldState;
-                //     }
-                // });
-
-                // $rootScope.$on('$routeChangeStart', (evt, next, current) => {
-                // if (typeof current !== 'undefined') {
-                // const nextName = next.$$route.templateUrl.replace(/.*\/(.*?)\.html/, '$1');
-                // $rootScope.$broadcast('routeChange', nextName);
-                // }
-                // });
-
-                $AppConfig.api.url = $AppConfig.api.url.replace(/%s/, location.hostname);
-                $AppConfig.ws.url = $AppConfig.ws.url.replace(/%s/, location.hostname);
+                $AppConfig.api.url = $AppConfig.api.url.replace(/%s/, window.location.hostname);
+                $AppConfig.ws.url = $AppConfig.ws.url.replace(/%s/, window.location.hostname);
             }]);
 
         angular.bootstrap(node, ['pitstop'], {

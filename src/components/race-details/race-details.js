@@ -1,6 +1,5 @@
 class RaceDetails {
     constructor (clubsDict, $stateParams, $state, $scope, getRace, $filter) {
-        console.log(7777);
         this.clubsDict = clubsDict;
         this.$stateParams = $stateParams;
         this.$state = $state;
@@ -45,66 +44,68 @@ class RaceDetails {
             const lapNum = lapData.num;
 
             console.log(12345, data.drivers);
-            for (const driverId in data.drivers) {
-                if (data.drivers.hasOwnProperty(driverId)) {
-                    const driverData = data.drivers[driverId];
 
-                    if (lapCounter === 0) {
-                        driverData.average = driverData.average.toFixed(3);
+            const driverIdsList = Object.keys(data.drivers);
 
-                        driverData.kartChanges = [{
-                            kart: driverData.kart,
-                            lap: 0,
-                            distance: 0
-                        }];
+            for (let dIdx = 0, dLength = driverIdsList.length; dIdx < dLength; dIdx++) {
+                const driverId = driverIdsList[dIdx];
+                const driverData = data.drivers[driverId];
+
+                if (lapCounter === 0) {
+                    driverData.average = driverData.average.toFixed(3);
+
+                    driverData.kartChanges = [{
+                        kart: driverData.kart,
+                        lap: 0,
+                        distance: 0
+                    }];
+
+                    driverData.segmentTime = 0;
+                    driverData.kart = lapData[driverId] && lapData[driverId].k || null;
+                    driverData.lapsFinished = 0;
+
+                    // posChanges[ lapCounter ][ driverId ] = lapData[ driverId ].p;
+                    driverData.p = driverData.startPos;
+                }
+
+                const time = (typeof lapData[driverId] !== 'undefined') ? lapData[driverId].t : null;
+
+                if (time !== null) {
+                    driverData.lapsFinished += 1;
+                    driverData.segmentTime += time;
+
+                    if (driverData.kart !== lapData[driverId].k) {
+                        const distance = lapNum - driverData.kartChanges[driverData.kartChanges.length - 1].lap;
+
+                        driverData.kartChanges.push({
+                            lap: lapNum + 1,
+                            distance,
+                            kart: lapData[driverId].k,
+                            perc: distance * 100 / len,
+                            retired: lapData[driverId].k === 0,
+                            avg: Number(driverData.segmentTime / distance).toFixed(3)
+                        });
 
                         driverData.segmentTime = 0;
-                        driverData.kart = lapData[driverId] && lapData[driverId].k || null;
-                        driverData.lapsFinished = 0;
 
-                        // posChanges[ lapCounter ][ driverId ] = lapData[ driverId ].p;
-                        driverData.p = driverData.startPos;
-                    }
-
-                    const time = (typeof lapData[driverId] !== 'undefined') ? lapData[driverId].t : null;
-
-                    if (time !== null) {
-                        driverData.lapsFinished += 1;
-                        driverData.segmentTime += time;
-
-                        if (driverData.kart !== lapData[driverId].k) {
-                            const distance = lapNum - driverData.kartChanges[driverData.kartChanges.length - 1].lap;
-
-                            driverData.kartChanges.push({
-                                lap: lapNum + 1,
-                                distance,
-                                kart: lapData[driverId].k,
-                                perc: distance * 100 / len,
-                                retired: lapData[driverId].k === 0,
-                                avg: Number(driverData.segmentTime / distance).toFixed(3)
-                            });
-
-                            driverData.segmentTime = 0;
-
-                            if (driverData.kartChanges.length > changesCount) {
-                                changesCount = driverData.kartChanges.length;
-                            }
-
-                            driverData.kart = lapData[driverId].k;
+                        if (driverData.kartChanges.length > changesCount) {
+                            changesCount = driverData.kartChanges.length;
                         }
 
-                        if (driverData.p !== lapData[driverId].p) {
-                            if (typeof posChanges[lapNum + 1] === 'undefined') {
-                                posChanges[lapNum + 1] = {};
-                            }
-                            posChanges[lapNum + 1][driverId] = (driverData.p > lapData[driverId].p) ? `${driverData.p}↑${lapData[driverId].p}` : `${driverData.p}↓${lapData[driverId].p}`;
-                            driverData.p = lapData[driverId].p;
-                        }
-
-                        driverData.pos = lapData[driverId].p;
-
-                        lapData[driverId].t = this.$filter('lapTime')(parseFloat(time) * 1000);
+                        driverData.kart = lapData[driverId].k;
                     }
+
+                    if (driverData.p !== lapData[driverId].p) {
+                        if (typeof posChanges[lapNum + 1] === 'undefined') {
+                            posChanges[lapNum + 1] = {};
+                        }
+                        posChanges[lapNum + 1][driverId] = (driverData.p > lapData[driverId].p) ? `${driverData.p}↑${lapData[driverId].p}` : `${driverData.p}↓${lapData[driverId].p}`;
+                        driverData.p = lapData[driverId].p;
+                    }
+
+                    driverData.pos = lapData[driverId].p;
+
+                    lapData[driverId].t = this.$filter('lapTime')(parseFloat(time) * 1000);
                 }
             }
         }
@@ -149,7 +150,6 @@ class RaceDetails {
         this.changesCount = changesCount;
     }
 }
-
 
 angular.module('k.components').component('raceDetails', {
     templateUrl: 'partials/race-details/race-details.html',

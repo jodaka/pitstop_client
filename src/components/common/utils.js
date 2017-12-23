@@ -1,6 +1,5 @@
-angular.module( 'k.utils' ).factory( 'debounce', [
-function debounceFactory() {
-
+angular.module('k.utils').factory('debounce', [
+    function debounceFactory () {
         /**
          * Makes sure that function is fired only once during specified timeout
          *
@@ -8,46 +7,42 @@ function debounceFactory() {
          * @param  {Number}   threshold timeout in ms
          * @return {Function}           debounced function
          */
-        return function ( fn, threshold ) {
+        return function(fn, threshold) {
+            let timeout = null;
 
-            var timeout = null;
+            return function() {
+                const self = this;
+                const args = arguments;
 
-            return function () {
-
-                var self = this;
-                var args = arguments;
-
-                var delayed = function () {
-                    fn.apply( self, args );
+                const delayed = function() {
+                    fn.apply(self, args);
                     timeout = null;
                 };
 
-                if ( timeout ) {
-                    clearTimeout( timeout );
+                if (timeout) {
+                    clearTimeout(timeout);
                 }
 
-                timeout = setTimeout( delayed, threshold );
+                timeout = setTimeout(delayed, threshold);
             };
         };
+    }]);
 
-} ] );
+angular.module('k.utils').factory('sprintf', [
+    function sprintfFactory () {
+        return function() {
+            const args = Array.prototype.slice.call(arguments, 0);
+            const str = args.shift();
+            const parts = str.split('%s');
 
-angular.module( 'k.utils' ).factory( 'sprintf', [
-function sprintfFactory() {
-
-    return function () {
-            var args = Array.prototype.slice.call( arguments, 0 );
-            var str = args.shift();
-            var parts = str.split( '%s' );
-
-            if ( parts.length - 1 !== args.length ) {
-                console.warn( 'Sprintf arguments mismatch! Expected number of arguments: ', parts.length - 1, ', but found ', args );
+            if (parts.length - 1 !== args.length) {
+                console.warn('Sprintf arguments mismatch! Expected number of arguments: ', parts.length - 1, ', but found ', args);
             }
 
-            var res = parts.shift();
-            for ( var i = 0; i < parts.length; i++ ) {
-                res += args[ i ] + parts[ i ];
+            let res = parts.shift();
+            for (let i = 0; i < parts.length; i++) {
+                res += args[i] + parts[i];
             }
             return res;
         };
-}]);
+    }]);

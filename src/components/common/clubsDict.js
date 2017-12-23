@@ -14,7 +14,10 @@ const clubsDictFactory = function(AppConfig) {
     };
 
     const getIdByName = function(name) {
-        return AppConfig.clubs[name].id;
+        if (AppConfig.clubs.hasOwnProperty(name)) {
+            return AppConfig.clubs[name].id;
+        }
+        return null;
     };
 
     const getClubs = function() {
