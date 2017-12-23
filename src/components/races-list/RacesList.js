@@ -1,10 +1,6 @@
-/* global localStorage*/
-
-console.log(8);
+/* global localStorage:true, isNaN:true */
 class RacesList {
-
     constructor (clubsDict, $stateParams, $state) {
-        console.log(998);
         this.clubs = clubsDict.getClubs();
         this.clubsDict = clubsDict;
         this.$state = $state;
@@ -54,17 +50,11 @@ class RacesList {
 
         if (!this.selectedClub) {
             this.redirectToDefault();
-            return;
         }
     }
 
     saveUrlParams () {
         const page = (this.date === null) ? this.page : this.date;
-        console.warn('redirect to ', {
-            club: this.clubName,
-            period: this.period,
-            page
-        });
         this.$state.go('app.races', {
             club: this.clubName,
             period: this.period,
@@ -94,6 +84,7 @@ class RacesList {
     }
 
     periodIsActive (period) {
+        console.log(period, this.period);
         if (this.period === 'all' && period === 'all') {
             return true;
         }
@@ -120,11 +111,9 @@ class RacesList {
         this.clubId = this.clubsDict.getIdByName(this.clubName);
         this.saveUrlParams();
     }
-
 }
 
 angular.module('k.components').component('racesList', {
-    templateUrl: 'partials/races/races.html',
-    // controller: RacesList
+    templateUrl: 'partials/races-list/races-list.html',
     controller: ['clubsDict', '$stateParams', '$state', RacesList]
 });

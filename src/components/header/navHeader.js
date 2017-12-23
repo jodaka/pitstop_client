@@ -1,11 +1,9 @@
 class NavigationHeader {
-
-    constructor (clubsDict, $stateParams, $location, $rootScope, $state) {
+    constructor (clubsDict, $stateParams, $location, $state) {
         console.log(776);
         this.clubs = clubsDict.getClubs();
         this.clubName = $stateParams.club;
 
-        this.$rootScope = $rootScope;
 
         if (this.clubName) {
             this.clubName = this.clubName.toLowerCase();
@@ -15,6 +13,7 @@ class NavigationHeader {
         // this.section = $stateParams.
         this.clubId = clubsDict.getIdByName(this.clubName);
         this.currentPath = $location.path();
+        this.stateName = $state.current.name;
     }
 
     // getLinkPath (id) {
@@ -30,19 +29,20 @@ class NavigationHeader {
     //     return this.$rootScope.previousPage;
     // }
 
-    // icanhas (chzbrgr) {
-    //     switch (chzbrgr) {
-    //     case 'dataFilter':
-    //         return (this.section === 'races' || this.section === 'club' || this.section === 'live');
-    //     case 'back':
-    //         return (this.$rootScope.previousPage && (this.section === 'pilot' || this.section === 'race'));
-    //     default:
-    //         return false;
-    //     }
-    // }
+    icanhas (chzbrgr) {
+        switch (chzbrgr) {
+        case 'dataFilter':
+            return (this.stateName === 'app.races' || this.stateName === 'app.club' || this.stateName === 'app.live');
+        case 'back':
+            return (this.section === 'pilot' || this.section === 'race');
+        default:
+            return false;
+        }
+    }
 }
 
 angular.module('k.components').component('navHeader', {
-    templateUrl: 'partials/common/navHeader.tmpl.html',
-    controller: ['clubsDict', '$stateParams', '$location', '$rootScope', '$state', NavigationHeader]
+    transclude: true,
+    templateUrl: 'partials/header/navHeader.tmpl.html',
+    controller: ['clubsDict', '$stateParams', '$location', '$state', NavigationHeader]
 });

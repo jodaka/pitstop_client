@@ -33,8 +33,8 @@
         app.config(['$stateProvider', '$locationProvider', '$urlRouterProvider', function($stateProvider, $locationProvider, $urlRouterProvider) {
             $locationProvider.html5Mode(false);
 
-            $urlRouterProvider.when('/', '/races/');
-            $urlRouterProvider.when('', '/races/');
+            $urlRouterProvider.when('/', '/races/pulkovo/all/1');
+            $urlRouterProvider.when('', '/races/pulkovo/all/1');
 
             $stateProvider
                 .state('app', {
@@ -42,32 +42,59 @@
                     abstract: true
                 })
                 .state('app.races', {
-                    url: 'races/:club',
-                    template: '<races-list></races-list>'
+                    url: 'races/:club/:period/:page',
+                    template: '<races-list></races-list>',
+                    params: {
+                        club: {
+                            type: 'string',
+                            value: 'pulkovo'
+                        },
+                        period: {
+                            type: 'string',
+                            value: 'all'
+                        },
+                        page: {
+                            type: 'string',
+                            value: '1'
+                        }
+                    }
                 });
 
-                // .when('/race/:club/:id', {
-                //     templateUrl: 'partials/race/race.html',
-                //     controller: 'RaceCtrl'
-                // })
-                // .when('/live/:club', {
-                //     templateUrl: 'partials/live/live.html'
-                // })
-                // .when('/races/:club?/:period?/:page?', {
-                //     templateUrl: 'partials/races/races.html',
-                //     controller: 'RacesCtrl'
-                // })
-                // .when('/pilot/:id?/:page?', {
-                //     templateUrl: 'partials/pilot/pilot.html',
-                //     controller: 'PilotCtrl'
-                // })
-                // .when('/club/:club?/:period?', {
-                //     templateUrl: 'partials/club/club.html',
-                //     controller: 'ClubCtrl'
-                // })
-                // .otherwise({
-                //     redirectTo: '/races'
-                // });
+            // .state('app.races.incomplete', {
+            //     url: 'races/:club',
+            //     template: '<races-list></races-list>'
+            // })
+            // .state('app.races.incomplete2', {
+            //     url: 'races/:club/:period',
+            //     template: '<races-list></races-list>'
+            // })
+            // .state('app.races', {
+            //     url: 'races/:club/:period/:page',
+            //     template: '<races-list></races-list>'
+            // });
+
+            // .when('/race/:club/:id', {
+            //     templateUrl: 'partials/race/race.html',
+            //     controller: 'RaceCtrl'
+            // })
+            // .when('/live/:club', {
+            //     templateUrl: 'partials/live/live.html'
+            // })
+            // .when('/races/:club?/:period?/:page?', {
+            //     templateUrl: 'partials/races/races.html',
+            //     controller: 'RacesCtrl'
+            // })
+            // .when('/pilot/:id?/:page?', {
+            //     templateUrl: 'partials/pilot/pilot.html',
+            //     controller: 'PilotCtrl'
+            // })
+            // .when('/club/:club?/:period?', {
+            //     templateUrl: 'partials/club/club.html',
+            //     controller: 'ClubCtrl'
+            // })
+            // .otherwise({
+            //     redirectTo: '/races'
+            // });
         }]);
 
         // app.config(['$compileProvider', ($compileProvider) => {
@@ -102,10 +129,10 @@
                 // });
 
                 // $rootScope.$on('$routeChangeStart', (evt, next, current) => {
-                    // if (typeof current !== 'undefined') {
-                        // const nextName = next.$$route.templateUrl.replace(/.*\/(.*?)\.html/, '$1');
-                        // $rootScope.$broadcast('routeChange', nextName);
-                    // }
+                // if (typeof current !== 'undefined') {
+                // const nextName = next.$$route.templateUrl.replace(/.*\/(.*?)\.html/, '$1');
+                // $rootScope.$broadcast('routeChange', nextName);
+                // }
                 // });
 
                 $AppConfig.api.url = $AppConfig.api.url.replace(/%s/, location.hostname);

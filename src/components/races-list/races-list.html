@@ -1,0 +1,27 @@
+<div class="k-page k-page_races">
+
+    <nav-header 
+        data-section="races">
+
+        <div class="k-filters k-filters_period">
+            <label class="k-filter k-filter_period" ng-class="{'k-filter_active': $ctrl.periodIsActive('all')}">
+                <a class="k-link_filter" ng-click="$ctrl.setPeriod('all')">Вся история</a>
+            </label>
+            <label class="k-filter k-filter_period" ng-class="{'k-filter_active': $ctrl.periodIsActive($ctrl.today)}">
+                <a class="k-link_filter" ng-click="$ctrl.setPeriod('today')">Сегодня</a>
+            </label>
+            <label class="k-filter k-filter_period" ng-class="{'k-filter_active': $ctrl.periodIsActive($ctrl.yesterday)}">
+                <a class="k-link_filter" ng-click="$ctrl.setPeriod('yesterday')">Вчера</a>
+            </label>
+        </div>
+
+    </nav-header>
+
+    
+
+    <races 
+        data-selected-club="$ctrl.selectedClub" 
+        data-page="$ctrl.page" 
+        data-change-page="$ctrl.changePage(page)" 
+        data-date="$ctrl.date"></races>
+</div>

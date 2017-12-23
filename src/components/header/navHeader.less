@@ -1,5 +1,9 @@
+
 .k-filters {
-    display: inline-block;
+
+    &__root {
+        display: flex;
+    }
     margin: 0 0 @margin_small / 2 0;
 }
 .k-filters_period,
@@ -65,6 +69,8 @@
     text-decoration: none;
     color: #000;
 }
+
+
 @media screen and (max-width: 400px),(max-device-width:400px) {
     .k-filters {
         margin: 1em 0 0;

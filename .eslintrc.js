@@ -38,6 +38,7 @@ module.exports = {
                 ],
                 "allowSamePrecedence": true
             }
-        ]
+        ],
+        "prefer-destructuring": 0
     }
 };
