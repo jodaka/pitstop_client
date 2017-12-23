@@ -26,7 +26,7 @@
     <div class="k-paging">
         <h5>Страницы</h5>
         <div class="k-paging__page"
-            ng-class="{ 'k-paging__page_selected': p == page }"
+            ng-class="{ 'k-paging__page_selected': p == $ctrl.page }"
             ng-repeat="p in $ctrl.paging track by $index"
             ng-click="$ctrl.setPage(p)">
             {{:: p }}

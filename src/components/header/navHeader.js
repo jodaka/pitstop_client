@@ -1,6 +1,7 @@
 class NavigationHeader {
-    constructor (clubsDict, $stateParams, $location, $state) {
+    constructor (clubsDict, $stateParams, $state) {
         console.log(776);
+        this.$state = $state;
         this.clubs = clubsDict.getClubs();
         this.clubName = $stateParams.club;
 
@@ -12,22 +13,20 @@ class NavigationHeader {
         console.log(345, $stateParams, $state);
         // this.section = $stateParams.
         this.clubId = clubsDict.getIdByName(this.clubName);
-        this.currentPath = $location.path();
         this.stateName = $state.current.name;
     }
 
-    // getLinkPath (id) {
-    //     const name = this.clubsDict.getNameById(id);
-    //     if (this.section === 'races' || this.section === 'club' || this.section === 'live') {
-    //         const re = new RegExp(this.clubName);
-    //         return `/#${this.currentPath.replace(re, name)}`;
-    //     }
-    //     return `/#/races/${name}/all/1`;
-    // }
+    changeClub (club, stateName = this.stateName) {
+        const params = {
+            club,
+            period: stateName === 'app.races' ? 'all' : 'week'
+        };
+        if (stateName === 'app.races') {
+            params.page = 1;
+        }
 
-    // gimmeBackLink () {
-    //     return this.$rootScope.previousPage;
-    // }
+        this.$state.go(stateName, params);
+    }
 
     icanhas (chzbrgr) {
         switch (chzbrgr) {
@@ -44,5 +43,5 @@ class NavigationHeader {
 angular.module('k.components').component('navHeader', {
     transclude: true,
     templateUrl: 'partials/header/navHeader.tmpl.html',
-    controller: ['clubsDict', '$stateParams', '$location', '$state', NavigationHeader]
+    controller: ['clubsDict', '$stateParams', '$state', NavigationHeader]
 });

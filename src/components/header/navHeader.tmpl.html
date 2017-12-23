@@ -5,7 +5,7 @@
             ng-class="{ 'k-filter_active' : $ctrl.clubId == club.id}" 
             ng-repeat="(clubName, club) in $ctrl.clubs track by club.id">
             <a class="k-link_filter" 
-                ui-sref="app.races({club:'{{:: clubName }}',period:'all',page:1})">{{:: club.title }}</a>
+                ng-click="$ctrl.changeClub(clubName)">{{:: club.title }}</a>
         </label>
     </div>
 
@@ -14,14 +14,14 @@
             <a href="javascript:void(0)" class="k-link_filter">Заезды</a>
         </label>
         <label class="k-filter k-filter_type" ng-if="$ctrl.stateName!='app.races'">
-            <a ui-sref="app.races({club:'{{:: clubName }}',period:'all',page:1})" class="k-link_filter">Заезды</a>
+            <a ng-click="$ctrl.changeClub($ctrl.clubName, 'app.races')" class="k-link_filter">Заезды</a>
         </label>
 
         <label class="k-filter k-filer_type k-filter_active" ng-if="$ctrl.stateName=='app.club'">
             <a href="javascript:void(0)" class="k-link_filter">Топ 20</a>
         </label>
         <label class="k-filter k-filter_type" ng-if="$ctrl.stateName!='app.club'">
-            <a ui-sref="app.club({club:'{{:: clubName }}'})" class="k-link_filter">Топ 20</a>
+            <a ng-click="$ctrl.changeClub($ctrl.clubName, 'app.club')" class="k-link_filter">Топ 20</a>
         </label>
         <!-- <label class="k-filter k-filter_type k-filter_active" ng-if="section=='live'">
             <a href="javascript:void(0)" class="k-link_filter">Live</a>
@@ -32,9 +32,4 @@
     </div>
 
     <div ng-transclude=""></div>
-
-    <!-- <div class="k-filters" ng-if="$ctrl.icanhas('back')">
-        <a class="k-link" href="{{:: gimmeBackLink()}}">← Назад </a>
-    </div> -->
-
 </header>

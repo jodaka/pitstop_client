@@ -58,6 +58,20 @@
                             value: '1'
                         }
                     }
+                })
+                .state('app.club', {
+                    url: 'club/:club/:period',
+                    template: '<club-top></club-top>',
+                    params: {
+                        club: {
+                            type: 'string',
+                            value: 'pulkovo'
+                        },
+                        period: {
+                            type: 'string',
+                            value: 'week'
+                        }
+                    }
                 });
 
             // .state('app.races.incomplete', {
