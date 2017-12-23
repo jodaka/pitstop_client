@@ -3,13 +3,13 @@
     <div class="k-filters k-filters_clubs">
         <label class="k-filter k-filter__club" 
             ng-class="{ 'k-filter_active' : $ctrl.clubId == club.id}" 
-            ng-repeat="(clubName, club) in $ctrl.clubs track by club.id">
+            ng-repeat="(clubName, club) in ::$ctrl.clubs track by club.id">
             <a class="k-link_filter" 
                 ng-click="$ctrl.changeClub(clubName)">{{:: club.title }}</a>
         </label>
     </div>
 
-    <div class="k-filters k-filters_types" ng-show="$ctrl.icanhas('dataFilter')">
+    <div class="k-filters k-filters_types" ng-show="$ctrl.filtersEnabled">
         <label class="k-filter k-filter_type k-filter_active" ng-if="$ctrl.stateName=='app.races'">
             <a href="javascript:void(0)" class="k-link_filter">Заезды</a>
         </label>

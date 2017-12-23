@@ -72,6 +72,19 @@
                             value: 'week'
                         }
                     }
+                })
+                .state('app.race', {
+                    url: 'race/:club/:raceId',
+                    template: '<race-details></race-details>',
+                    params: {
+                        club: {
+                            type: 'string',
+                            value: 'pulkovo'
+                        },
+                        raceId: {
+                            type: 'string'
+                        }
+                    }
                 });
 
             // .state('app.races.incomplete', {

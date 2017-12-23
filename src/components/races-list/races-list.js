@@ -1,12 +1,26 @@
 /* global localStorage:true, isNaN:true */
 class RacesList {
-    constructor (clubsDict, $stateParams, $state) {
+    constructor (clubsDict, $stateParams, $state, $scope, getRaces, $filter) {
         this.clubs = clubsDict.getClubs();
         this.clubsDict = clubsDict;
         this.$state = $state;
+        this.getRaces = getRaces;
+        this.$filter = $filter;
+        this.$stateParams = $stateParams;
 
-        let period = $stateParams.period;
-        let page = $stateParams.page;
+        this.checkParams();
+
+        // // on club change
+        $scope.$watch('$ctrl.selectedClub', (newVal) => {
+            if (newVal) {
+                this.loadData();
+            }
+        });
+    }
+
+    checkParams () {
+        let period = this.$stateParams.period;
+        let page = this.$stateParams.page;
         let date = null;
 
         if (!(period === 'all' || period === 'date')) {
@@ -41,12 +55,12 @@ class RacesList {
         this.date = date;
         this.page = page;
 
-        this.clubName = $stateParams.club;
+        this.clubName = this.$stateParams.club;
         if (this.clubName) {
             this.clubName = this.clubName.toLowerCase();
         }
 
-        this.selectedClub = clubsDict.getIdByName(this.clubName);
+        this.selectedClub = this.clubsDict.getIdByName(this.clubName);
 
         if (!this.selectedClub) {
             this.redirectToDefault();
@@ -84,7 +98,6 @@ class RacesList {
     }
 
     periodIsActive (period) {
-        console.log(period, this.period);
         if (this.period === 'all' && period === 'all') {
             return true;
         }
@@ -111,9 +124,42 @@ class RacesList {
         this.clubId = this.clubsDict.getIdByName(this.clubName);
         this.saveUrlParams();
     }
+
+    // requesting data again
+    loadData () {
+        this.races = [];
+        const period = (this.date === null) ? this.page - 1 : this.date;
+
+        this.getRaces(this.selectedClub, period)
+            .then((response) => {
+                this.races = (angular.isArray(response.data)) ? response.data : [response.data];
+
+                for (let z = 0; z < this.races.length; z++) {
+                    this.races[z].best = this.$filter('lapTime')(this.races[z].best);
+                }
+
+                const paging = [];
+                const perPage = 25;
+                let total = response.total;
+                let i = 1;
+                while (total > perPage) {
+                    paging.push(i);
+                    i += 1;
+                    total -= perPage;
+                    if (i > 25) {
+                        break;
+                    }
+                }
+
+                this.paging = paging;
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }
 }
 
 angular.module('k.components').component('racesList', {
     templateUrl: 'partials/races-list/races-list.html',
-    controller: ['clubsDict', '$stateParams', '$state', RacesList]
+    controller: ['clubsDict', '$stateParams', '$state', '$scope', 'getRaces', '$filter', RacesList]
 });
