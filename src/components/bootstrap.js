@@ -92,46 +92,10 @@
                         }
                     }
                 });
-
-            // .state('app.races.incomplete', {
-            //     url: 'races/:club',
-            //     template: '<races-list></races-list>'
-            // })
-            // .state('app.races.incomplete2', {
-            //     url: 'races/:club/:period',
-            //     template: '<races-list></races-list>'
-            // })
-            // .state('app.races', {
-            //     url: 'races/:club/:period/:page',
-            //     template: '<races-list></races-list>'
-            // });
-
-            // .when('/race/:club/:id', {
-            //     templateUrl: 'partials/race/race.html',
-            //     controller: 'RaceCtrl'
-            // })
-            // .when('/live/:club', {
-            //     templateUrl: 'partials/live/live.html'
-            // })
-            // .when('/races/:club?/:period?/:page?', {
-            //     templateUrl: 'partials/races/races.html',
-            //     controller: 'RacesCtrl'
-            // })
-            // .when('/pilot/:id?/:page?', {
-            //     templateUrl: 'partials/pilot/pilot.html',
-            //     controller: 'PilotCtrl'
-            // })
-            // .when('/club/:club?/:period?', {
-            //     templateUrl: 'partials/club/club.html',
-            //     controller: 'ClubCtrl'
-            // })
-            // .otherwise({
-            //     redirectTo: '/races'
-            // });
         }]);
 
         app.config(['$compileProvider', ($compileProvider) => {
-            $compileProvider.debugInfoEnabled(true);
+            $compileProvider.debugInfoEnabled(false);
         }]);
 
         app.run(['$rootScope', 'AppConfig',

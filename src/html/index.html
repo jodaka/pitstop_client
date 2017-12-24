@@ -10,7 +10,7 @@
     </head>
     <body>
         <div class="k-main" ui-view>
-            <h1>Loading…</h1>
+            <h3>Загрузка…</h3>
         </div>
         <script type="text/javascript" src="js/angular-deps.js?ver=0.7"></script>
         <script type="text/javascript" src="js/main.js?_version_"></script>
@@ -35,10 +35,7 @@
                 s.type = "text/javascript";
                 s.async = true;
                 s.src = "https://mc.yandex.ru/metrika/watch.js";
-
-                if (w.opera == "[object Opera]") {
-                    d.addEventListener("DOMContentLoaded", f, false);
-                } else { f(); }
+                f();
             })(document, window, "yandex_metrika_callbacks");
         </script>
         <noscript><div><img src="https://mc.yandex.ru/watch/35934625" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
@@ -48,10 +45,8 @@
           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
           m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
           ga('create', 'UA-75069753-1', 'auto');
           ga('send', 'pageview');
-
         </script>
         <!--
         <div class="k-copyleft">

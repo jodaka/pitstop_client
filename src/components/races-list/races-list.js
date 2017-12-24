@@ -10,7 +10,7 @@ class RacesList {
 
         this.checkParams();
 
-        // // on club change
+        // on club change
         $scope.$watch('$ctrl.selectedClub', (newVal) => {
             if (newVal) {
                 this.loadData();

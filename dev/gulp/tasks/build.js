@@ -14,9 +14,7 @@ const handleErrors = (err) => {
 gulp.task('build:copy-app', ['copy'], () =>
     gulp.src(`${config.paths.www_site}/**/*`, {
         base: './app/'
-    })
-    .pipe(gulp.dest(config.paths.peace))
-);
+    }).pipe(gulp.dest(config.paths.peace)));
 
 gulp.task('build:includesVersion', () => {
     const ver = Date.now();
@@ -42,7 +40,8 @@ gulp.task('build:copy', (cb) => {
         'build:copy-app',
         'build:turnOffDebug',
         'build:includesVersion',
-        cb);
+        cb
+    );
 });
 
 gulp.task('build:minify-js', ['build:copy'], () => {
