@@ -1,0 +1,9 @@
+<div class="k-paging">
+    <h5>Страницы</h5>
+    <div class="k-paging__page"
+        ng-repeat="page in $ctrl.pages track by $index"
+        ng-class="{ 'k-paging__page_selected': page == $ctrl.page }"
+        ng-click="$ctrl.changePage(page)">
+        {{:: page }}
+    </div>
+</div>

@@ -8,6 +8,9 @@
         "races": "races/%s/%s",
         "club": "club/%s/%s"
     },
+    "pagination": {
+        "perPage": 25
+    },
     "ws": {
         "url": "ws://%s:8882"
     },

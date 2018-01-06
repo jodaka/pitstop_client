@@ -1,8 +1,7 @@
 module.exports = {
     "globals": {
         "angular": true,
-        "widgets": true,
-        "triptop": true
+        "isNaN": true
     },
     "env": {
         "browser": true

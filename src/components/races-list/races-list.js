@@ -108,7 +108,9 @@ class RacesList {
         return false;
     }
 
-    changePage (page) {
+    changePage (pageObject) {
+        const page = pageObject.page ? pageObject.page : pageObject;
+
         if (page && page !== this.page) {
             this.page = page;
             this.saveUrlParams();
@@ -125,36 +127,33 @@ class RacesList {
         this.saveUrlParams();
     }
 
+    processResponse (response) {
+        this.races = (angular.isArray(response.data)) ? response.data : [response.data];
+
+        for (let z = 0; z < this.races.length; z++) {
+            this.races[z].best = this.$filter('lapTime')(this.races[z].best);
+        }
+
+        this.pagination = {
+            total: response.total,
+            page: this.page
+        };
+    }
+
+
     // requesting data again
     loadData () {
+        this.loading = true;
         this.races = [];
         const period = (this.date === null) ? this.page - 1 : this.date;
 
         this.getRaces(this.selectedClub, period)
-            .then((response) => {
-                this.races = (angular.isArray(response.data)) ? response.data : [response.data];
-
-                for (let z = 0; z < this.races.length; z++) {
-                    this.races[z].best = this.$filter('lapTime')(this.races[z].best);
-                }
-
-                const paging = [];
-                const perPage = 25;
-                let total = response.total;
-                let i = 1;
-                while (total > perPage) {
-                    paging.push(i);
-                    i += 1;
-                    total -= perPage;
-                    if (i > 25) {
-                        break;
-                    }
-                }
-
-                this.paging = paging;
-            })
+            .then(response => this.processResponse(response))
             .catch((err) => {
                 console.error(err);
+            })
+            .then(() => {
+                this.loading = false;
             });
     }
 }

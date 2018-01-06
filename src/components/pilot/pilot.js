@@ -6,16 +6,16 @@ class PilotDetails {
         this.$scope = $scope;
         this.getPilot = getPilot;
 
-        const clubs = clubsDict.getClubs();
-        console.log(222, clubs);
-
         this.pilotId = Number($stateParams.pilotId);
-        this.page = $stateParams.page;
+        this.page = Number($stateParams.page);
 
         // checking page
         if (isNaN(this.page) || !Number.isInteger(this.page)) {
             this.page = 1;
         }
+
+        console.log(123, this.page);
+
 
         // checking pilot id
         if (isNaN(this.pilotId) || !Number.isInteger(this.pilotId)) {
@@ -26,7 +26,9 @@ class PilotDetails {
         this.loadData();
     }
 
-    changePage (page) {
+    changePage (pageObject) {
+        const page = pageObject.page ? pageObject.page : pageObject;
+
         if (page && page !== this.page) {
             this.$state.go('app.pilot', {
                 pilotId: this.pilotId,
@@ -56,28 +58,21 @@ class PilotDetails {
             this.races[z].clubTitle = this.clubsDict.getTitleById(this.races[z].clubid);
         }
 
-        const paging = [];
-        const perPage = 25;
-        let total = response.total;
-        let i = 1;
-        while (total > perPage) {
-            paging.push(i);
-            i += 1;
-            total -= perPage;
-            if (i > 10) {
-                break;
-            }
-        }
-
-        this.paging = paging;
-        console.log('DONE');
+        this.pagination = {
+            total: response.total,
+            page: this.page
+        };
     }
 
     loadData () {
+        this.loading = true;
         this.getPilot(this.pilotId, this.page - 1)
             .then(response => this.processPilotData(response))
             .catch((err) => {
                 console.error(err);
+            })
+            .then(() => {
+                this.loading = false;
             });
     }
 }
