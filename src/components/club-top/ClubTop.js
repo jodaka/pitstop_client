@@ -27,18 +27,6 @@ class ClubTop {
         today.setDate(today.getDate() - 1);
         this.yesterday = new Date(today.getTime()).toISOString().slice(0, 10);
 
-        // $scope.$watch('$ctrl.period', (newVal, oldVal) => {
-        //     if (newVal && newVal !== oldVal) {
-        //         this.loadData();
-        //     }
-        // });
-
-        // $scope.$watch('$ctrl.period', (newVal, oldVal)=>{
-        //     if (newVal && newVal !== oldVal) {
-        //         this.loadData()
-        //     }
-        // })
-
         this.loadData();
     }
 
@@ -68,21 +56,23 @@ class ClubTop {
         }
     }
 
+    processData (data) {
+        for (let z = 0; z < data.pilots.length; z++) {
+            data.pilots[z].best = (data.pilots[z].best / 1000).toFixed(3);
+        }
+
+        for (let z = 0; z < data.karts.length; z++) {
+            data.karts[z].best = (data.karts[z].best / 1000).toFixed(3);
+        }
+
+        this.karts = data.karts;
+        this.pilots = data.pilots;
+    }
+
     loadData () {
         this.loading = true;
         this.getClub(this.clubId, this.period)
-            .then((data) => {
-                for (let z = 0; z < data.pilots.length; z++) {
-                    data.pilots[z].best = (data.pilots[z].best / 1000).toFixed(3);
-                }
-
-                for (let z = 0; z < data.karts.length; z++) {
-                    data.karts[z].best = (data.karts[z].best / 1000).toFixed(3);
-                }
-
-                this.karts = data.karts;
-                this.pilots = data.pilots;
-            })
+            .then(data => this.processData(data))
             .catch((err) => {
                 console.error(err);
             })
