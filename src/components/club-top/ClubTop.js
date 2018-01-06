@@ -1,5 +1,5 @@
 class ClubTop {
-    constructor (clubsDict, $stateParams, $state, getClub, $scope) {
+    constructor (clubsDict, $stateParams, $state, getClub) {
         this.clubsDict = clubsDict;
         this.$state = $state;
         this.loading = true;
@@ -84,5 +84,5 @@ class ClubTop {
 
 angular.module('k.components').component('clubTop', {
     templateUrl: 'partials/club-top/club-top.html',
-    controller: ['clubsDict', '$stateParams', '$state', 'getClub', '$scope', ClubTop]
+    controller: ['clubsDict', '$stateParams', '$state', 'getClub', ClubTop]
 });

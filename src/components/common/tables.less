@@ -30,10 +30,17 @@
     display: table-row;
 }
 
+.k-table-header__cell {
+
+}
+
 .k-table-header__cell,
 .k-table-cell
 {
     padding: 0 @margin_normal/2 0 @margin_normal;
+}
+
+.k-table-cell {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -53,11 +60,27 @@
 {
 
     height: 4em;
-    line-height: 4em;
+    line-height: 1em;
+    vertical-align: middle;
     font-weight: bold;
 
     .k-link
     {
         color: @color_5;
+    }
+}
+
+
+
+@media screen and (max-width: 400px),(max-device-width:400px) {
+    
+    .k-table-cell {
+        max-width: 150px;
+    }
+    
+    .k-table-header__cell,
+    .k-table-cell
+    {
+        padding: 0 @margin_small/2 0 @margin_small;
     }
 }

@@ -3,16 +3,21 @@
     <head>
         <meta charset="utf-8">
         <base href="/">
-        <title>ПитСтоп Статистика</title>
+        <title>Статистика сети картинг клубов PitStop</title>
         <meta name="theme-color" content="#375D81">
         <link rel="stylesheet" media="all" href="/css/styles.css?_version_" async="async"/>
-        <link href='https://fonts.googleapis.com/css?family=Roboto&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     </head>
     <body>
         <div class="k-main" ui-view>
             <h3>Загрузка…</h3>
         </div>
-        <script type="text/javascript" src="js/angular-deps.js?ver=0.7"></script>
+        <div class="k-footer">
+            <div class="k-footer__text">
+                Статистика по данным <a href="http://karting-spb.ru/ru/" target="_blank">сети картинг клубов Pitstop</a>.
+                2016-2018 © Создание и поддержка сайта <a href="https://kudris.com/cv/index_en.html">Антон Кудрис</a>.
+            </div>
+        </div>
+        <script type="text/javascript" src="js/angular-deps.js?ver=2018-01"></script>
         <script type="text/javascript" src="js/main.js?_version_"></script>
         <!-- Yandex.Metrika counter -->
         <script type="text/javascript">
@@ -48,11 +53,6 @@
           ga('create', 'UA-75069753-1', 'auto');
           ga('send', 'pageview');
         </script>
-        <!--
-        <div class="k-copyleft">
-             2016 © Copyleft Артель братца Кудриса
-        </div>
-        -->
     </body>
 
 </html>

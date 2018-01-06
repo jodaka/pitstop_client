@@ -3,22 +3,57 @@
     .k-filter_active;
 }
 
-.k-club-stat__karts_holder,
-.k-club-stat__pilots_holder
-{
-    padding: 0;
-    margin: 0;
-    vertical-align: top;
+.k-stats {
+    &__holder {
+        display: flex;
+        flex-direction: row;
+    }
+
+    &__karts,
+    &__pilots
+    {
+        padding: 0;
+        margin: 0;
+        vertical-align: top;
+        width: inherit;
+    }
+
+    &__karts {
+        flex-grow: 1
+    }
+
+    &__pilots {
+        margin-left: 5em;
+        flex-grow: 3
+    }
 }
 
-.k-club-stat__karts_holder
-{
-    width: 40%;
-    padding: 0;
+@media screen and (max-width: 400px),(max-device-width:400px){
+
+    .k-stats {
+        &__holder {
+            flex-direction: column;
+        }
+
+        &__karts,
+        &__pilots {
+            width: 100%;
+        }
+
+        &__pilots {
+            margin-left: 0;
+        }
+    }
 }
 
-.k-club-stat__pilots_holder
-{
-    padding-left: 1em;
-    width: 60%;
-}
+// .k-stats__karts_holder
+// {
+//     width: 40%;
+//     padding: 0;
+// }
+
+// .k-stats__pilots_holder
+// {
+//     padding-left: 1em;
+//     width: 60%;
+// }
