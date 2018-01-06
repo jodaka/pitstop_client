@@ -35,3 +35,13 @@ gulp.task('serve', ['copy'], () => {
     gulp.watch(`${config.paths.src}/components/**/*.tmpl.html`, ['js-copy'])
         .on('change', browserSync.reload);
 });
+
+
+gulp.task('serve-production', ['build'], () => {
+    browserSync.init({
+        server: {
+            baseDir: './peace/'
+        },
+        https: false
+    });
+});

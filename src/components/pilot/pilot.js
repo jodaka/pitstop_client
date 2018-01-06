@@ -14,9 +14,6 @@ class PilotDetails {
             this.page = 1;
         }
 
-        console.log(123, this.page);
-
-
         // checking pilot id
         if (isNaN(this.pilotId) || !Number.isInteger(this.pilotId)) {
             $state.go('/');
@@ -43,7 +40,6 @@ class PilotDetails {
         this.name = response.name;
 
         Object.keys(response.clubs).forEach((clubId) => {
-            console.log(1, clubId);
             this.clubStats[this.clubsDict.getTitleById(clubId)] = {
                 count: response.clubs[clubId].count,
                 best: (Number(response.clubs[clubId].best) / 1000).toFixed(3)

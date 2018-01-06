@@ -1,6 +1,6 @@
 /**
  * Default task - serve
- **/
+ * */
 
 const gulp = require('gulp');
 
