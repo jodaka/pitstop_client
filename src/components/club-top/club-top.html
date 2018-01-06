@@ -1,0 +1,82 @@
+<div class="k-page k-page_club">
+
+    <nav-header data-section="club">
+        <div class="k-filters k-filters_period">
+            <label class="k-filter k-filter_period" ng-class="{'k-filter_active': $ctrl.isActive('month')}">
+                <a href="javascript:void(0)" class="k-link k-link_filter" ng-click="$ctrl.setPeriod('month')">Месяц</a>
+            </label>
+            <label class="k-filter k-filter_period" ng-class="{'k-filter_active': $ctrl.isActive('week')}">
+                <a href="javascript:void(0)" class="k-link k-link_filter" ng-click="$ctrl.setPeriod('week')">Неделя</a>
+            </label>
+            <label class="k-filter k-filter_period" ng-class="{'k-filter_active': $ctrl.isActive('today')}">
+                <a href="javascript:void(0)" class="k-link k-link_filter" ng-click="$ctrl.setPeriod('today')">Сегодня</a>
+            </label>
+            <label class="k-filter k-filter_period" ng-class="{'k-filter_active': $ctrl.isActive('yesterday')}">
+                <a href="javascript:void(0)" class="k-link k-link_filter" ng-click="$ctrl.setPeriod('yesterday')">Вчера</a>
+            </label>
+        </div>
+    </nav-header>
+
+    <loader display="$ctrl.loading">Загрузка рекордов…</loader>
+
+    <div class="k-page__content" ng-hide="$ctrl.loading">
+
+        <div class="k-stats__holder">
+
+            <div class="k-stats__karts">
+
+                <h3 class="k-header">Top по картам</h3>
+                <div class="k-table">
+                    <div class="k-table-header">
+                        <div class="k-table-header__cell">Место</div>
+                        <div class="k-table-header__cell">Карт</div>
+                        <div class="k-table-header__cell">Лучшее время</div>
+                    </div>
+
+                    <div class="k-table-row k-table-row_zebra" 
+                    ng-repeat="data in ::$ctrl.karts track by $index">
+                        <div class="k-table-cell">
+                            {{:: $index+1 }}
+                        </div>
+                        <div class="k-table-cell">
+                            {{:: data.kart }}
+                        </div>
+                        <div class="k-table-cell">{{:: data.best }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="k-stats__pilots">
+                <h3 class="k-header">Top по пилотам</h3>
+                <div class="k-table">
+                    <div class="k-table-header">
+                        <div class="k-table-header__cell">Место</div>
+                        <div class="k-table-header__cell">Пилот</div>
+                        <div class="k-table-header__cell">Карт</div>
+                        <div class="k-table-header__cell">Лучшее время</div>
+                        <div class="k-table-header__cell">Заезд</div>
+                    </div>
+
+                    <div class="k-table-row k-table-row_zebra" 
+                    ng-repeat="data in ::$ctrl.pilots track by $index">
+                        <div class="k-table-cell">
+                            {{:: $index+1 }}
+                        </div>
+                        <div class="k-table-cell">
+                            <a class="k-link" href="/#/pilot/{{::data.did}}">{{:: data.dname }}</a>
+                        </div>
+                        <div class="k-table-cell">
+                            {{:: data.kart }}
+                        </div>
+                        <div class="k-table-cell">{{:: data.best }}</div>
+                        <div class="k-table-cell">
+                            <a class="k-link" href="/#/race/{{::clubName}}/{{::data.raceid}}">{{:: data.name }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

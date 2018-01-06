@@ -1,48 +1,35 @@
-angular.module( 'k.services' ).service( 'clubsDict', [
-'AppConfig',
-function clubsDictFactory( AppConfig ) {
+const clubsDictFactory = function(AppConfig) {
+    const clubsByIDs = {};
 
-        var clubNamesDict = {};
-        var clubTitlesDict = {};
+    Object.keys(AppConfig.clubs).forEach((clubName) => {
+        clubsByIDs[AppConfig.clubs[clubName].id] = clubName;
+    });
 
-        for ( var cl in AppConfig.clubsEn ) {
-            if ( AppConfig.clubsEn.hasOwnProperty( cl ) ) {
-                clubNamesDict[ AppConfig.clubsEn[ cl ] ] = cl;
-            }
+    const getTitleById = function(id) {
+        return AppConfig.clubs[clubsByIDs[id]].title;
+    };
+
+    const getNameById = function(id) {
+        return clubsByIDs[id];
+    };
+
+    const getIdByName = function(name) {
+        if (AppConfig.clubs.hasOwnProperty(name)) {
+            return AppConfig.clubs[name].id;
         }
+        return null;
+    };
 
-        for ( cl in AppConfig.clubs ) {
-            if ( AppConfig.clubs.hasOwnProperty( cl ) ) {
-                clubTitlesDict[ AppConfig.clubs[ cl ] ] = cl;
-            }
-        }
+    const getClubs = function() {
+        return AppConfig.clubs;
+    };
 
-        var getTitles = function () {
-            return AppConfig.clubs;
-        };
+    return {
+        getClubs,
+        getTitleById,
+        getNameById,
+        getIdByName
+    };
+};
 
-        var getNames = function () {
-            return AppConfig.clubsEn;
-        };
-
-        var getTitleById = function ( id ) {
-            return clubTitlesDict[ id ];
-        };
-
-        var getNameById = function ( id ) {
-            return clubNamesDict[ id ];
-        };
-
-        var getIdByName = function ( name ) {
-            return AppConfig.clubsEn[ name ];
-        };
-
-        return {
-            getTitles: getTitles,
-            getNames: getNames,
-            getTitleById: getTitleById,
-            getNameById: getNameById,
-            getIdByName: getIdByName
-
-        };
-} ] );
+angular.module('k.services').service('clubsDict', ['AppConfig', clubsDictFactory]);

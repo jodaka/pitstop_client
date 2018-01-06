@@ -4,7 +4,7 @@ html {
     font-size: 0.8em;
     background-color: @color_1;
     color: @color_3;
-    font-family: Roboto, "San Francisco", "Helvetica Neue", "PT Sans", "Lucida Grande", Helvetica, Arial, sans-serif;
+    font-family: Roboto, "PT Sans", "Lucida Grande", Helvetica, "San Francisco", "Helvetica Neue", Arial, sans-serif;
     box-sizing: border-box;
 }
 
@@ -20,17 +20,31 @@ body
     box-sizing: inherit;
 }
 
-.k-copyleft {
-    color: @color_3;
-    height: 90px;
-    line-height: 90px;
-    text-align: center;
+.k-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    background-color: @color_8;
+    color: @color_5;
+
+    height: 10em;
     margin-top: 50px;
+
+    &__text {
+        max-width: 80%;
+        
+    }
+}
+
+.k-footer a {
+    color: @color_5;
 }
 
 .k-header
 {
-    font-weight: 100;
+    font-size: 1em;
+    font-weight: bold;
     color: @color_3;
     margin: 1.5em 0 0.5em 0;
 }

@@ -8,18 +8,25 @@
         "races": "races/%s/%s",
         "club": "club/%s/%s"
     },
+    "pagination": {
+        "perPage": 25
+    },
     "ws": {
         "url": "ws://%s:8882"
     },
     "clubs": {
-        "Пулково": "586",
-        "Драйв": "686",
-        "Нарвская": "786"
-    },
-    "clubsEn": {
-        "pulkovo": 586,
-        "drive": 686,
-        "narvskaya": 786
+        "pulkovo": {
+            "id": 586,
+            "title": "Пулково"
+        },
+        "drive": {
+            "id": 686,
+            "title": "Драйв"
+        },
+        "narvskaya": {
+            "id": 786,
+            "title": "Нарвская"
+        }
     }
 
 }

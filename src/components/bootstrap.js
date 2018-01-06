@@ -11,18 +11,12 @@
      * Loads CSS/JS dependencies and init angular application
      */
     const initApplication = () => {
-        // this is a main holder
         const node = d.querySelector('.k-main');
 
-        // and this is router pager
-        const holder = d.createElement('div');
-        holder.setAttribute('ng-view', '');
-        holder.setAttribute('class', 'a-view');
-        node.appendChild(holder);
-
         // If no errors detected, we initialize Angular
-        const app = angular.module('k', [
-            'ngRoute',
+        const app = angular.module('pitstop', [
+            'ui.router',
+            'k.components',
             'k.controllers',
             'k.directives',
             'k.services',
@@ -30,37 +24,75 @@
             'k.config'
         ]);
 
-        // Angular 1.6 #! router fix
-        app.config(['$locationProvider', ($locationProvider) => {
-            $locationProvider.hashPrefix('');
-        }]);
+        app.config(['$stateProvider', '$locationProvider', '$urlRouterProvider', function($stateProvider, $locationProvider, $urlRouterProvider) {
+            $locationProvider.html5Mode(false);
 
-        app.config(['$routeProvider',
-            function($routeProvider) {
-                $routeProvider
-                    .when('/race/:club/:id', {
-                        templateUrl: 'partials/race/race.html',
-                        controller: 'RaceCtrl'
-                    })
-                    .when('/live/:club', {
-                        templateUrl: 'partials/live/live.html'
-                    })
-                    .when('/races/:club?/:period?/:page?', {
-                        templateUrl: 'partials/races/races.html',
-                        controller: 'RacesCtrl'
-                    })
-                    .when('/pilot/:id?/:page?', {
-                        templateUrl: 'partials/pilot/pilot.html',
-                        controller: 'PilotCtrl'
-                    })
-                    .when('/club/:club?/:period?', {
-                        templateUrl: 'partials/club/club.html',
-                        controller: 'ClubCtrl'
-                    })
-                    .otherwise({
-                        redirectTo: '/races'
-                    });
-            }]);
+            $urlRouterProvider.when('/', '/races/pulkovo/all/1');
+            $urlRouterProvider.when('', '/races/pulkovo/all/1');
+
+            $stateProvider
+                .state('app', {
+                    url: '/',
+                    abstract: true
+                })
+                .state('app.races', {
+                    url: 'races/:club/:period/:page',
+                    template: '<races-list></races-list>',
+                    params: {
+                        club: {
+                            type: 'string',
+                            value: 'pulkovo'
+                        },
+                        period: {
+                            type: 'string',
+                            value: 'all'
+                        },
+                        page: {
+                            type: 'string',
+                            value: '1'
+                        }
+                    }
+                })
+                .state('app.club', {
+                    url: 'club/:club/:period',
+                    template: '<club-top></club-top>',
+                    params: {
+                        club: {
+                            type: 'string',
+                            value: 'pulkovo'
+                        },
+                        period: {
+                            type: 'string',
+                            value: 'week'
+                        }
+                    }
+                })
+                .state('app.race', {
+                    url: 'race/:club/:raceId',
+                    template: '<race-details></race-details>',
+                    params: {
+                        club: {
+                            type: 'string',
+                            value: 'pulkovo'
+                        },
+                        raceId: {
+                            type: 'string'
+                        }
+                    }
+                })
+                .state('app.pilot', {
+                    url: 'pilot/:pilotId/:page',
+                    template: '<pilot-details></pilot-details>',
+                    params: {
+                        pilotId: {
+                            type: 'string'
+                        },
+                        page: {
+                            type: 'string'
+                        }
+                    }
+                });
+        }]);
 
         app.config(['$compileProvider', ($compileProvider) => {
             $compileProvider.debugInfoEnabled(false);
@@ -68,24 +100,11 @@
 
         app.run(['$rootScope', 'AppConfig',
             function($rootScope, $AppConfig) {
-                $rootScope.$on('$locationChangeSuccess', (scope, newState, oldState) => {
-                    if (newState !== oldState) {
-                        $rootScope.previousPage = oldState;
-                    }
-                });
-
-                $rootScope.$on('$routeChangeStart', (evt, next, current) => {
-                    if (typeof current !== 'undefined') {
-                        const nextName = next.$$route.templateUrl.replace(/.*\/(.*?)\.html/, '$1');
-                        $rootScope.$broadcast('routeChange', nextName);
-                    }
-                });
-
-                $AppConfig.api.url = $AppConfig.api.url.replace(/%s/, location.hostname);
-                $AppConfig.ws.url = $AppConfig.ws.url.replace(/%s/, location.hostname);
+                $AppConfig.api.url = $AppConfig.api.url.replace(/%s/, window.location.hostname);
+                $AppConfig.ws.url = $AppConfig.ws.url.replace(/%s/, window.location.hostname);
             }]);
 
-        angular.bootstrap(node, ['k'], {
+        angular.bootstrap(node, ['pitstop'], {
             strictDi: true
         });
     };

@@ -1,0 +1,52 @@
+<div class="k-page k-page_races">
+
+    <nav-header data-section="races">
+        <div class="k-filters k-filters_period">
+            <label class="k-filter k-filter_period" ng-class="{'k-filter_active': $ctrl.periodIsActive('all')}">
+                <a class="k-link_filter" ng-click="$ctrl.setPeriod('all')">Вся история</a>
+            </label>
+            <label class="k-filter k-filter_period" ng-class="{'k-filter_active': $ctrl.periodIsActive($ctrl.today)}">
+                <a class="k-link_filter" ng-click="$ctrl.setPeriod('today')">Сегодня</a>
+            </label>
+            <label class="k-filter k-filter_period" ng-class="{'k-filter_active': $ctrl.periodIsActive($ctrl.yesterday)}">
+                <a class="k-link_filter" ng-click="$ctrl.setPeriod('yesterday')">Вчера</a>
+            </label>
+        </div>
+    </nav-header>
+    <loader display="$ctrl.loading">Загрузка данных по заездам…</loader>
+
+    <div class="k-page__content" ng-hide="$ctrl.loading">
+
+        <div class="k-table k-races-list">
+            <div class="k-table-header k-races-list__race_header k-races-list_single-club">
+                <div class="k-table-header__cell k-race__cell_name">Заезд</div>
+                <div class="k-table-header__cell k-race__cell_date">Дата</div>
+                <div class="k-table-header__cell k-race__cell_winner">Победитель</div>
+                <div class="k-table-header__cell k-race__cell_kart">Карт</div>
+                <div class="k-table-header__cell k-race__cell_laps">Лучшее время</div>
+            </div>
+        
+            <div class="k-table-row k-table-row_zebra k-races-list_single-club" 
+                ng-repeat="race in $ctrl.races track by $index">
+                <div class="k-table-cell k-race__cell_name">
+                    <a class="k-link" ui-sref="app.race({ club: '{{::clubName}}', raceId: '{{::race.id}}'})">{{:: race.name }}</a>
+                </div>
+                <div class="k-table-cell k-race__cell_date" ng-bind-html="race.date | raceDate"></div>
+                <div class="k-table-cell k-race__cell_winner">
+                    <a class="k-link" ui-sref="app.pilot({pilotId: '{{::race.winnerId}}', page: '1'})">{{:: race.winner }}</a>
+                </div>
+                <div class="k-table-cell k-race__cell_kart">{{:: race.winnerKart }}</div>
+                <div class="k-table-cell k-race__cell_laps">{{:: race.best }}</div>
+            </div>
+        </div>
+
+        <div class="k-paging-holder" ng-if="$ctrl.date === null">
+            <pagination
+                on-change-page="$ctrl.changePage({page: page})"
+                items-count="$ctrl.pagination.total"
+                items-per-page="$ctrl.pagination.perPage",
+                page="$ctrl.pagination.page">
+            </pagination>
+        </div>
+    </div>
+</div>

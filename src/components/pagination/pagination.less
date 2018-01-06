@@ -1,0 +1,33 @@
+.k-paging {
+    margin: 50px auto 25px;
+
+    &__pages {
+        display: flex;
+        flex-direction: row;
+    }
+
+    &__page {
+        width: 2.5em;
+        height: 2.5em;
+        line-height: 2.5em;
+        text-align: center;
+        background-color: @color_5;
+        margin-right: 5px;
+        color: @color_3;
+    
+        &:hover {
+            cursor: pointer;
+            background-color: @color_3;
+            color: @color_1;
+        }
+    }
+
+    &__page_selected {
+        background-color: @color_3;
+        color: @color_1;
+        &:hover {
+            cursor: default;
+            color: @color_1;
+        }
+    }
+}

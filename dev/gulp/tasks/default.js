@@ -1,6 +1,7 @@
 /**
  * Default task - serve
- **/
+ * */
 
-let gulp = require( 'gulp' );
-gulp.task( 'default', [ 'serve' ] );
+const gulp = require('gulp');
+
+gulp.task('default', ['serve']);
