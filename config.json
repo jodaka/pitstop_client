@@ -2,7 +2,7 @@
     "DEBUG": true,
     "version": "0.0.2",
     "api": {
-        "url": "https://pitstop.top/api/",
+        "url": "http://localhost:8881/",
         "race": "race/%s",
         "pilot": "pilot/%s/%s",
         "races": "races/%s/%s",
@@ -10,9 +10,6 @@
     },
     "pagination": {
         "perPage": 25
-    },
-    "ws": {
-        "url": "ws://%s:8882"
     },
     "clubs": {
         "pulkovo": {

@@ -25,6 +25,11 @@ class NavigationHeader {
             club,
             period: stateName === 'app.races' ? 'all' : 'week'
         };
+
+        if (this.period) {
+            params.period = this.period;
+        }
+
         if (stateName === 'app.races') {
             params.page = 1;
         }
@@ -35,6 +40,9 @@ class NavigationHeader {
 
 angular.module('k.components').component('navHeader', {
     transclude: true,
+    bindings: {
+        period: '<?'
+    },
     templateUrl: 'partials/header/nav-header.html',
     controller: ['clubsDict', '$stateParams', '$state', NavigationHeader]
 });

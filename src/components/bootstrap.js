@@ -101,7 +101,6 @@
         app.run(['$rootScope', 'AppConfig',
             function($rootScope, $AppConfig) {
                 $AppConfig.api.url = $AppConfig.api.url.replace(/%s/, window.location.hostname);
-                $AppConfig.ws.url = $AppConfig.ws.url.replace(/%s/, window.location.hostname);
             }]);
 
         angular.bootstrap(node, ['pitstop'], {

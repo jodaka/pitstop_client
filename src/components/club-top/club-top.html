@@ -1,7 +1,10 @@
 <div class="k-page k-page_club">
 
-    <nav-header data-section="club">
+    <nav-header data-section="club" period="$ctrl.period">
         <div class="k-filters k-filters_period">
+            <label class="k-filter k-filter_period" ng-class="{'k-filter_active': $ctrl.isActive('year')}">
+                <a href="javascript:void(0)" class="k-link k-link_filter" ng-click="$ctrl.setPeriod('year')">Год</a>
+            </label>
             <label class="k-filter k-filter_period" ng-class="{'k-filter_active': $ctrl.isActive('month')}">
                 <a href="javascript:void(0)" class="k-link k-link_filter" ng-click="$ctrl.setPeriod('month')">Месяц</a>
             </label>
@@ -10,9 +13,6 @@
             </label>
             <label class="k-filter k-filter_period" ng-class="{'k-filter_active': $ctrl.isActive('today')}">
                 <a href="javascript:void(0)" class="k-link k-link_filter" ng-click="$ctrl.setPeriod('today')">Сегодня</a>
-            </label>
-            <label class="k-filter k-filter_period" ng-class="{'k-filter_active': $ctrl.isActive('yesterday')}">
-                <a href="javascript:void(0)" class="k-link k-link_filter" ng-click="$ctrl.setPeriod('yesterday')">Вчера</a>
             </label>
         </div>
     </nav-header>
