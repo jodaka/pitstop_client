@@ -6,7 +6,8 @@
   "license": "ISC",
   "scripts": {
     "start": "node fuse.js",
-    "build": "gulp build"
+    "build": "rm -rf build && NODE_ENV=production node fuse.js",
+    "debug-production": "npm run build && cd build && python -m SimpleHTTPServer"
   },
   "dependencies": {
     "@uirouter/angularjs": "^1.0.12",

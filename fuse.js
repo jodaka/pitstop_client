@@ -4,17 +4,19 @@ const {
     JSONPlugin,
     HTMLPlugin,
     LESSPlugin,
-    CSSPlugin
+    CSSPlugin,
+    QuantumPlugin
 } = require('fuse-box');
 
-const appPackages = `
-    !> [index.js]`;
+const isProduction = process.env.NODE_ENV === 'production';
 
+const appPackages = '!> [index.js]';
 const vendorPackages = '~ index.js';
 
 const fuse = FuseBox.init({
     homeDir: 'src',
-    target: 'browser@es6',
+    target: 'browser@es5',
+    hash: isProduction,
     log: true,
     debug: true,
     output: 'build/$name.js',
@@ -28,19 +30,23 @@ const fuse = FuseBox.init({
         [
             LESSPlugin(),
             CSSPlugin()
-        ]
+        ],
+        isProduction && QuantumPlugin({
+            target: 'browser',
+            polyfills: ['Promise'],
+            treeshake: true,
+            uglify: true
+        })
     ]
 });
 
 // vendor should come first
-const vendor = fuse.bundle('vendor')
-    .instructions(vendorPackages);
+fuse.bundle('vendor').instructions(vendorPackages);
+const app = fuse.bundle('app').instructions(appPackages);
 
-const app = fuse.bundle('app')
-    .instructions(appPackages)
-    .hmr()
-    .watch();
-
-fuse.dev();
+if (!isProduction) {
+    fuse.dev();
+    app.hmr().watch();
+}
 
 fuse.run();
