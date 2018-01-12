@@ -29,9 +29,13 @@ const fuse = FuseBox.init({
         HTMLPlugin(),
         [
             LESSPlugin(),
-            CSSPlugin()
+            CSSPlugin({
+                inject: () => '/style.css',
+                outFile: () => './build/style.css'
+            })
         ],
         isProduction && QuantumPlugin({
+            bakeApiIntoBundle: 'app',
             target: 'browser',
             polyfills: ['Promise'],
             treeshake: true,
