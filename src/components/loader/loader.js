@@ -1,11 +1,10 @@
-angular.module('k.directives').directive('loader', () => {
-    return {
-        restrict: 'E',
-        scope: {
-            display: '='
-        },
-        transclude: true,
-        replace: true,
-        templateUrl: 'partials/loader/loader.html'
-    };
+import * as angular from 'angular';
+import template from './loader.html';
+
+angular.module('k.directives').component('loader', {
+    bindings: {
+        display: '<'
+    },
+    transclude: true,
+    template
 });

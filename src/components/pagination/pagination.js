@@ -1,3 +1,6 @@
+import * as angular from 'angular';
+import template from './pagination.html';
+
 class Pagination {
     constructor (AppConfig) {
         this.perPage = AppConfig.pagination.perPage;
@@ -65,6 +68,6 @@ angular.module('k.components').component('pagination', {
         onChangePage: '&',
         page: '<'
     },
-    templateUrl: 'partials/pagination/pagination.html',
+    template,
     controller: ['AppConfig', Pagination]
 });

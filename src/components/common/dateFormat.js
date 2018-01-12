@@ -1,3 +1,5 @@
+import * as angular from 'angular';
+
 const addLeadingZero = (num) => {
     if (num < 10) {
         return `0${num}`;

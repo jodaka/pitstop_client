@@ -1,3 +1,5 @@
+import * as angular from 'angular';
+
 // please do not touch this file unless you really know
 // what you are doing :)
 angular.module('k.components', []);

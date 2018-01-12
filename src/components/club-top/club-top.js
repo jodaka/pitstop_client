@@ -1,3 +1,6 @@
+import * as angular from 'angular';
+import template from './club-top.html';
+
 class ClubTop {
     constructor (clubsDict, $stateParams, $state, getClub) {
         this.clubsDict = clubsDict;
@@ -83,6 +86,6 @@ class ClubTop {
 }
 
 angular.module('k.components').component('clubTop', {
-    templateUrl: 'partials/club-top/club-top.html',
+    template,
     controller: ['clubsDict', '$stateParams', '$state', 'getClub', ClubTop]
 });

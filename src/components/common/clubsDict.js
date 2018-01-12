@@ -1,3 +1,5 @@
+import * as angular from 'angular';
+
 const clubsDictFactory = function(AppConfig) {
     const clubsByIDs = {};
 
