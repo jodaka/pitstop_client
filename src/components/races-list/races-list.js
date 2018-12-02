@@ -10,15 +10,11 @@ class RacesList {
         this.getRaces = getRaces;
         this.$filter = $filter;
         this.$stateParams = $stateParams;
+    }
 
+    $onInit() {
         this.checkParams();
-
-        // on club change
-        $scope.$watch('$ctrl.selectedClub', (newVal) => {
-            if (newVal) {
-                this.loadData();
-            }
-        });
+        this.loadData();
     }
 
     checkParams () {

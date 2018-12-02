@@ -8,12 +8,12 @@ class NavigationHeader {
         this.clubsDict = clubsDict;
 
         this.clubs = this.clubsDict.getClubs();
-        this.clubId = this.clubsDict.getIdByName(this.clubName);
     }
 
     $onInit () {
         this.clubName = this.$stateParams.club;
         this.stateName = this.$state.current.name;
+        this.clubId = this.clubsDict.getIdByName(this.clubName);
 
         if (this.clubName) {
             this.clubName = this.clubName.toLowerCase();
