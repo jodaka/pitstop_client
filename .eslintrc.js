@@ -1,6 +1,5 @@
 module.exports = {
     "globals": {
-        "angular": true,
         "isNaN": true
     },
     "env": {

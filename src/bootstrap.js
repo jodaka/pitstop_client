@@ -1,3 +1,5 @@
+import * as angular from 'angular';
+
 (function(w, d) {
     // global errors handler
     if (typeof w.onerror === 'undefined') {

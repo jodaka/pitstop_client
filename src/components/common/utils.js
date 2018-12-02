@@ -1,3 +1,5 @@
+import * as angular from 'angular';
+
 angular.module('k.utils').factory('debounce', [
     function debounceFactory () {
         /**

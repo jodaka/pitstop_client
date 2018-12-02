@@ -1,5 +1,3 @@
-app/
+.fusebox
 node_modules/
 build/
-peace/
-.tern-project

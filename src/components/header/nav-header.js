@@ -1,3 +1,6 @@
+import * as angular from 'angular';
+import headerTemplate from './nav-header.html';
+
 class NavigationHeader {
     constructor (clubsDict, $stateParams, $state) {
         this.$state = $state;
@@ -43,6 +46,6 @@ angular.module('k.components').component('navHeader', {
     bindings: {
         period: '<?'
     },
-    templateUrl: 'partials/header/nav-header.html',
+    template: headerTemplate,
     controller: ['clubsDict', '$stateParams', '$state', NavigationHeader]
 });

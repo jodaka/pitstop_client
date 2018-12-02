@@ -1,3 +1,6 @@
+import * as angular from 'angular';
+import racesTemplate from './races-list.html';
+
 /* global localStorage:true, isNaN:true */
 class RacesList {
     constructor (clubsDict, $stateParams, $state, $scope, getRaces, $filter) {
@@ -159,6 +162,6 @@ class RacesList {
 }
 
 angular.module('k.components').component('racesList', {
-    templateUrl: 'partials/races-list/races-list.html',
-    controller: ['clubsDict', '$stateParams', '$state', '$scope', 'getRaces', '$filter', RacesList]
+    controller: ['clubsDict', '$stateParams', '$state', '$scope', 'getRaces', '$filter', RacesList],
+    template: racesTemplate
 });
