@@ -1,6 +1,6 @@
 {
     "DEBUG": true,
-    "version": "0.0.2",
+    "version": "0.0.3",
     "api": {
         "url": "https://pitstop.top/api/",
         "race": "race/%s",
@@ -23,6 +23,10 @@
         "narvskaya": {
             "id": 786,
             "title": "Нарвская"
+        },
+        "premium": {
+            "id": 25506,
+            "title": "Ладожская"
         }
     }
 
