@@ -15,7 +15,7 @@ const vendorPackages = '~ index.js';
 
 const fuse = FuseBox.init({
     homeDir: 'src',
-    target: 'browser@es2016',
+    target: 'browser',
     hash: true,
     log: true,
     debug: true,
@@ -35,8 +35,7 @@ const fuse = FuseBox.init({
             })
         ],
         isProduction && QuantumPlugin({
-            bakeApiIntoBundle: 'app',
-            target: 'browser@es2016',
+            bakeApiIntoBundle: 'vendor',
             treeshake: true,
             uglify: true
         })

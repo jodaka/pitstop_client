@@ -1,3 +1,5 @@
+import template from './race-details.html';
+
 class RaceDetails {
     constructor (clubsDict, $stateParams, $state, $scope, getRace, $filter) {
         this.clubsDict = clubsDict;
@@ -150,6 +152,6 @@ class RaceDetails {
 }
 
 angular.module('k.components').component('raceDetails', {
-    templateUrl: 'partials/race-details/race-details.html',
+    template,
     controller: ['clubsDict', '$stateParams', '$state', '$scope', 'getRace', '$filter', RaceDetails]
 });

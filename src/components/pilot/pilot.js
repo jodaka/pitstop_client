@@ -1,3 +1,5 @@
+import template from './pilot.html';
+
 class PilotDetails {
     constructor (clubsDict, $stateParams, $state, $scope, getPilot) {
         this.clubsDict = clubsDict;
@@ -5,9 +7,11 @@ class PilotDetails {
         this.$state = $state;
         this.$scope = $scope;
         this.getPilot = getPilot;
+    }
 
-        this.pilotId = Number($stateParams.pilotId);
-        this.page = Number($stateParams.page);
+    $onInit() {
+        this.pilotId = Number(this.$stateParams.pilotId);
+        this.page = Number(this.$stateParams.page);
 
         // checking page
         if (isNaN(this.page) || !Number.isInteger(this.page)) {
@@ -74,6 +78,6 @@ class PilotDetails {
 }
 
 angular.module('k.components').component('pilotDetails', {
-    templateUrl: 'partials/pilot/pilot.html',
+    template,
     controller: ['clubsDict', '$stateParams', '$state', '$scope', 'getPilot', PilotDetails]
 });

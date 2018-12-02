@@ -4,24 +4,27 @@ import headerTemplate from './nav-header.html';
 class NavigationHeader {
     constructor (clubsDict, $stateParams, $state) {
         this.$state = $state;
-        this.clubs = clubsDict.getClubs();
-        this.clubName = $stateParams.club;
+        this.$stateParams = $stateParams;
+        this.clubsDict = clubsDict;
 
+        this.clubs = this.clubsDict.getClubs();
+        this.clubId = this.clubsDict.getIdByName(this.clubName);
+    }
+
+    $onInit () {
+        this.clubName = this.$stateParams.club;
+        this.stateName = this.$state.current.name;
 
         if (this.clubName) {
             this.clubName = this.clubName.toLowerCase();
         }
 
-        this.clubId = clubsDict.getIdByName(this.clubName);
-        this.stateName = $state.current.name;
-
-        this.filtersEnabled = (this.section !== 'pilot');
+        this.filtersEnabled = (this.stateName !== 'app.pilot');
     }
 
     changeClub (club, stateName = this.stateName) {
-        // when in race state, changing club doesn't makes sense
-        if (stateName === 'app.race') {
-            return;
+        if (['app.races', 'app.club'].indexOf(stateName) === -1) {
+            stateName = 'app.races';
         }
 
         const params = {

@@ -10,19 +10,16 @@
     "debug-production": "npm run build && cd build && python -m SimpleHTTPServer"
   },
   "dependencies": {
-    "@uirouter/angularjs": "^1.0.12",
-    "@uirouter/core": "^5.0.13",
-    "angular": "^1.6.8"
-  },
-  "devDependencies": {
-    "eslint": "^4.14.0",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.8.0",
-    "fuse-box": "^3.0.2",
-    "fusebox": "^1.3.123",
-    "less": "^2.7.3",
-    "typescript": "^2.6.2",
-    "uglify-es": "^3.3.5",
-    "uglify-js": "^3.3.5"
+    "@uirouter/angularjs": "1.0.20",
+    "@uirouter/core": "5.0.21",
+    "angular": "1.7.5",
+    "eslint": "5.9.0",
+    "eslint-config-airbnb-base": "13.1.0",
+    "eslint-plugin-import": "2.14.0",
+    "fuse-box": "3.6.0",
+    "less": "3.9.0",
+    "typescript": "3.2.1",
+    "uglify-es": "3.3.9",
+    "uglify-js": "3.4.9"
   }
 }
